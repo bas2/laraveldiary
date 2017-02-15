@@ -1,0 +1,225 @@
+body {
+  background-color: #000;
+  color: #fff;
+  margin: 5px 0px 0px 5px;
+}
+
+/* Preferred colours */
+.today_col {
+  background-color: #609; color: #fff; /* today */
+  background-image: linear-gradient(#609, #000);
+}
+.sel_col {
+  background-color: #c00; /* selected day */
+  background-image: linear-gradient(#c00, #000);
+}
+.three_col {
+  background-color: #f60; /* days with entries */
+  background-image: linear-gradient(#f60, #000);
+}
+.four_col {
+  background-color: #c90; /* days without entries */
+  background-image: linear-gradient(#c90, #000);
+}
+
+ul#projectsmenu {
+  position:absolute;top:0;right:0;
+  margin-top:0;padding-left: 0;
+  li {
+    list-style: none;
+    padding-left: 0;
+    float:left;
+    a {
+      margin-right: .5em;color:#ccc;text-decoration: none;font-weight: bold;
+    }
+    span {margin-right:.5em;font-weight: bold;color:yellow;}
+  }
+
+}
+
+ul.diaryheadings {
+  float:left;
+  border: 0px solid #000;
+  margin: 0;
+  padding: 0 0 0 0; /* just don't add at the bottom */
+  list-style: none;
+  border-bottom: 0;
+  float: left;
+  width: 100%;
+  background-color: transparent;
+  a {
+      height: 100%;
+  display: block;
+  border: 0;
+  padding: 1% 0;
+
+  text-align: center;
+  font-family: arial;
+  font-weight: bold;
+  }
+  li {
+    float: left;
+    margin: 1% 0 0 1%;
+    padding: 0;
+    width: 10.5%;
+
+    border-top-left-radius: .4em;
+    border-top-right-radius: .4em;
+  }
+  li#Mon {
+    margin-left: -6%;
+  }
+}
+
+.datehead {
+  color: #fff;
+  font-weight: bold;
+  font-family: verdana;
+  font-size: 8pt;
+  cursor: pointer;
+  border-top-left-radius: .8em;
+  border-top-right-radius: .8em;
+  text-shadow: 2px 2px 1px grey;
+  border-top: 2px solid orange;
+}
+
+#li_prvwkbtn button, #li_nxtwkbtn button, #dtPck .lbtn, #dtPck .rbtn  {
+  cursor: pointer;
+  border: 1px solid grey;
+  font-size: 1em;
+  font-weight: bold;
+  background-image: linear-gradient(#f00, #f90);
+  color: #900;
+}
+
+#li_prvwkbtn button:hover, #li_nxtwkbtn button:hover {
+  background-color: #c00;
+  color: #fff;
+}
+
+#li_prvwkbtn button {
+  border-top-left-radius: .8em;
+  border-bottom-left-radius: .8em;
+}
+
+#li_nxtwkbtn button {
+  border-top-right-radius: .8em;
+  border-bottom-right-radius: .8em;
+}
+
+/* Data entry textarea */
+#txtInfo1 {
+  width: 90%;
+  margin: 0;
+  padding: .8em;
+  height: 20em;
+  /*  width: 92%; Simple really! 24-07-2009 */
+  font: 1.2em arial;
+  border: 0;
+  font-weight: bold;
+  color: #fff;
+  overflow: auto;
+  line-height: 1.4em;
+  border-radius: .8em;
+}
+
+/* Digital clock */
+#clock {
+  display: none;
+  font-family: arial, helvetica;
+  font-weight: bold;
+  font-size: 9pt;
+  border: 1px solid #000;
+  margin-right: 2px;
+}
+
+/* Container holding each hideable layer with button to hide/show layer */
+.cont {
+  float: left;
+  width: 99%;
+  border-top: 1px solid #050;
+  border-left: 1px solid #050;
+  border-top-left-radius: .3em;
+  margin-bottom: 5px;
+
+}
+
+#diarym {
+  padding: 0;
+  margin: 0;
+  width: 70%;
+
+}
+
+#upd_btn {
+  border-bottom-left-radius: .8em;
+  border-bottom-right-radius: .8em;
+  font-size: 1.3em;
+  width: 20em;
+  border: 0;
+  right: 0;
+}
+
+#upd_btn:hover {
+  background-color: #c00;
+  color: #fff;
+  font-weight: bold;
+}
+
+
+#ins_upd_dt {
+  background: #c00;
+  color: #fff;
+  font: 1em arial bold;
+  border-radius: .3em;
+  padding: .3em;
+}
+
+#ins_upd_dt span {
+  padding: .4em;
+}
+
+.ui-tooltip, .arrow:after {
+  background: #f90;
+  background-image: linear-gradient(rgb(255,0,0), #f90);
+  border: 1px solid rgba(100,100,100,.6);
+}
+.ui-tooltip {
+  text-align: center;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 20px;
+  font: bold 12px "Helvetica Neue", Sans-Serif;
+  text-transform: uppercase;
+  box-shadow: 0 0 7px black;
+}
+.ui-tooltip .date_s {
+  font: bold 12px "Arial Black", Tahoma;
+  background-color: #fff;
+  color: #fff;
+  border: 0px solid #900;
+  border-radius: .3em;
+  padding: 4px;
+  margin-bottom: 4px;
+  background-image: linear-gradient(#f90, rgb(255,0,0));
+  text-shadow: 1px 1px 1px rgb(100,100,100);
+}
+
+
+/* Calendar styles */
+#dtPck {
+  position: fixed;
+  right: 20;
+  top: 5;
+  width: 30%;
+  border: 0px solid #c00;
+  padding: .5em;
+  text-align: center;
+  /*background-color: #fff;*/
+  background-image: linear-gradient(#c00, #000);
+  border-radius: .8em;
+  box-shadow: 2px 2px 2px #000;
+  overflow: auto;
+  heigh: 80%;
+}
+

@@ -1,0 +1,2 @@
+<?php
+return ['appname'=>'Diary'];
