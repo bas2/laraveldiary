@@ -40,18 +40,26 @@
 
 @for($i=1;$i<=$vals['daysinmonth'];$i++)
   @if(!empty($vals['monthentries'][$i]))
-  @if($i==date('j'))
+  @if($vals['seldate']->format('Y-m-'.$i)==date('Y-m-d'))
   <td class="curDate">
   @else
+  @if(\Carbon\Carbon::parse($vals['seldate'])->format('Y-m-'.$i)==$vals['datesel'])
+  <td class="sel_col">
+  @else
   <td class="three_col">
+  @endif
   @endif
   <a id="CalDay" title2="{{ $vals['seldate']->format('Y-m-'.$i) }}|{{ \Carbon\Carbon::parse($vals['seldate']->format('Y-m-'.$i))->format('D') }}|"
    tooltiptxt="{{ $vals['monthentries'][$i] }}">{{ $i }}</a></td>
   @else
-  @if($i==date('j'))
+  @if($vals['seldate']->format('Y-m-'.$i)==date('Y-m-d'))
   <td class="curDate">
   @else
+  @if(\Carbon\Carbon::parse($vals['seldate'])->format('Y-m-'.$i)==$vals['datesel'])
+  <td class="sel_col">
+  @else
   <td class="four_col">
+  @endif
   @endif
   <a id="CalDay" title2="{{ $vals['seldate']->format('Y-m-'.$i) }}|{{ \Carbon\Carbon::parse($vals['seldate']->format('Y-m-'.$i))->format('D') }}|">{{ $i }}</a></td>
   @endif
