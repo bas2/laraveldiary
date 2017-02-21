@@ -17,17 +17,14 @@
 <body>
 
 <script>
-var dtarr     = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // JavaScript days of week array:
+var dtarr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // JavaScript days of week array:
 
-var arritems  = ['events', 'bottmenu', 'diarym', 'dimages', 'rw6', 'selects', 'entrytags', 'related']; // JavaScript arrays holding DIV names
+//var arritems  = [bottmenu', 'diarym', 'dimages', 'rw6', 'selects', 'entrytags', 'related']; // JavaScript arrays holding DIV names
 
-var arritems2 = ['Events', 'Bottom Menu', 'Diary', 'Images', 'Bottom row', 'Dropdowns', 'Tags', 'Related']; // Friendly names // , 'Top Buttons'
+//var arritems2 = [Bottom Menu', 'Diary', 'Images', 'Bottom row', 'Dropdowns', 'Tags', 'Related']; // Friendly names // , 'Top Buttons'
 
 // DECLARE (global) CONSTANTS to pass to our JavaScript. These values are provided dynamically using PHP
-var Dt2dy  = '{{ date('Y-m-d') }}';  // Today's date in yyyy-mm-dd format.
 var Dt2dy2 = '{{ date("D") }}';   // Day today in three letter format eg Tue obviously representing today which is Tuesday.
-
-//var tools_script = '_inc/tools2.php'; // 10-07-2009 15:41
 
 </script>
 
@@ -90,79 +87,60 @@ $(document).ready(function(){
   });
   
   //showHideItem2(); // Hide Show elements as per cookie values to restore previous state
-  loadtime();      // JavaScript timer
+  //loadtime();      // JavaScript timer
 
- 
-  // Initial load via ajax:
-  $.ajax({
-    type:'get',
-    url:'ajax/getday/' + Dt2dy,
-    dataType: 'json',
-    success: function (data){
-      //alert(data);
-      AjaxTest(data, 'initial');
-    } // End ajax.
-  });
-
-  // When a date header is clicked
-  function goToday(sel2, sel, iscurwk) {
+  function getData(date) {
     $.ajax({
       type:'get',
-      url:'ajax/getday/' + sel2,
+      url:'ajax/getday/' + date,
       dataType: 'json',
-      success: function (data){
-        //alert(data);
-        AjaxTest(data, '', sel2, sel, iscurwk);
+      success: function (json){
+        AjaxTest(json, 'initial');
       } // End ajax.
     });
-  } // End goToday function.
+  }
+ 
+  // Initial load via ajax:
+  getData('');
+
+  // When a date header is clicked
+  function goToday(sel2) {getData(sel2);}
 
 
 
-  function AjaxTest(data, mode, sel2, sel, iscurwk) {
+  function AjaxTest(json, mode) {
     var splitdata=[];
-        $.each(data, function(index, element) {
-          splitdata[index]=element;
-        });
-    //var splitdata = data.split('-||-');
-   
-    if (mode=='initial') {
-      sel=Dt2dy2; sel2=Dt2dy; iscurwk=1;
-    } else {
+    $.each(json, function(index, element) {
+      splitdata[index]=element;
+    });
 
-    } // End if.
-
+    // 09/05/13 - Are we in the current week?
+    var iscurweek      = splitdata[28];//alert(iscurweek);
+    var iscurweeksplit = iscurweek.split('-');
 
     for (i=0; i < 7; i++) {
       var th_dy = dtarr[i]; // Three-letter day of week Mon-Fri
-      if (th_dy == sel) {
+      if (th_dy == splitdata[17].substring(0,3)) {
         $('#'+th_dy).attr('class','').addClass('sel_col') ;   // Selected day
-      } else if ( splitdata[i+6].length ==0 && th_dy != Dt2dy2 ) {
-        //alert(splitdata[i+6]);
-        //alert('');
+      } else if ( splitdata[i+6].length==0 && th_dy != splitdata[17].substring(0,3) ) {
         $('#'+th_dy).attr('class','').addClass('four_col');   // No entries since date did not come back
       } else {
-        //alert('');
         $('#'+th_dy).attr('class','').addClass('three_col');   // Contain entries
       } // End if.
-      //alert(splitdata[i+18]);
-      $('#'+th_dy).html(splitdata[i+18]) ; // Rewrite Day headings (18-24)
+      $('#'+th_dy).html(splitdata[i+20]) ; // Rewrite Day headings (18-24)
     } // End for.
 
-    if (sel2 == Dt2dy || mode=='initial') // Today's entry is selected
+    if (splitdata[15] == splitdata[16]) // Today's entry is selected  || mode=='initial'
     {
-      //alert(sel);
       $('#txtInfo1').attr('class','').addClass('today_col');
-      $('#'+sel).attr('class','').addClass('today_col');
+      $('#'+splitdata[17].substring(0,3)).attr('class','').addClass('today_col');
     }
     else {
       $('#txtInfo1').addClass('sel_col'); // Add selected colour to text entry area.
     } // End if.
     
     // Make sure the tab for today stays noticeable only when current week is displayed
-    if (iscurwk == 1) {
-      $('#'+Dt2dy2).attr('class','').addClass('today_col');
-    } // End if.
+    if (iscurweeksplit[1]==1) {$('#'+Dt2dy2).attr('class','').addClass('today_col');} // End if.
 
 
     var DateEntryText  = splitdata[0]; // Actual text for diary entry from database
@@ -175,33 +153,32 @@ $(document).ready(function(){
     // 6 - 12: Entry text for each day of selected week
     // Highlight days with no entries or no content and is not currently selected. Array items 6-12
 
-    var onthisdaytext  = splitdata[13]; // Info for on this day dropdown menu
-    var impdatestext   = splitdata[14]; // Important entries dropdown
-    var lastdofwk      = splitdata[15]; // Not used for anything anymore
+    //var onthisdaytext  = splitdata[13]; // Info for on this day dropdown menu
+    //var impdatestext   = splitdata[14]; // Important entries dropdown
+    // 15 and 16
+    var lastdofwk      = splitdata[17]; // Not used for anything anymore
 
-    var prvwkd         = splitdata[16]; // Date on selected day in previous week
-    var nxtwkd         = splitdata[17]; // Date on selected day next week
+    var prvwkd         = splitdata[18]; // Date on selected day in previous week
+    var nxtwkd         = splitdata[19]; // Date on selected day next week
 
     // 18-24: Text to show in DHTML popups for each day of the selected week
 
-    var futuredatestxt = splitdata[25];
+    //var futuredatestxt = splitdata[27];
     
-    // 09/05/13 - Are we in the current week?
-    var iscurweek      = splitdata[26];//alert(iscurweek);
-    var iscurweeksplit = iscurweek.split('-');
+
 
     // Populate textarea
     $('#txtInfo1').val(DateEntryText);
       
     var st_str = 'Created: ';
-    if (InsertDate == '00/00/0000 00:00:00') {st_str += 'Not Known';}
+    if (InsertDate == '01/01/1990 00:00:00') {st_str += 'Not Known';}
     else if (InsertDate == '-- ::')          {st_str += 'N/A';}
     else                                     {st_str += InsertDate;}
     st_str += ' | ';
       
     numEdits = (numEdits==1) ? ' [1 Change]' : ' [' + numEdits + ' Changes]' ; // Added: 21-07-2009
     st_str += 'Changed: ';
-    if (changedDate == '00/00/0000 00:00:00') {st_str += 'Not Known';}
+    if (changedDate == '01/01/1990 00:00:00') {st_str += 'Not Known';}
     else if (changedDate == '-- ::')          {st_str += 'N/A';}
     else                                      {st_str += changedDate + numEdits;}
     $("#ins_upd_dt").html(st_str) ;
@@ -217,9 +194,9 @@ $(document).ready(function(){
     else                        {$("#row_imp").removeAttr('checked');}
    
     // Display select menus
-    $("#onthisday").html(onthisdaytext) ;  // 13
-    $("#impdates").html(impdatestext) ;   // 14
-    $("#futuredates").html(futuredatestxt) ; // 
+    //$("#onthisday").html(onthisdaytext) ;  // 13
+    //$("#impdates").html(impdatestext) ;   // 14
+    //$("#futuredates").html(futuredatestxt) ; // 
    
     // Change Prev week button text and actions
     $("#li_prvwkbtn")
@@ -233,16 +210,16 @@ $(document).ready(function(){
       
     if (mode!='initial' && iscurweeksplit[2]==1) {$('#li_nxtwkbtn button').addClass('today_col');}
 
-    var uk_date_split = sel2.split("-");
+    var uk_date_split = splitdata[16].split("-");
     document.title = 'An AJAX Diary: ' + uk_date_split[2] + '-' + uk_date_split[1]
                                        + '-' + uk_date_split[0] + '(' + TotalEntries + ')';
     focus_txtarea();
-    $('#LoadText').html('');
+    //$('#LoadText').html('');
       
     // We set this so we can keep track of the selected date
-    $('#upd_btn').attr('title3', sel2);
-    $('#upload_d').attr('value', sel2);      // 10/05/13 - So we can send date to upload script
-    $('#upd_btn').attr('title4', lastdofwk); // Attach title4 attribute to Update button so we can see selected date.
+    $('#upd_btn').attr('title2',splitdata[16]);
+    $('#upload_d');      // 10/05/13 - So we can send date to upload script
+    //$('#upd_btn').attr('title4', lastdofwk); // Attach title4 attribute to Update button so we can see selected date.
 
     if (mode=='initial') {
       //loadGal(Dt2dy);
@@ -250,7 +227,7 @@ $(document).ready(function(){
 
       // Calendar
       $('#dtPck').animate({right: 10, top: 20}, 'slow');
-      loadCal(0, Dt2dy);
+      loadCal(0, splitdata[16]);
     } // End if.
   }
 
@@ -264,18 +241,17 @@ $(document).ready(function(){
  
   // Update entry
   $('#upd_btn').click(function(){
-    var sel2 = $('#upd_btn').attr('title3');              // e.g. 2013-05-08
-    var sel  = $('#upd_btn').attr('title4').substr(0, 3); // e.g. Wed
+    var datetoupdate = $('#upd_btn').attr('title2');              // e.g. 2013-05-08
+    //var sel  = $('#upd_btn').attr('title4').substr(0, 3); // e.g. Wed
     $.ajax({
       type:'post',
-      url:'ajax/update/' + sel2,
+      url:'ajax/update/' + datetoupdate,
       data:'&info=' + encodeURIComponent($('#txtInfo1').val()) + '&_token={{ csrf_token() }}',
       success: function (d){
-        //alert(d);
-        goToday(sel2, sel);
+        goToday(datetoupdate);
         showhidechangedstatus('hidden'); // This function is defined below.
         focus_txtarea();
-        //loadCal(0, sel2); // Refresh calendar
+        loadCal(0, datetoupdate); // Refresh calendar
       } // End ajax success.
     });
   });
@@ -299,40 +275,36 @@ $(document).ready(function(){
 
   // Click on a date heading
   $('.datehead').live('click', function(){
-    goToday($(this).attr('title3'), $(this).attr('title4'), $(this).attr('iscurwk') );
+    goToday($(this).attr('title3') );
     loadCal(0, $(this).attr('title3'));
     //loadGal($(this).attr('title3'));
     //loadRel($(this).attr('title3')); // 
     //loadTags($(this).attr('title3')); // 26/10/13
-    //alert( $(this).attr('iscurwk') );
   });
 
   $('#goToday').live('click', function(){
     var split2 = $(this).attr('title2').split('|');
-    goToday(split2[0], split2[1]);
+    goToday(split2[0]);
     loadCal(0, split2[0]);
   });
  
   $('#CalDay').live('click', function(){
     var split2 = $(this).attr('title2').split('|');
-    //alert(split2[1]);
-    goToday(split2[0], split2[1], split2[2]);
+    goToday(split2[0]);
     loadCal(0, split2[0]);
     //loadRel(split2[0]); // 
     //loadGal(split2[0]);
   });
  
   $('#btnPrevwk, #btnNextwk').live('click', function(){
-    goToday($(this).attr('title3'), $(this).attr('title4').substr(0, 3), $(this).attr('iscurwk').substr(0, 3));
+    goToday($(this).attr('title3'));
     loadCal(0, $(this).attr('title3'));
     //loadGal($(this).attr('title3'));
   });
  
 
  
-  $('#txtInfo1').change(function(){
-    showhidechangedstatus('visible');
-  });
+  $('#txtInfo1').change(function(){showhidechangedstatus('visible');});
   
   $('#txtInfo1').keypress(function(event){
     if (event.which > 0) {showhidechangedstatus('visible');}
@@ -359,8 +331,7 @@ $(document).ready(function(){
     loadCal(1);
   });
   
-  function loadCal(toggle, dt) {
-    var dateSelected       = dt;
+  function loadCal(toggle, dateSelected) {
     var dateSelected_split = dateSelected.split("-");
     $.ajax({
       type: 'get',
@@ -410,9 +381,7 @@ $(document).ready(function(){
         url: 'ajax/delimage',
         data: 'imgid=' + $(this).attr('title'),
         
-        success: function (data){
-          loadGal($('#upd_btn').attr('title3'));
-        }
+        success: function (data){loadGal($('#upd_btn').attr('title3'));}
       }); // End ajax call.
     } // End if delete image.
   });
@@ -441,9 +410,7 @@ $(document).ready(function(){
       url: 'ajax/related',
       data: 'sel=' + seldate + '&opt=' + opt + '&upd=1',
       
-      success: function (data){
-        if (data!='') {$('#related').html(data);}
-      }
+      success: function (data){if (data!='') {$('#related').html(data);}}
     }); // End ajax call.
   });
 
@@ -460,9 +427,7 @@ $(document).ready(function(){
       url: 'ajax/addtag',
       data: 'sel=' + seldate + '&load=1',
       
-      success: function (data){
-        $('#entrytags').html(data);
-      }
+      success: function (data){$('#entrytags').html(data);}
     }); // End ajax call.
   } // End loadTags() function.
 
@@ -480,9 +445,7 @@ $(document).ready(function(){
         url: 'ajax/addtag',
         data: 'sel=' + seldate + '&tagid=' + tagid,
         
-        success: function (data){
-
-        }
+        success: function (data){}
       }); // End ajax call.
     }
   });
@@ -565,9 +528,6 @@ $(document).ready(function(){
     }); // End ajax call.
   });
 
-  //$('.upentry').live('click', function() {
-  //});
-
 
 
   function reloadQADiv(m) {
@@ -589,123 +549,6 @@ function focus_txtarea() {
   // Problem with giving textarea focus if it is in a layer that is not visible
   if ($('#txtInfo1').length>0) {$("#txtInfo1").focus();}
 } // End function.
-
-
-  // Initial load.
-  function AjaxTest222222222(data) {
-    var splitdata = data.split('-||-'); // Same
-     
-    for (i=0; i < 7; i++) { // Same
-      var th_dy = dtarr[i]; // Three-letter day of week Mon-Fri // Same
-      if (th_dy == Dt2dy2) { // Dt2dy2 instead of sel
-        $('#'+th_dy).addClass('sel_col') ;   // Selected day // Does not have .attr('class','')
-
-      } else if (splitdata[i+6].length != 10 && th_dy != Dt2dy2) { // 
-        $('#'+th_dy).addClass('four_col');   // No entries
-
-      } else {
-        $('#'+th_dy).addClass('three_col');   // Contain entries
-      } // End if.
-      $('#'+th_dy).html(splitdata[i+18]) ; // Rewrite Day headings (18-24) - Same!
-    } // End for.
-
-    $('#txtInfo1').addClass('today_col');
-    $('#'+Dt2dy2).addClass('today_col');
-  
-    // Make sure the tab for today stays noticeable only when current week is displayed
-    $('#'+Dt2dy2).attr('class', '').addClass('today_col');
-  
-    var DateEntryText  = splitdata[0]; // Actual text for selected diary entry from database
-    var IsImportant    = splitdata[1]; // Marked as important
-    var InsertDate     = splitdata[2]; // Date inserted
-    var changedDate    = splitdata[3]; // Date changed
-    var numEdits       = splitdata[4]; // Number of edits made to entry. Added on 21-07-2009.
-    var TotalEntries   = splitdata[5]; // Total diary entries (to show in document title bar)
-
-    // 6 - 12: Entry text for each day of selected week
-    // Highlight days with no entries or no content and is not currently selected. Array items 6-12
-
-    var onthisdaytext  = splitdata[13]; // Info for on this day dropdown menu
-    var impdatestext   = splitdata[14]; // Important entries dropdown
-    var lastdofwk      = splitdata[15]; // Not used for anything anymore
-    var prvwkd         = splitdata[16]; // Date on selected day in previous week
-    //alert (prvwkd);
-    var nxtwkd         = splitdata[17]; // Date on selected day next week
-
-    // 18-24: Text to show in DHTML popups for each day of the selected week
-
-    var futuredatestxt = splitdata[25];
-    
-    // 09/05/13 - Are we in the current week?
-    var iscurweek      = splitdata[26];
-    var iscurweeksplit = iscurweek.split('-');
-
-    // Populate textarea
-    $('#txtInfo1').val(DateEntryText);
-    
-    var st_str = '<span>Created-: ';
-    if (InsertDate == '00/00/0000 00:00:00') {st_str += 'Not Known';}
-    else if (InsertDate == '-- ::')          {st_str += 'N/A';}
-    else                                     {st_str += InsertDate;}
-    {st_str += '</span>';}
-    
-    numEdits = (numEdits==1) ? ' [1 Change]' : ' [' + numEdits + ' Changes]' ; // Added: 21-07-2009
-    st_str += '<span>Changed: ';
-    if (changedDate == '00/00/0000 00:00:00') {st_str += 'Not Known';}
-    else if (changedDate == '-- ::')          {st_str += 'N/A';}
-    else                                      {st_str += changedDate + numEdits;}
-    st_str += '</span>';
-    
-    $("#ins_upd_dt").html(st_str) ;
- 
-    // Check boxes if apply
-    if (InsertDate.length > 5)  {$("#row_exist").attr('checked',  'checked') ;}
-    if (InsertDate.length == 5) {$("#row_exist").attr('disabled', 'disabled');}
-
-    if (IsImportant == 1) {$("#row_imp").attr('checked', 'checked');}
-    else                  {$("#row_imp").removeAttr('checked');}
- 
-    // Display select menus
-    $("#onthisday").html(onthisdaytext) ;  // 13
-    $("#impdates").html(impdatestext) ;   // 14
-    $("#futuredates").html(futuredatestxt) ; // 
- 
-    // Change Prev week button text and actions
-    $("#li_prvwkbtn")
-    .html('<button id="btnPrevwk" title3="'+prvwkd+'" title4="'+lastdofwk+'" iscurwk="'+iscurweeksplit[0]+'" title="This day in Previous Week">&lt;</button>') ;
-
-    // Change Next week button text and action
-    $("#li_nxtwkbtn")
-    .html('<button id="btnNextwk" title3="'+nxtwkd+'" title4="'+lastdofwk+'" iscurwk="'+iscurweeksplit[2]+'" title="This day Next Week">&gt;</button>' ) ;
-    
-    
-    if (typeof(str)=="undefined") {str = Dt2dy;} // ??
-    var uk_date_split = str.split("-");
-    document.title = 'An AJAX Diary: ' + uk_date_split[2] + '-' + uk_date_split[1]
-                                       + '-' + uk_date_split[0] + '(' + TotalEntries + ')';
-    //focus_txtarea(); // Same
-    //$('#LoadText').html(''); // Same
-    
-    // We set this so we can keep track of the selected date
-    //$('#upd_btn').attr('title3', Dt2dy);
-    //$('#upload_d').attr('value', Dt2dy); // 10/05/13 - So we can send date to upload script
-    //$('#upd_btn').attr('title4', lastdofwk); // Same
-    
-    //focus_txtarea();
-    //loadGal(Dt2dy);
-    //loadRel(Dt2dy);
-
-    // Calendar
-    //$('#dtPck').animate({right: 10, top: 20}, 'slow');
-    //loadCal(0, Dt2dy);
-  }
-
-
-
-
-
-
-
 
 
 
