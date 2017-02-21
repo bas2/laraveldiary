@@ -33,40 +33,47 @@ var Dt2dy2 = '{{ date("D") }}';   // Day today in three letter format eg Tue obv
 
 <div id="dtPck"><!-- Calendar widget --></div>
 {{ App\ProjectsMenu::display() }}
-<div class="cont"><div id="diarym">
+<div class="cont">
+  <div id="diarym">
 
-<ul class="diaryheadings">
-  <li id="li_prvwkbtn"></li>
-@foreach (['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $weekday)
-<li id="{{ $weekday }}"><a>&nbsp;</a></li>
-@endforeach
-  <li id="li_nxtwkbtn"></li>
-</ul>
+    <ul class="diaryheadings">
+      <li id="li_prvwkbtn"></li>
+      @foreach (['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $weekday)
+      <li id="{{ $weekday }}"><a>&nbsp;</a></li>
+      @endforeach
+      <li id="li_nxtwkbtn"></li>
+    </ul>
 
-<div style="height:90%;float:left;width:100%;background:rgba(255,0,0,.3;">
-<textarea id="txtInfo1"></textarea> <div class="quickadd">+</div>
-<!-- End DIV dateinfo -->
+    <div style="height:90%;float:left;width:100%;background:rgba(255,0,0,.3;">
+      <textarea id="txtInfo1"></textarea> <div class="quickadd">+</div>
+      <!-- End DIV dateinfo -->
 
-<div id="diaryu">
-  <span id="LoadText"><!-- Loading Graphic --></span>
-  <span id="statusText2"><!--  --></span>
-  <span id="statusText">&nbsp;&nbsp;<!--  --></span>
-  <span id="clock">&nbsp;&nbsp;<!-- JavaScript clock --></span>
-  <!-- Update button --><input type="button" id="upd_btn" value="Update &gt;">
+      <div id="diaryu">
+        <span id="LoadText"><!-- Loading Graphic --></span>
+        <span id="statusText2"><!--  --></span>
+        <span id="statusText">&nbsp;&nbsp;<!--  --></span>
+        <span id="clock">&nbsp;&nbsp;<!-- JavaScript clock --></span>
+        <!-- Update button --><input type="button" id="upd_btn" value="Update &gt;">
+      </div>
+    </div>
+
+  </div>
 </div>
+
+<div class="cont">
+  <div id="rw6">
+
+    <div id="rw7">
+      <input id="row_exist" type="checkbox" checked>
+      <label for="row_exist" title="Delete this entry if it exists">Row Exists</label>
+      <input id="row_imp" name="row_imp" type="checkbox">
+      <label for="row_imp" title="Mark this entry as important">Important</label>
+    </div>
+
+    <div id="rw8"><span id="ins_upd_dt">&nbsp;<!-- Created/Edit dates --></span></div>
+
+  </div>
 </div>
-
-</div></div>
-
-<div id="rw7">
-<span id="chkrw"><input id="row_exist" type="checkbox" checked="checked">
-<label for="row_exist" title="Delete this entry if it exists">Row Exists</label></span>&nbsp;&nbsp;
-<input id="row_imp" name="row_imp" type="checkbox">
-<label for="row_imp" title="Mark this entry as important">Important</label></div>
-
- <div id="rw8"><span id="ins_upd_dt">&nbsp;<!-- Created/Edit dates --></span></div>
-
-
 
 
 <script>
@@ -90,7 +97,7 @@ $(document).ready(function(){
   $.ajax({
     type:'get',
     url:'ajax/getday/' + Dt2dy,
-    data:'' ,
+    dataType: 'json',
     success: function (data){
       //alert(data);
       AjaxTest(data, 'initial');
@@ -102,8 +109,7 @@ $(document).ready(function(){
     $.ajax({
       type:'get',
       url:'ajax/getday/' + sel2,
-      data:'',
-      
+      dataType: 'json',
       success: function (data){
         //alert(data);
         AjaxTest(data, '', sel2, sel, iscurwk);
@@ -114,7 +120,11 @@ $(document).ready(function(){
 
 
   function AjaxTest(data, mode, sel2, sel, iscurwk) {
-    var splitdata = data.split('-||-');
+    var splitdata=[];
+        $.each(data, function(index, element) {
+          splitdata[index]=element;
+        });
+    //var splitdata = data.split('-||-');
    
     if (mode=='initial') {
       sel=Dt2dy2; sel2=Dt2dy; iscurwk=1;
@@ -125,19 +135,23 @@ $(document).ready(function(){
 
     for (i=0; i < 7; i++) {
       var th_dy = dtarr[i]; // Three-letter day of week Mon-Fri
-
       if (th_dy == sel) {
         $('#'+th_dy).attr('class','').addClass('sel_col') ;   // Selected day
-      } else if ( splitdata[i+6].length != 10 && th_dy != Dt2dy2 ) {
+      } else if ( splitdata[i+6].length ==0 && th_dy != Dt2dy2 ) {
+        //alert(splitdata[i+6]);
+        //alert('');
         $('#'+th_dy).attr('class','').addClass('four_col');   // No entries since date did not come back
       } else {
+        //alert('');
         $('#'+th_dy).attr('class','').addClass('three_col');   // Contain entries
       } // End if.
+      //alert(splitdata[i+18]);
       $('#'+th_dy).html(splitdata[i+18]) ; // Rewrite Day headings (18-24)
     } // End for.
 
     if (sel2 == Dt2dy || mode=='initial') // Today's entry is selected
     {
+      //alert(sel);
       $('#txtInfo1').attr('class','').addClass('today_col');
       $('#'+sel).attr('class','').addClass('today_col');
     }
@@ -173,7 +187,7 @@ $(document).ready(function(){
     var futuredatestxt = splitdata[25];
     
     // 09/05/13 - Are we in the current week?
-    var iscurweek      = splitdata[26];
+    var iscurweek      = splitdata[26];//alert(iscurweek);
     var iscurweeksplit = iscurweek.split('-');
 
     // Populate textarea
@@ -286,7 +300,7 @@ $(document).ready(function(){
   // Click on a date heading
   $('.datehead').live('click', function(){
     goToday($(this).attr('title3'), $(this).attr('title4'), $(this).attr('iscurwk') );
-    //loadCal(0, $(this).attr('title3'));
+    loadCal(0, $(this).attr('title3'));
     //loadGal($(this).attr('title3'));
     //loadRel($(this).attr('title3')); // 
     //loadTags($(this).attr('title3')); // 26/10/13
@@ -304,13 +318,13 @@ $(document).ready(function(){
     //alert(split2[1]);
     goToday(split2[0], split2[1], split2[2]);
     loadCal(0, split2[0]);
-    loadRel(split2[0]); // 
-    loadGal(split2[0]);
+    //loadRel(split2[0]); // 
+    //loadGal(split2[0]);
   });
  
   $('#btnPrevwk, #btnNextwk').live('click', function(){
     goToday($(this).attr('title3'), $(this).attr('title4').substr(0, 3), $(this).attr('iscurwk').substr(0, 3));
-    //loadCal(0, $(this).attr('title3'));
+    loadCal(0, $(this).attr('title3'));
     //loadGal($(this).attr('title3'));
   });
  
@@ -350,11 +364,7 @@ $(document).ready(function(){
     var dateSelected_split = dateSelected.split("-");
     $.ajax({
       type: 'get',
-      url: 'ajax/calendar',
-      data: 'dt=' + dateSelected
-          + '&d=' + dateSelected_split[2]
-          + '&m=' + dateSelected_split[1]
-          + '&y=' + dateSelected_split[0],
+      url: 'ajax/calendar/' + dateSelected,
       
       success: function (data){
         //alert(data);
@@ -502,9 +512,8 @@ $(document).ready(function(){
       var id   = $(this).attr('class').substr(3);
       //alert(id);
       $.ajax({
-        type: 'POST',
-        url: 'ajax/quickentries',
-        data: 'act=up' + '&id=' + id,
+        type: 'GET',
+        url: 'ajax/quickentries/up/' + id,
         
         success: function (quickentries){
           //alert(quickentries);
@@ -523,12 +532,9 @@ $(document).ready(function(){
   $('.quickadddiv .newentry').live('click', function() {
     $.ajax({
       type: 'POST',
-      url: 'ajax/quickentries',
-      data: 'act=add' ,
-      
-      success: function (quickentries){
-        reloadQADiv('u');
-      }
+      url: 'ajax/quickentries/add',
+      //data: 'act=add' ,
+      success: function (quickentries){reloadQADiv('u');}
     }); // End ajax call.
   });
 
@@ -544,12 +550,9 @@ $(document).ready(function(){
     var text = $(this).prev().val();
     $.ajax({
       type: 'POST',
-      url: 'ajax/quickentries',
-      data: 'act=upd' + '&text=' + text + '&id=' + id,
-      
-      success: function (quickentries){
-        reloadQADiv('u');
-      }
+      url: 'ajax/quickentries/upd/' + id,
+      data: 'text=' + text,
+      success: function (quickentries){reloadQADiv('u');}
     }); // End ajax call.
   });
 
@@ -557,12 +560,8 @@ $(document).ready(function(){
     var id   = $(this).parent().attr('class').substr(3);
     $.ajax({
       type: 'POST',
-      url: 'ajax/quickentries',
-      data: 'act=del' + '&id=' + id,
-      
-      success: function (quickentries){
-        reloadQADiv('d');
-      }
+      url: 'ajax/quickentries/del/' + id,
+      success: function (quickentries){reloadQADiv('d');}
     }); // End ajax call.
   });
 
@@ -575,10 +574,8 @@ $(document).ready(function(){
     if ($('.quickadddiv').length>0 && m == 'initial') {$('.quickadddiv').remove();$('.quickadd').text('+');}
     else {
       $.ajax({
-        type: 'POST',
-        url: 'ajax/quickentries',
-        data: 'mode=' + m ,
-        
+        type: 'GET',
+        url: 'ajax/quickentries/' + m,
         success: function (quickentries){
           if ($('.quickadddiv').length>0) {$('.quickadddiv').remove();}
           $('.quickadd').text('-');
@@ -588,7 +585,10 @@ $(document).ready(function(){
     } // End if.
   } // End function.
 
-
+function focus_txtarea() {
+  // Problem with giving textarea focus if it is in a layer that is not visible
+  if ($('#txtInfo1').length>0) {$("#txtInfo1").focus();}
+} // End function.
 
 
   // Initial load.
