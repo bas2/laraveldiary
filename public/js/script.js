@@ -72,9 +72,9 @@ function init() {
 // AJAX Calendar functions
 
 $('#goLastMonth').live('click', function(){
-  var splittxt = $(this).attr('title2').split('|');
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
   var month = parseInt(splittxt[1], 10);
-  var year  = parseInt(splittxt[2], 10);
+  var year  = parseInt(splittxt[0], 10);
   if(month== 1) {
     --year;
     month= 13;
@@ -82,130 +82,86 @@ $('#goLastMonth').live('click', function(){
   month--;
   $.ajax({
     type:'get',
-    url:'_inc/func_showcal.php',
-    data:'dt=' + splittxt[0] + '&m=' + month + '&y=' + year,
-  
-    success: function (data){
-      //alert('dt=' + splittxt[0] + '&m=' + month + '&y=' + parseInt(splittxt[2]));
-      $('#dtPck').html(data).fadeIn();
-    }
+    url:'ajax/calendar/' + year + '-' + month + '-' + splittxt[2],
+    success: function (data){$('#dtPck').html(data).fadeIn();}
   });
 });
 
 $('#goToMonth').live('change', function(){
-  var splittxt = $(this).attr('title2').split('|');
-  //alert(splittxt);
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
   var month = parseInt($(this).val(), 10) + 1;
-  //alert(month);
   $.ajax({
     type:'get',
-    url:'_inc/func_showcal.php',
-    data:'dt=' + splittxt[0] + '&m=' + month + '&y=' + parseInt(splittxt[2]),
-    
-    success: function (data){
-      //alert('dt=' + splittxt[0] + '&m=' + month + '&y=' + splittxt[2] );
-      $('#dtPck').html(data).fadeIn();
-    }
+    url:'ajax/calendar/' + splittxt[0],
+    data:'m=' + month + '&y=' + parseInt(splittxt[2]),
+    success: function (data){$('#dtPck').html(data).fadeIn();}
   });
 });
 
 $('#goNextMonth').live('click', function(){
-  var splittxt = $(this).attr('title2').split('|');
-  //alert(splittxt);
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
   var month = parseInt(splittxt[1], 10);
-  var year  = parseInt(splittxt[2], 10);
-  if(month== 12) {
+  var year  = parseInt(splittxt[0], 10);
+  if(month==12) {
     ++year;
-    month= 0;
+    month=0;
   }
   month++;
-  //alert(splittxt[2]);
   $.ajax({
     type:'get',
-    url:'_inc/func_showcal.php',
-    data:'dt=' + splittxt[0] + '&m=' + month + '&y=' + year,
-    
-    success: function (data){
-      $('#dtPck').html(data).fadeIn();
-    }
+    url:'ajax/calendar/' + year + '-' + month + '-' + splittxt[2],
+    success: function (data){$('#dtPck').html(data).fadeIn();}
   });
 });
 
 $('#goThisMonth').live('click', function(){
-  var splittxt = $(this).attr('title2').split('|');
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
   var month = parseInt(splittxt[1], 10);
-  var year  = parseInt(splittxt[2], 10);
+  var year  = parseInt(splittxt[0], 10);
   $.ajax({
     type:'get',
-    url:'_inc/func_showcal.php',
-    data:'dt=' + splittxt[0] + '&m=' + month + '&y=' + year,
-    
-    success: function (data){
-      $('#dtPck').html(data).fadeIn();
-    }
+    url:'ajax/calendar/' + year + '-' + month + '-' + splittxt[2],
+    success: function (data){$('#dtPck').html(data).fadeIn();}
   });
 });
 
 $('#goLastYear').live('click', function(){
-  var splittxt = $(this).attr('title2').split('|');
-  //alert(splittxt);
-  var year = parseInt(splittxt[2], 10);
-  //year--;
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var year = parseInt(splittxt[0], 10);
   $.ajax({
     type:'get',
-    url:'_inc/func_showcal.php',
-    data:'dt=' + splittxt[0] + '&m=' + splittxt[1] + '&y=' + --year,
-    
-    success: function (data){
-      $('#dtPck').html(data).fadeIn();
-    }
+    url:'ajax/calendar/' + --year + '-' + splittxt[1] + '-' + splittxt[2],
+    success: function (data){$('#dtPck').html(data).fadeIn();}
   });
 });
 
 $('#goToYear').live('change', function(){
-  var splittxt = $(this).attr('title2').split('|');
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
   var year = parseInt($(this).val(), 10) ;
-  //alert(month);
   $.ajax({
     type:'get',
-    url:'_inc/func_showcal.php',
-    data:'dt=' + splittxt[0] + '&m=' + parseInt(splittxt[1], 10) + '&y=' + year,
-    
-    success: function (data){
-      $('#dtPck').html(data).fadeIn();
-    }
+    url:'ajax/calendar/' + year + '-' + parseInt(splittxt[1], 10) + splittxt[2],
+    success: function (data){$('#dtPck').html(data).fadeIn();}
   });
 });
 
 $('#goNextYear').live('click', function(){
-  var splittxt = $(this).attr('title2').split('|');
-  //alert(splittxt);
-  var year = parseInt(splittxt[2], 10);
-
-  //alert(splittxt[2]);
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var year = parseInt(splittxt[0], 10);
   $.ajax({
     type:'get',
-    url:'_inc/func_showcal.php',
-    data:'dt=' + splittxt[0] + '&m=' + parseInt(splittxt[1], 10) + '&y=' + ++year,
-    
-    success: function (data){
-      $('#dtPck').html(data).fadeIn();
-    }
+    url:'ajax/calendar/' + ++year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2],
+    success: function (data){$('#dtPck').html(data).fadeIn();}
   });
 });
 
 $('#goThisYear').live('click', function(){
-  var splittxt = $(this).attr('title2').split('|');
-  //alert(splittxt);
-  var year = parseInt(splittxt[2], 10);
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var year = parseInt(splittxt[0], 10);
   $.ajax({
     type:'get',
-    url:'_inc/func_showcal.php',
-    data:'dt=' + splittxt[0] + '&m=' + parseInt(splittxt[1], 10) + '&y=' + year,
-    
-    success: function (data){
-      $('#dtPck').html(data).fadeIn();
-    }
+    url:'ajax/calendar/' + year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2],
+    success: function (data){$('#dtPck').html(data).fadeIn();}
   });
 });
 
@@ -262,7 +218,7 @@ function calNav(act, dt, month, year) {
 
   $.ajax({
     type:'get',
-    url:'_inc/func_showcal.php',
+    url:'ajax/calendar/',
     //context:'#editrow',
     data:'dt=' + urlstr + '&m=' + month + '&y=' + year,
     
@@ -290,11 +246,7 @@ $('.btnHide a').live('click', function(e) {
 });
 
 
-function focus_txtarea() {
-  // Problem with giving textarea focus if it is in a layer that is not visible
-  //alert(document.getElementById('diarym').style.display);
-  //if (document.getElementById('diarym').style.display == "block") {document.getElementById("txtInfo1").focus();}
-} // End function.
+
 
 //var shwDiv = true;
 //function hideShowDIV() {
