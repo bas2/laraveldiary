@@ -15,7 +15,7 @@ class Entries extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('d')->default('1990-01-01');
+            $table->date('d'); # Unique
             $table->text('info');
             $table->boolean('important')->default(0);
             $table->integer('numedit')->default(0);
