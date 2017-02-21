@@ -15,8 +15,12 @@ Route::get('home', function () {
   return view('welcome');
 });
 
-Route::get('ajax/getday/{date}', function($date){
+Route::get('ajax/getday/{date?}', function($date=null){
+  if(is_null($date)) {$date=\Carbon\Carbon::now()->format('Y-m-d');}
+  else {$date=\Carbon\Carbon::parse($date)->format('Y-m-d');}
+
   $date2 = \Carbon\Carbon::parse($date);
+  
   $date3 = $date2->copy()->format('l');
   $date4 = $date2->copy();
   $mon = $date2->startOfWeek();
@@ -53,7 +57,7 @@ Route::get('ajax/getday/{date}', function($date){
     $info=(empty($entries[0]->info)) ? '' : $entries[0]->info ;
     $json[]=$info;
   }
-  foreach(['otd13','imp14',$date3,$prvwk,$nxtwk] as $element) {$json[]=$element;}
+  foreach(['otd13','imp14',\Carbon\Carbon::now()->format('Y-m-d'),$date,$date3,$prvwk,$nxtwk] as $element) {$json[]=$element;}
 
   foreach ([$mon,$tue,$wed,$thu,$fri,$sat,$sun] as $value) {
     $entries=App\Entry::where('d',$value)->get(['info']);
@@ -89,7 +93,8 @@ Route::get('ajax/calendar/{date}', function($date){
   
 
   return view('ajax.calendar')->with('vals',
-    ['daysinmonth'=>$daysinmonth,'monthentries'=>$me2,'blankcells'=>$blankcells,'seldate'=>$seldatest]
+    ['daysinmonth'=>$daysinmonth,'monthentries'=>$me2,'blankcells'=>$blankcells,'seldate'=>$seldatest,
+    'datesel'=>$date]
   );
 });
 
