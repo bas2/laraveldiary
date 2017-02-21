@@ -4,6 +4,10 @@ body {
   margin: 5px 0px 0px 5px;
 }
 
+select {
+ font-size: 11px;
+}
+
 /* Preferred colours */
 .today_col {
   background-color: #609; color: #fff; /* today */
@@ -144,12 +148,35 @@ ul.diaryheadings {
 
 }
 
+/* Actual DIVs hold content that we want to hide */
+#events, #topbuttons, #bottmenu,
+#dimages, #diarym, #rw6, #selects, #ticki, #entrytags, #related {
+ width: 800px;
+ float: left;
+}
+
+
 #diarym {
   padding: 0;
   margin: 0;
   width: 70%;
-
+  input {
+    border: 1px solid #ccc;
+    padding: 1px;
+    font-family: verdana;
+  }
 }
+
+#diaryu {
+  border: 0px solid #000;
+  width: 100%;
+  text-align: right;
+    float: left;
+  width: 90%;
+}
+
+
+
 
 #upd_btn {
   border-bottom-left-radius: .8em;
@@ -209,17 +236,158 @@ ul.diaryheadings {
 /* Calendar styles */
 #dtPck {
   position: fixed;
-  right: 20;
-  top: 5;
+  right: 20;top: 5;
   width: 30%;
   border: 0px solid #c00;
   padding: .5em;
   text-align: center;
-  /*background-color: #fff;*/
   background-image: linear-gradient(#c00, #000);
   border-radius: .8em;
   box-shadow: 2px 2px 2px #000;
   overflow: auto;
-  heigh: 80%;
+  height: 80%;
+  tbody#d {
+    color: #f00;
+    font-weight: bold;
+    font-size: .8em;
+    border: 0px solid black;
+    padding: .1em;
+    margin-bottom: 1em;
+    border-radius: 2em;
+    td {
+      color: #fff;
+      background: grey;
+      margin-right: .3em;
+    }
+  }
+  #tblDate {
+    border-collapse: collapse;
+    border: 0px solid #000;
+    text-align: center;
+    td {
+      border: 0px solid #000;
+      border-top: 0px solid red;
+      padding: 0px;
+      text-align: center;
+      border-radius: .4em;
+      font-family: 2em tahoma;
+      margin-right: .3em;
+      a {
+        display: block;
+        text-decoration: none;
+        padding: 2px;
+        font-weight: bold;
+        font-family: arial;
+        border-radius: .4em;
+        border-right: 1px solid #000;
+        border-bottom: 1px solid #000;
+        text-shadow: 2px 2px 1px #000;
+        width: 2em;
+        cursor: pointer;
+      }
+    }
+  }
+  .closebtn {
+    background: #c00;
+    border-radius: .8em;
+    border: 0;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    cursor: hand;
+  }
+  .lbtn {
+    border-top-left-radius: .8em;
+    border-bottom-left-radius: .8em;
+  }
+  .rbtn {
+    border-top-right-radius: .8em;
+    border-bottom-right-radius: .8em;
+  }
+  .btnHide {
+    display:none;position:absolute;width:2em;color:#c00;
+  }
+}
+
+#dtPck #tblDate td.curDate, #dtPck #tblDate td.curDate a, #dtPck #tblDate td.curDate:hover, td.curDate a:hover {
+  background-color: #609; color: #fff; /* today_col */
+}
+
+#dtPck #tblDate td.three_col, #dtPck #tblDate td.three_col a {
+  background-color: #f60; color: #fff; /* three_col */
+}
+
+#dtPck #tblDate td.four_col, #dtPck #tblDate td.four_col a {
+  background-color: #c90; color: #fff; /* four_col */
+}
+
+#dtPck #tblDate td.sel_col, #dtPck #tblDate td.sel_col a, #dtPck #tblDate td.sel_col:hover, td.sel_col a:hover, #dtPck #tblDate td:hover, #dtPck #tblDate td a:hover {
+  background-color: #c00; color: #fff;
+}
+
+#dtPck #tblDate td.nohover, #dtPck #tblDate td.medHead {
+  /*background-color: #fff; color: #000;*/
+  cursor: hand;
+}
+
+
+#rw7 { /* Row exists and important. */
+  float: right;
+}
+
+
+/* Quick Add - 15/11/2016 */
+
+.quickadd {
+  position:absolute; top: 0; left: 800px;
+  cursor:pointer;
+  font-weight: bold;
+}
+
+.quickadddiv {
+  border-radius: .4em;
+  position:absolute; top: 20px; left: 800px;
+  background: linear-gradient(black, blue);
+  color:#fff;border:1px solid #fff;
+  padding: 1em;
+}
+
+.quickadddiv ul {
+  margin: 1em 1em 1em 0; padding-left:1.3em;
+}
+
+.quickadddiv li {
+  cursor: pointer;
+}
+
+.quickadddiv li:hover {
+  background: #f00;color: #fff;
+}
+
+.quickadddiv li textarea {
+  width: 25em;
+}
+
+.quickadddiv .newentry {
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: .3em;
+  background: red;
+  text-align: center;
+  width: 5em;
+}
+
+.quickadddiv .mode span {
+  cursor: pointer;
+}
+
+
+.quickadddiv .mode span.highlight {
+  color: yellow;
+  cursor: default;
+}
+
+.quickadddiv .mode {
+  font-weight: bold;
 }
 
