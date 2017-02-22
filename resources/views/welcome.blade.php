@@ -4,15 +4,15 @@
   <meta charset="utf-8">
   <title>Diary - AJAX!</title>
 
-  <!--<link rel="stylesheet" href="js/jquery/colorbox/colorbox.css">-->
+  {{-- <link rel="stylesheet" href="js/jquery/colorbox/colorbox.css"> --}}
   <link rel="stylesheet" href="js/jquery/css/blitzer/jquery-ui-1.10.3.custom.min.css">
   <link rel="stylesheet" href="css/styles.css">
 
   <script src="js/jquery-1.8.3.min.js"></script>
-  <!--<script src="js/jquery.colorbox-min.js"></script>-->
+  {{-- <script src="js/jquery.colorbox-min.js"></script> --}}
   <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-  <script src="js/cookie.js"></script>
-  <script src="js/script.js"></script>
+  {{-- <script src="js/cookie.js"></script>
+  <script src="js/script.js"></script> --}}
 </head>
 <body>
 
@@ -87,16 +87,13 @@ $(document).ready(function(){
   });
   
   //showHideItem2(); // Hide Show elements as per cookie values to restore previous state
-  //loadtime();      // JavaScript timer
 
   function getData(date) {
     $.ajax({
       type:'get',
       url:'ajax/getday/' + date,
       dataType: 'json',
-      success: function (json){
-        AjaxTest(json, 'initial');
-      } // End ajax.
+      success: function (json){AjaxTest(json, 'initial');}
     });
   }
  
@@ -620,6 +617,23 @@ function focus_txtarea() {
 } // End function.
 
 
+var EntryChangeCounter;
+var EntryChangeCount = 0;
+
+// Hiding/Showing Changedstatus button - invoked when there is a change in the data entered.
+function showhidechangedstatus(wh) {
+  if (wh == "visible") { // Change was detected!
+    clearInterval(EntryChangeCounter);
+    EntryChangeCounter = setInterval(function(){
+      $('#upd_btn').val('Data Changed Update? ' + ++EntryChangeCount);
+    }, 1000);
+    $('#upd_btn').css({'background':'#c00','color':'#fff'});
+  } else {
+    clearInterval(EntryChangeCounter);
+    EntryChangeCount=0;
+    $('#upd_btn').css({'background':'buttonface','color':'#000'}).attr('value','Update!');
+  }
+} // End function.
 
 });
 </script>
