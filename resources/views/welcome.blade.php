@@ -295,6 +295,75 @@ $(document).ready(function(){
     //loadRel(split2[0]); // 
     //loadGal(split2[0]);
   });
+
+  // Calendar functions
+// AJAX Calendar functions
+
+$('#goLastMonth').live('click', function(){
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var month = parseInt(splittxt[1], 10);
+  var year  = parseInt(splittxt[0], 10);
+  if(month== 1) {
+    --year;
+    month= 13;
+  }
+  month--;
+  goToday(year + '-' + month + '-' + splittxt[2]);
+});
+
+$('#goToMonth').live('change', function(){
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var month = parseInt($(this).val(), 10) + 1;
+  goToday(parseInt(splittxt[2]) + '-' + month + '-01');
+});
+
+$('#goThisMonth').live('click', function(){
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var month = parseInt(splittxt[1], 10);
+  var year  = parseInt(splittxt[0], 10);
+  goToday(year + '-' + month + '-' + splittxt[2]);
+});
+
+  $('#goNextMonth').live('click', function(){
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var month = parseInt(splittxt[1], 10);
+  var year  = parseInt(splittxt[0], 10);
+  if(month==12) {
+    ++year;
+    month=0;
+  }
+  month++;
+  goToday(year + '-' + month + '-' + splittxt[2]);
+});
+
+$('#goLastYear').live('click', function(){
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var year = parseInt(splittxt[0], 10);
+  goToday(--year + '-' + splittxt[1] + '-' + splittxt[2]);
+});
+
+$('#goToYear').live('change', function(){
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var year = parseInt($(this).val(), 10) ;
+  goToday(year + '-' + parseInt(splittxt[1], 10)  + '-' + splittxt[2] );
+});
+
+$('#goNextYear').live('click', function(){
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var year = parseInt(splittxt[0], 10);
+  goToday(++year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2]);
+});
+
+$('#goThisYear').live('click', function(){
+  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+  var year = parseInt(splittxt[0], 10);
+  goToday(year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2]);
+});
+
+
+
+
+
  
   $('#btnPrevwk, #btnNextwk').live('click', function(){
     goToday($(this).attr('title3'));
