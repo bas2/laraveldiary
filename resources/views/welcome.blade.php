@@ -106,10 +106,7 @@ $(document).ready(function(){
 
 
   function AjaxTest(json, mode) {
-    var splitdata=[];
-    $.each(json, function(index, element) {
-      splitdata[index]=element;
-    });
+    var splitdata=[];$.each(json, function(index, element) {splitdata[index]=element;});
 
     // 09/05/13 - Are we in the current week?
     var iscurweek      = splitdata[28];//alert(iscurweek);
@@ -118,16 +115,15 @@ $(document).ready(function(){
     for (i=0; i < 7; i++) {
       var th_dy = dtarr[i]; // Three-letter day of week Mon-Fri
       if (th_dy == splitdata[17].substring(0,3)) {
-        $('#'+th_dy).attr('class','').addClass('sel_col') ;   // Selected day
+        $('#'+th_dy).attr('class','').addClass('sel_col') ; // Selected day
       } else if ( splitdata[i+6].length==0 && th_dy != splitdata[17].substring(0,3) ) {
-        $('#'+th_dy).attr('class','').addClass('four_col');   // No entries since date did not come back
-      } else {
-        $('#'+th_dy).attr('class','').addClass('three_col');   // Contain entries
-      } // End if.
+        $('#'+th_dy).attr('class','').addClass('four_col'); // No entries since date did not come back
+      }
+      else {$('#'+th_dy).attr('class','').addClass('three_col');} // Contain entries
       $('#'+th_dy).html(splitdata[i+20]) ; // Rewrite Day headings (18-24)
     } // End for.
 
-    if (splitdata[15] == splitdata[16]) // Today's entry is selected  || mode=='initial'
+    if (splitdata[15] == splitdata[16]) // Today's entry is selected.
     {
       $('#txtInfo1').attr('class','').addClass('today_col');
       $('#'+splitdata[17].substring(0,3)).attr('class','').addClass('today_col');
@@ -169,14 +165,14 @@ $(document).ready(function(){
       
     var st_str = 'Created: ';
     if (InsertDate == '01/01/1990 00:00:00') {st_str += 'Not Known';}
-    else if (InsertDate == '-- ::')          {st_str += 'N/A';}
+    else if (InsertDate == '')               {st_str += 'N/A';}
     else                                     {st_str += InsertDate;}
     st_str += ' | ';
       
     numEdits = (numEdits==1) ? ' [1 Change]' : ' [' + numEdits + ' Changes]' ; // Added: 21-07-2009
     st_str += 'Changed: ';
     if (changedDate == '01/01/1990 00:00:00') {st_str += 'Not Known';}
-    else if (changedDate == '-- ::')          {st_str += 'N/A';}
+    else if (changedDate == '')               {st_str += 'N/A';}
     else                                      {st_str += changedDate + numEdits;}
     $("#ins_upd_dt").html(st_str) ;
    
@@ -238,8 +234,7 @@ $(document).ready(function(){
  
   // Update entry
   $('#upd_btn').click(function(){
-    var datetoupdate = $('#upd_btn').attr('title2');              // e.g. 2013-05-08
-    //var sel  = $('#upd_btn').attr('title4').substr(0, 3); // e.g. Wed
+    var datetoupdate = $('#upd_btn').attr('title2');        // e.g. 2013-05-08
     $.ajax({
       type:'post',
       url:'ajax/update/' + datetoupdate,
@@ -255,7 +250,6 @@ $(document).ready(function(){
   
 
   $('#row_exist').click(function(){
-    var insl = document.getElementById('ins_upd_dt').innerHTML.length;
     if ($(this).attr('checked')!='checked' && $('#ins_upd_dt').substr(9, 12) != 'N/A')
     {
       if(confirm ('The diary entry for '+$('#upd_btn').attr('title2')+' will be deleted. Continue?') ){del_entry();}
@@ -321,7 +315,7 @@ $('#goThisMonth').live('click', function(){
   goToday(year + '-' + month + '-' + splittxt[2]);
 });
 
-  $('#goNextMonth').live('click', function(){
+$('#goNextMonth').live('click', function(){
   var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
   var month = parseInt(splittxt[1], 10);
   var year  = parseInt(splittxt[0], 10);
@@ -358,9 +352,6 @@ $('#goThisYear').live('click', function(){
 });
 
 
-
-
-
  
   $('#btnPrevwk, #btnNextwk').live('click', function(){
     goToday($(this).attr('title3'));
@@ -377,25 +368,25 @@ $('#goThisYear').live('click', function(){
   });
  
   // When DIVs are shown or hidden on clicking handle.
-  $('.btnShowHide').click(function(){
-    var layer = $(this).attr('title2');
-    var displ = ($('#'+layer).css('display')=='block') ? 'none' : 'block';
-    if (displ=='none') {
-      $('#'+layer+'hidebar_btn').text('Show ' + layer.capitalize()).hide().fadeIn('slow')
-      .css('background','navy');
-    } else { // DIV is visible.
-      $('#'+layer+'hidebar_btn').text('Hide ' + layer.capitalize()).hide().fadeIn('slow')
-      .css('background','lime');
-    } // End if.
-    $('#'+layer).toggle('slide');
-    setCookie(layer, displ, getExpDate(14,0,0));
-  });
+  //$('.btnShowHide').click(function(){
+  //  var layer = $(this).attr('title2');
+  //  var displ = ($('#'+layer).css('display')=='block') ? 'none' : 'block';
+  //  if (displ=='none') {
+  //    $('#'+layer+'hidebar_btn').text('Show ' + layer.capitalize()).hide().fadeIn('slow')
+  //    .css('background','navy');
+  //  } else { // DIV is visible.
+  //    $('#'+layer+'hidebar_btn').text('Hide ' + layer.capitalize()).hide().fadeIn('slow')
+  //    .css('background','lime');
+  //  } // End if.
+  //  $('#'+layer).toggle('slide');
+  //  setCookie(layer, displ, getExpDate(14,0,0));
+  //});
  
 
   // Show / Hide Calendar
-  $('#btnShwCal').click(function(){
-    loadCal(1);
-  });
+  //$('#btnShwCal').click(function(){
+  //  loadCal(1);
+  //});
   
   function loadCal(toggle, dateSelected) {
     var dateSelected_split = dateSelected.split("-");
@@ -459,11 +450,8 @@ $('#goThisYear').live('click', function(){
       type: 'POST',
       url: 'ajax/related',
       data: 'sel=' + seldate + '&load=1',
-      
-      success: function (data){
-        //alert(data);
-        $('#related').html(data);
-      }
+  
+      success: function (data){$('#related').html(data);}
     }); // End ajax call.
   }
 
@@ -510,7 +498,6 @@ $('#goThisYear').live('click', function(){
         type: 'POST',
         url: 'ajax/addtag',
         data: 'sel=' + seldate + '&tagid=' + tagid,
-        
         success: function (data){}
       }); // End ajax call.
     }
@@ -544,10 +531,7 @@ $('#goThisYear').live('click', function(){
         type: 'GET',
         url: 'ajax/quickentries/up/' + id,
         
-        success: function (quickentries){
-          //alert(quickentries);
-          reloadQADiv('up');
-        }
+        success: function (quickentries){reloadQADiv('up');}
       }); // End ajax call.
     } // End if.
   });
@@ -562,7 +546,6 @@ $('#goThisYear').live('click', function(){
     $.ajax({
       type: 'POST',
       url: 'ajax/quickentries/add',
-      //data: 'act=add' ,
       success: function (quickentries){reloadQADiv('u');}
     }); // End ajax call.
   });
