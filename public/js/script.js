@@ -1,7 +1,6 @@
 /* Globals */
 
-var EntryChangeCounter;
-var EntryChangeCount = 0;
+
 
 
 // INIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -20,29 +19,7 @@ var EntryChangeCount = 0;
 //});
 
 
-function entchtimer() {
-  EntryChangeCount++;
-  $('#upd_btn').val('Data Changed Update? ' + EntryChangeCount);
-} // End entchtimer() function.
 
-
-
-// Hiding/Showing Changedstatus button - invoked when there is a change in the data entered.
-function showhidechangedstatus(wh) {
-  var obj = document.getElementById('upd_btn').style;
-  if (wh == "visible") { // Change was detected!
-    clearInterval(EntryChangeCounter);
-    EntryChangeCounter = setInterval("entchtimer()", 1000);
-    obj.backgroundColor='#c00';
-    obj.color='#fff';
-  } else {
-    clearInterval(EntryChangeCounter);
-    EntryChangeCount=0;
-    document.getElementById('upd_btn').value='Update!';
-    obj.backgroundColor='buttonface';
-    obj.color='#000';
-  }
-} // End function.
 
 
 // USED
