@@ -94,7 +94,7 @@ Route::get('ajax/calendar/{date}', function($date){
 
   return view('ajax.calendar')->with('vals',
     ['daysinmonth'=>$daysinmonth,'monthentries'=>$me2,'blankcells'=>$blankcells,'seldate'=>$seldatest,
-    'datesel'=>$date]
+    'datesel'=>\Carbon\Carbon::parse($date)->format('Y-m-d')]
   );
 });
 
