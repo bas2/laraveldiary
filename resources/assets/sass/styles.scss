@@ -71,6 +71,9 @@ ul.diaryheadings {
     border-top-right-radius: .4em;
     &.sep {width:1.7375%;}
   }
+  a:hover {
+    background: linear-gradient($selcol,#000); color: #fff;
+  }
 }
 
 .datehead {
@@ -201,46 +204,27 @@ div.upd_btn {
 #dtPck {
   position: fixed;
   width: 27%;
-  border: 0px solid #c00;
-  padding: .5em;
   text-align: center;
-  background-image: linear-gradient(#c00, #000);
+  background-image: linear-gradient($selcol, #000);
   border-radius: .8em;
   box-shadow: 2px 2px 2px #000;
-  overflow: auto;
   height: 80%;
-  tbody#d {
-    color: #f00;
-    font-weight: bold;
-    font-size: .8em;
-    border: 0px solid black;
-    padding: .1em;
-    margin-bottom: 1em;
-    border-radius: 2em;
-    td {
-      color: #fff;
-      background: grey;
-      margin-right: .3em;
-    }
+  tbody#d td {
+    font: bold .8em arial;
+    color: #fff;
+    background: grey;
   }
   #tblDate {
     border-collapse: collapse;
-    border: 0px solid #000;
     text-align: center;
     td {
-      border: 0px solid #000;
-      border-top: 0px solid red;
-      padding: 0px;
-      text-align: center;
-      border-radius: .4em;
-      font-family: 2em tahoma;
-      margin-right: .3em;
+      padding: 0;
+      font: 1.2em tahoma;
       a {
         display: block;
         text-decoration: none;
-        padding: 2px;
-        font-weight: bold;
-        font-family: arial;
+        padding: .1em;
+        font: bold 1em arial;
         border-radius: .4em;
         border-right: 1px solid #000;
         border-bottom: 1px solid #000;
@@ -250,54 +234,23 @@ div.upd_btn {
       }
     }
   }
-  .closebtn {
-    background: #c00;
-    border-radius: .8em;
-    border: 0;
-    text-align: center;
-    font-weight: bold;
-    color: #fff;
-    cursor: hand;
-  }
-  .lbtn {
-    border-top-left-radius: .8em;
-    border-bottom-left-radius: .8em;
-  }
-  .rbtn {
-    border-top-right-radius: .8em;
-    border-bottom-right-radius: .8em;
-  }
-  .btnHide {
-    display:none;position:absolute;width:2em;color:#c00;
-  }
+  .lbtn {border-top-left-radius:.8em;border-bottom-left-radius:.8em;}
+  .rbtn {border-top-right-radius:.8em;border-bottom-right-radius:.8em;}
+  /*.btnHide {display:none;position:absolute;width:2em;color:#c00;}*/
 }
 
 #dtPck #tblDate td {
-  &.curDate, &.curDate a, &.curDate:hover, &.curDate a:hover {
-    background-color: $tdycol; color: #fff; /* today_col */
-  }
+  &.curDate {background-color: $tdycol; color: #fff;} /* today_col */
 }
 
-#dtPck #tblDate td.three_col, #dtPck #tblDate td.three_col a {
-  background-color: $thrcol; color: #fff; /* three_col */
-}
-
-#dtPck #tblDate td.four_col, #dtPck #tblDate td.four_col a.sel_col a:hover, {
-  background-color: $forcol; color: #fff; /* four_col */
-}
+#dtPck #tblDate td.three_col a {background-color: $thrcol; color: #fff; /* three_col */}
+#dtPck #tblDate td.four_col a {background-color: $forcol; color: #fff; /* four_col */}
 
 #dtPck #tblDate td {
-  &.sel_col, &.sel_col a, &.sel_col:hover, &.sel_col a:hover, &:hover, a:hover {
-    background-color: $selcol; color: #fff;
-  }
-}
-li a:hover {
-  background-color: $selcol; color: #fff;
+  &.sel_col a, &.sel_col a:hover, a:hover {background-color: $selcol; color: #fff;}
 }
 
-#dtPck #tblDate td {
-  &.nohover, &.medHead {cursor: hand;}
-}
+/*#dtPck #tblDate td {&.nohover, &.medHead {cursor: hand;}}*/
 
 
 
