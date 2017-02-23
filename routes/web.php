@@ -52,18 +52,21 @@ Route::get('ajax/getday/{date?}', function($date=null){
 
   $json=[$info,'Imp',$crdt,$chdt,$nume,$count];
 
-  foreach ([$mon,$tue,$wed,$thu,$fri,$sat,$sun] as $value) {
-    $entries=App\Entry::where('d',$value)->get(['info']);
-    $info=(empty($entries[0]->info)) ? '' : $entries[0]->info ;
-    $json[]=$info;
-  }
+  //foreach ([$mon,$tue,$wed,$thu,$fri,$sat,$sun] as $value) {
+  //  $entries=App\Entry::where('d',$value)->get(['info']);
+  //  $info=(empty($entries[0]->info)) ? '' : $entries[0]->info ;
+  //  $json[]='test'.$info;
+  //}
   foreach(['otd13','imp14',\Carbon\Carbon::now()->format('Y-m-d'),$date,$date3,$prvwk,$nxtwk] as $element) {$json[]=$element;}
 
+  $now=\Carbon\Carbon::now()->startOfDay();
   foreach ([$mon,$tue,$wed,$thu,$fri,$sat,$sun] as $value) {
     $entries=App\Entry::where('d',$value)->get(['info']);
     $info=(empty($entries[0]->info)) ? '' : $entries[0]->info ;
-    $info=str_replace("'", '&lsquo;', $info);
-    $json[]= "<a class='datehead' tooltiptxt='{$info}' title3='{$value->format('Y-m-d')}' title4='{$value->format('D')}' iscurwk='1'>{$value->format('l jS F')}</a>";
+    $info=str_replace("'", '&lsquo;', $info); # Replace single quotes so they don't mess tips.
+    $class=(empty($info))?' four_col':' three_col';
+    $difference = ($value->diff($now)->days < 1)? 'today': $value->diffForHumans($now);
+    $json[]= "<a class='datehead{$class}' tooltiptxt='<p class=date_s>{$value->format('l jS F')} {$difference}</p>{$info}' title3='{$value->format('Y-m-d')}' title4='{$value->format('D')}' iscurwk='1'>{$value->format('l jS F')}</a>";
   }
   foreach(['Forth25',$curwk,'c','n'] as $element) {$json[]=$element;}
   $json=json_encode($json);
