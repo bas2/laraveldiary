@@ -17,14 +17,8 @@
 <body>
 <div class="quickadd">+</div>
 <script>
-var dtarr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // JavaScript days of week array:
-
-//var arritems  = [bottmenu', 'diarym', 'dimages', 'rw6', 'selects', 'entrytags', 'related']; // JavaScript arrays holding DIV names
-
-//var arritems2 = [Bottom Menu', 'Diary', 'Images', 'Bottom row', 'Dropdowns', 'Tags', 'Related']; // Friendly names // , 'Top Buttons'
-
 // DECLARE (global) CONSTANTS to pass to our JavaScript. These values are provided dynamically using PHP
-var Dt2dy2 = '{{ date("D") }}';   // Day today in three letter format eg Tue obviously representing today which is Tuesday.
+var Dt2dy2 = '{{ date("D") }}'; // Day today in three letter format eg Tue obviously representing today which is Tuesday.
 
 </script>
 
@@ -70,71 +64,70 @@ $(document).ready(function(){
   
   //showHideItem2(); // Hide Show elements as per cookie values to restore previous state
 
-  function getData(date) {
+  function getData(initial,date) {
     $.ajax({
       type:'get',
       url:'ajax/getday/' + date,
       dataType: 'json',
-      success: function (json){AjaxTest(json, 'initial');}
+      success: function (json){AjaxTest(json, initial);}
     });
   }
  
   // Initial load via ajax:
-  getData('');
+  getData('initial','');
 
   // When a date header is clicked
-  function goToday(sel2) {getData(sel2);}
+  function goToday(sel2) {getData('',sel2);}
 
 
 
   function AjaxTest(json, mode) {
     var splitdata=[];$.each(json, function(index, element) {splitdata[index]=element;});
 
-    // 09/05/13 - Are we in the current week?
-    var iscurweek      = splitdata[28];//alert(iscurweek);
-    var iscurweeksplit = iscurweek.split('-');
-
+    var dtarr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // JavaScript days of week array.
     for (i=0; i < 7; i++) {
       var th_dy = dtarr[i]; // Three-letter day of week Mon-Fri
-      if (th_dy == splitdata[17].substring(0,3)) {
-        $('#'+th_dy).attr('class','').addClass('sel_col') ; // Selected day
-      } else if ( splitdata[i+6].length==0 && th_dy != splitdata[17].substring(0,3) ) {
-        $('#'+th_dy).attr('class','').addClass('four_col'); // No entries since date did not come back
+      $('#'+th_dy).html(splitdata[i+13]) ; // Rewrite Day headings (18-24)
+      if (th_dy == splitdata[10].substring(0,3)) { // Selected day.
+        $('#'+th_dy+' a').attr('class','').addClass('datehead sel_col') ;
       }
-      else {$('#'+th_dy).attr('class','').addClass('three_col');} // Contain entries
-      $('#'+th_dy).html(splitdata[i+20]) ; // Rewrite Day headings (18-24)
+
     } // End for.
 
-    if (splitdata[15] == splitdata[16]) // Today's entry is selected.
+    if (splitdata[8] == splitdata[9]) // Today's entry is selected.
     {
       $('#txtInfo1').attr('class','').addClass('today_col');
-      $('#'+splitdata[17].substring(0,3)).attr('class','').addClass('today_col');
+      $('#'+splitdata[10].substring(0,3)+' a').attr('class','').addClass('datehead today_col');
     }
     else {
       $('#txtInfo1').addClass('sel_col'); // Add selected colour to text entry area.
     } // End if.
     
+    // 09/05/13 - Are we in the current week?
+    var iscurweek      = splitdata[21];
+    var iscurweeksplit = iscurweek.split('-');
+
     // Make sure the tab for today stays noticeable only when current week is displayed
-    if (iscurweeksplit[1]==1) {$('#'+Dt2dy2).attr('class','').addClass('today_col');} // End if.
+    if (iscurweeksplit[1]==1) {$('#'+Dt2dy2+' a').attr('class','').addClass('datehead today_col');} // End if.
 
 
-    var DateEntryText  = splitdata[0]; // Actual text for diary entry from database
-    var IsImportant    = splitdata[1]; // Marked as important
-    var InsertDate     = splitdata[2]; // Date created
-    var changedDate    = splitdata[3]; // Date changed
-    var numEdits       = splitdata[4]; // Number of edits made to entry. Added on 21-07-2009.
-    var TotalEntries   = splitdata[5]; // Total diary entries (to show in document title bar)
+    //var DateEntryText  = splitdata[0]; // Actual text for diary entry from database
+    //var IsImportant    = splitdata[1]; // Marked as important
+    //var InsertDate     = splitdata[2]; // Date created
+    //var changedDate    = splitdata[3]; // Date changed
+    //var numEdits       = splitdata[4]; // Number of edits made to entry. Added on 21-07-2009.
+    //var TotalEntries   = splitdata[5]; // Total diary entries (to show in document title bar)
 
     // 6 - 12: Entry text for each day of selected week
     // Highlight days with no entries or no content and is not currently selected. Array items 6-12
 
-    //var onthisdaytext  = splitdata[13]; // Info for on this day dropdown menu
-    //var impdatestext   = splitdata[14]; // Important entries dropdown
-    // 15 and 16
-    var lastdofwk      = splitdata[17]; // Not used for anything anymore
+    //var onthisdaytext  = splitdata[13-6]; // Info for on this day dropdown menu
+    //var impdatestext   = splitdata[14-7]; // Important entries dropdown
+    // 15-8 and 16-9
+    //var lastdofwk      = splitdata[10]; // Not used for anything anymore
 
-    var prvwkd         = splitdata[18]; // Date on selected day in previous week
-    var nxtwkd         = splitdata[19]; // Date on selected day next week
+    //var prvwkd         = splitdata[11]; // Date on selected day in previous week
+    //var nxtwkd         = splitdata[12]; // Date on selected day next week
 
     // 18-24: Text to show in DHTML popups for each day of the selected week
 
@@ -143,58 +136,57 @@ $(document).ready(function(){
 
 
     // Populate textarea
-    $('#txtInfo1').val(DateEntryText);
+    $('#txtInfo1').val(splitdata[0]);
       
     var st_str = 'Created: ';
-    if (InsertDate == '01/01/1990 00:00:00') {st_str += 'Not Known';}
-    else if (InsertDate == '')               {st_str += 'N/A';}
-    else                                     {st_str += InsertDate;}
+    if (splitdata[2] == '01/01/1990 00:00:00') {st_str += 'Not Known';}
+    else if (splitdata[2] == '')               {st_str += 'N/A';}
+    else                                       {st_str += splitdata[2];}
     st_str += ' | ';
       
-    numEdits = (numEdits==1) ? ' [1 Change]' : ' [' + numEdits + ' Changes]' ; // Added: 21-07-2009
+    numEdits = (splitdata[4]==1) ? ' [1 Change]' : ' [' + splitdata[4] + ' Changes]' ; // Added: 21-07-2009
     st_str += 'Changed: ';
-    if (changedDate == '01/01/1990 00:00:00') {st_str += 'Not Known';}
-    else if (changedDate == '')               {st_str += 'N/A';}
-    else                                      {st_str += changedDate + numEdits;}
+    if (splitdata[3] == '01/01/1990 00:00:00') {st_str += 'Not Known';}
+    else if (splitdata[3] == '')               {st_str += 'N/A';}
+    else                                       {st_str += splitdata[3] + splitdata[4];}
     $("#ins_upd_dt").html(st_str) ;
    
     // Check boxes if apply
-    if (InsertDate.length > 5)  {$("#row_exist").attr('checked',  'checked') ;}
-    else                        {$('#row_exist').removeAttr('checked');}
+    if (splitdata[2].length > 5)  {$("#row_exist").attr('checked',  'checked') ;}
+    else                          {$('#row_exist').removeAttr('checked');}
 
-    if (InsertDate.length == 5) {$("#row_exist").attr('disabled', 'disabled');}
-    else                        {$('#row_exist').removeAttr('disabled');}
+    if (splitdata[2].length == 5) {$("#row_exist").attr('disabled', 'disabled');}
+    else                          {$('#row_exist').removeAttr('disabled');}
 
-    if (IsImportant == 1)       {$("#row_imp").attr('checked', 'checked');}
-    else                        {$("#row_imp").removeAttr('checked');}
+    if (splitdata[1] == 1)        {$("#row_imp").attr('checked', 'checked');}
+    else                          {$("#row_imp").removeAttr('checked');}
    
     // Display select menus
-    //$("#onthisday").html(onthisdaytext) ;  // 13
-    //$("#impdates").html(impdatestext) ;   // 14
-    //$("#futuredates").html(futuredatestxt) ; // 
+    //$("#onthisday").html(splitdata[6]) ;  // 13
+    //$("#impdates").html(splitdata[7]) ;   // 14
+    //$("#futuredates").html(splitdata[13]) ; // 
    
     // Change Prev week button text and actions
     $("#li_prvwkbtn")
-    .html('<button id="btnPrevwk" title3="'+prvwkd+'" title4="'+lastdofwk+'" iscurwk="'+iscurweeksplit[0]+'" title="This day in the Previous Week">&lt;</button>') ;
+    .html('<button id="btnPrevwk" title3="'+splitdata[11]+'" title4="'+splitdata[10]+'" iscurwk="'+iscurweeksplit[0]+'" title="This day in the Previous Week">&lt;</button>') ;
 
     if (mode!='initial' && iscurweeksplit[0]==1) {$('#li_prvwkbtn button').addClass('today_col');}
     
     // Change Next week button text and action
     $("#li_nxtwkbtn")
-    .html('<button id="btnNextwk" title3="'+nxtwkd+'" title4="'+lastdofwk+'" iscurwk="'+iscurweeksplit[2]+'" title="This day Next Week">&gt;</button>') ;
+    .html('<button id="btnNextwk" title3="'+splitdata[12]+'" title4="'+splitdata[10]+'" iscurwk="'+iscurweeksplit[2]+'" title="This day Next Week">&gt;</button>') ;
       
     if (mode!='initial' && iscurweeksplit[2]==1) {$('#li_nxtwkbtn button').addClass('today_col');}
 
-    var uk_date_split = splitdata[16].split("-");
+    var uk_date_split = splitdata[9].split("-");
     document.title = 'An AJAX Diary: ' + uk_date_split[2] + '-' + uk_date_split[1]
-                                       + '-' + uk_date_split[0] + '(' + TotalEntries + ')';
+                                       + '-' + uk_date_split[0] + '(' + splitdata[5] + ')';
     focus_txtarea();
-    //$('#LoadText').html('');
       
     // We set this so we can keep track of the selected date
-    $('#upd_btn').attr('title2',splitdata[16]);
-    $('#upload_d');      // 10/05/13 - So we can send date to upload script
-    //$('#upd_btn').attr('title4', lastdofwk); // Attach title4 attribute to Update button so we can see selected date.
+    $('#upd_btn').attr('title2',splitdata[9]);
+    //$('#upload_d'); // 10/05/13 - So we can send date to upload script
+    //$('#upd_btn').attr('title4', splitdata[10]); // Attach title4 attribute to Update button so we can see selected date.
 
     if (mode=='initial') {
       //loadGal(Dt2dy);
@@ -202,7 +194,7 @@ $(document).ready(function(){
 
       // Calendar
       $('#dtPck').animate({right: 10, top: 20}, 'slow');
-      loadCal(0, splitdata[16]);
+      loadCal(0, splitdata[9]);
     } // End if.
   }
 
