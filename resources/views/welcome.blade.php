@@ -15,7 +15,7 @@
   <script src="js/script.js"></script> --}}
 </head>
 <body>
-
+<div class="quickadd">+</div>
 <script>
 var dtarr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // JavaScript days of week array:
 
@@ -30,46 +30,28 @@ var Dt2dy2 = '{{ date("D") }}';   // Day today in three letter format eg Tue obv
 
 <div id="dtPck"><!-- Calendar widget --></div>
 {{ App\ProjectsMenu::display() }}
-<div class="cont">
-  <div id="diarym">
 
-    <ul class="diaryheadings">
-      <li id="li_prvwkbtn"></li>
-      @foreach (['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $weekday)
-      <li id="{{ $weekday }}"><a>&nbsp;</a></li>
-      @endforeach
-      <li id="li_nxtwkbtn"></li>
-    </ul>
+<div id="diarym">
 
-    <div style="height:90%;float:left;width:100%;background:rgba(255,0,0,.3;">
-      <textarea id="txtInfo1"></textarea> <div class="quickadd">+</div>
-      <!-- End DIV dateinfo -->
+  <ul class="diaryheadings">
+    <li id="li_prvwkbtn"></li>
+    <li class="sep"></li>
+    @foreach (['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $weekday)
+    <li id="{{ $weekday }}"><a>&nbsp;</a></li><li class="sep"></li>
+    @endforeach
+    <li id="li_nxtwkbtn"></li>
+  </ul>
 
-      <div id="diaryu">
-        <span id="LoadText"><!-- Loading Graphic --></span>
-        <span id="statusText2"><!--  --></span>
-        <span id="statusText">&nbsp;&nbsp;<!--  --></span>
-        <span id="clock">&nbsp;&nbsp;<!-- JavaScript clock --></span>
-        <!-- Update button --><input type="button" id="upd_btn" value="Update &gt;">
-      </div>
-    </div>
-
+  <div><textarea id="txtInfo1"></textarea></div>
+  <div id="rw7">
+  <input id="row_exist" type="checkbox" checked>
+  <label for="row_exist" title="Delete this entry if it exists">Row Exists</label>
+  <input id="row_imp" name="row_imp" type="checkbox">
+  <label for="row_imp" title="Mark this entry as important">Important</label>
   </div>
-</div>
+  <div class="upd_btn"><input type="button" id="upd_btn" value="Update &gt;"></div>
+  <div id="ins_upd_dt">&nbsp;<!-- Created/Edit dates --></div>
 
-<div class="cont">
-  <div id="rw6">
-
-    <div id="rw7">
-      <input id="row_exist" type="checkbox" checked>
-      <label for="row_exist" title="Delete this entry if it exists">Row Exists</label>
-      <input id="row_imp" name="row_imp" type="checkbox">
-      <label for="row_imp" title="Mark this entry as important">Important</label>
-    </div>
-
-    <div id="rw8"><span id="ins_upd_dt">&nbsp;<!-- Created/Edit dates --></span></div>
-
-  </div>
 </div>
 
 
