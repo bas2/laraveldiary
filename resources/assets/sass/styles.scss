@@ -1,7 +1,12 @@
+$tdycol: #609;
+$selcol: #c00;
+$thrcol: #f60;
+$forcol: #c90;
+
 body {
   background-color: #000;
   color: #fff;
-  margin: 5px 0px 0px 5px;
+  margin: 5px;
 }
 
 select {
@@ -10,20 +15,20 @@ select {
 
 /* Preferred colours */
 .today_col {
-  background-color: #609; color: #fff; /* today */
-  background-image: linear-gradient(#609, #000);
+  background-color: $tdycol; color: #fff; /* today */
+  background-image: linear-gradient($tdycol, #000);
 }
 .sel_col {
-  background-color: #c00; /* selected day */
-  background-image: linear-gradient(#c00, #000);
+  background-color: $selcol; /* selected day */
+  background-image: linear-gradient($selcol, #000);
 }
 .three_col {
-  background-color: #f60; /* days with entries */
-  background-image: linear-gradient(#f60, #000);
+  background-color: $thrcol; /* days with entries */
+  background-image: linear-gradient($thrcol, #000);
 }
 .four_col {
-  background-color: #c90; /* days without entries */
-  background-image: linear-gradient(#c90, #000);
+  background-color: $forcol; /* days without entries */
+  background-image: linear-gradient($forcol, #000);
 }
 
 ul#projectsmenu {
@@ -42,36 +47,29 @@ ul#projectsmenu {
 }
 
 ul.diaryheadings {
-  float:left;
-  border: 0px solid #000;
+  display:flex;
+  flex-wrap:wrap;
   margin: 0;
-  padding: 0 0 0 0; /* just don't add at the bottom */
+  padding: 0;
   list-style: none;
   border-bottom: 0;
-  float: left;
-  width: 100%;
   background-color: transparent;
   a {
-      height: 100%;
-  display: block;
-  border: 0;
-  padding: 1% 0;
-
-  text-align: center;
-  font-family: arial;
-  font-weight: bold;
+    display: block;
+    border: 0;
+    padding: 1%;
+    text-align: center;
+    font-family: arial;
+    font-weight: bold;
   }
   li {
-    float: left;
-    margin: 1% 0 0 1%;
+    margin: 0;
     padding: 0;
-    width: 10.5%;
+    width: 10.8%;
 
     border-top-left-radius: .4em;
     border-top-right-radius: .4em;
-  }
-  li#Mon {
-    margin-left: -6%;
+    &.sep {width:1.7375%;}
   }
 }
 
@@ -85,6 +83,11 @@ ul.diaryheadings {
   border-top-right-radius: .8em;
   text-shadow: 2px 2px 1px grey;
   border-top: 2px solid orange;
+}
+
+#li_prvwkbtn, #li_nxtwkbtn {
+  width:5.25%;
+  button {width: 100%;}
 }
 
 #li_prvwkbtn button, #li_nxtwkbtn button, #dtPck .lbtn, #dtPck .rbtn  {
@@ -111,48 +114,20 @@ ul.diaryheadings {
   border-bottom-right-radius: .8em;
 }
 
+
 /* Data entry textarea */
 #txtInfo1 {
-  width: 90%;
+  width: 100%;
   margin: 0;
-  padding: .8em;
+  padding: .3em;
   height: 20em;
-  /*  width: 92%; Simple really! 24-07-2009 */
   font: 1.2em arial;
   border: 0;
   font-weight: bold;
   color: #fff;
-  overflow: auto;
   line-height: 1.4em;
   border-radius: .8em;
-}
-
-/* Digital clock */
-#clock {
-  display: none;
-  font-family: arial, helvetica;
-  font-weight: bold;
-  font-size: 9pt;
-  border: 1px solid #000;
-  margin-right: 2px;
-}
-
-/* Container holding each hideable layer with button to hide/show layer */
-.cont {
-  float: left;
-  width: 99%;
-  border-top: 1px solid #050;
-  border-left: 1px solid #050;
-  border-top-left-radius: .3em;
-  margin-bottom: 5px;
-
-}
-
-/* Actual DIVs hold content that we want to hide */
-#events, #topbuttons, #bottmenu,
-#dimages, #diarym, #rw6, #selects, #ticki, #entrytags, #related {
- width: 800px;
- float: left;
+  box-sizing: border-box;
 }
 
 
@@ -167,51 +142,41 @@ ul.diaryheadings {
   }
 }
 
-#diaryu {
-  border: 0px solid #000;
-  width: 100%;
-  text-align: right;
-    float: left;
-  width: 90%;
+div.upd_btn {
+  float: right;
+  #upd_btn {
+    float: right;
+    border-bottom-left-radius: .8em;
+    border-bottom-right-radius: .8em;
+    font-size: 1.3em;
+    width: 20em;
+    border: 0;
+    &:hover {
+      background-color: #c00;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
 }
 
-
-
-
-#upd_btn {
-  border-bottom-left-radius: .8em;
-  border-bottom-right-radius: .8em;
-  font-size: 1.3em;
-  width: 20em;
-  border: 0;
-  right: 0;
+#rw7 { /* Row exists and important. */
+  float: left;
 }
-
-#upd_btn:hover {
-  background-color: #c00;
-  color: #fff;
-  font-weight: bold;
-}
-
 
 #ins_upd_dt {
+  clear:both;
   background: #c00;
   color: #fff;
-  font: 1em arial bold;
+  font: bold .9em tahoma;
   border-radius: .3em;
-  padding: .3em;
-}
-
-#ins_upd_dt span {
+  margin-top: 2.3em;
   padding: .4em;
+  text-align: center;
 }
 
-.ui-tooltip, .arrow:after {
-  background: #f90;
-  background-image: linear-gradient(rgb(255,0,0), #f90);
-  border: 1px solid rgba(100,100,100,.6);
-}
+
 .ui-tooltip {
+  background: hsla(30, 100%, 40%, 1);
   text-align: center;
   padding: 10px 20px;
   color: #fff;
@@ -219,25 +184,23 @@ ul.diaryheadings {
   font: bold 12px "Helvetica Neue", Sans-Serif;
   text-transform: uppercase;
   box-shadow: 0 0 7px black;
-}
-.ui-tooltip .date_s {
-  font: bold 12px "Arial Black", Tahoma;
-  background-color: #fff;
-  color: #fff;
-  border: 0px solid #900;
-  border-radius: .3em;
-  padding: 4px;
-  margin-bottom: 4px;
-  background-image: linear-gradient(#f90, rgb(255,0,0));
-  text-shadow: 1px 1px 1px rgb(100,100,100);
+  .date_s {
+    font: bold 12px "Arial Black", Tahoma;
+    background-color: #fff;
+    color: #fff;
+    border-radius: .3em;
+    padding: 4px;
+    margin-bottom: 4px;
+    background-image: linear-gradient(#f90, rgb(255,0,0));
+    text-shadow: 1px 1px 1px rgb(100,100,100);
+  }
 }
 
 
 /* Calendar styles */
 #dtPck {
   position: fixed;
-  right: 20;top: 5;
-  width: 30%;
+  width: 27%;
   border: 0px solid #c00;
   padding: .5em;
   text-align: center;
@@ -309,37 +272,41 @@ ul.diaryheadings {
   }
 }
 
-#dtPck #tblDate td.curDate, #dtPck #tblDate td.curDate a, #dtPck #tblDate td.curDate:hover, td.curDate a:hover {
-  background-color: #609; color: #fff; /* today_col */
+#dtPck #tblDate td {
+  &.curDate, &.curDate a, &.curDate:hover, &.curDate a:hover {
+    background-color: $tdycol; color: #fff; /* today_col */
+  }
 }
 
 #dtPck #tblDate td.three_col, #dtPck #tblDate td.three_col a {
-  background-color: #f60; color: #fff; /* three_col */
+  background-color: $thrcol; color: #fff; /* three_col */
 }
 
-#dtPck #tblDate td.four_col, #dtPck #tblDate td.four_col a {
-  background-color: #c90; color: #fff; /* four_col */
+#dtPck #tblDate td.four_col, #dtPck #tblDate td.four_col a.sel_col a:hover, {
+  background-color: $forcol; color: #fff; /* four_col */
 }
 
-#dtPck #tblDate td.sel_col, #dtPck #tblDate td.sel_col a, #dtPck #tblDate td.sel_col:hover, td.sel_col a:hover, #dtPck #tblDate td:hover, #dtPck #tblDate td a:hover {
-  background-color: #c00; color: #fff;
+#dtPck #tblDate td {
+  &.sel_col, &.sel_col a, &.sel_col:hover, &.sel_col a:hover, &:hover, a:hover {
+    background-color: $selcol; color: #fff;
+  }
+}
+li a:hover {
+  background-color: $selcol; color: #fff;
 }
 
-#dtPck #tblDate td.nohover, #dtPck #tblDate td.medHead {
-  /*background-color: #fff; color: #000;*/
-  cursor: hand;
+#dtPck #tblDate td {
+  &.nohover, &.medHead {cursor: hand;}
 }
 
 
-#rw7 { /* Row exists and important. */
-  float: right;
-}
+
 
 
 /* Quick Add - 15/11/2016 */
 
 .quickadd {
-  position:absolute; top: 0; left: 800px;
+  position:absolute; top: 0; left: 70%;
   cursor:pointer;
   font-weight: bold;
 }
