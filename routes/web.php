@@ -66,7 +66,7 @@ Route::get('ajax/getday/{date?}', function($date=null){
     $info=str_replace("'", '&lsquo;', $info); # Replace single quotes so they don't mess tips.
     $class=(empty($info))?' four_col':' three_col';
     $difference = ($value->diff($now)->days < 1)? 'today': $value->diffForHumans($now);
-    $json[]= "<a class='datehead{$class}' tooltiptxt='<p class=date_s>{$value->format('l jS F')} {$difference}</p>{$info}' title3='{$value->format('Y-m-d')}' title4='{$value->format('D')}' iscurwk='1'>{$value->format('l jS F')}</a>";
+    $json[]= "<a class='datehead{$class}' tooltiptxt='<p class=date_s>{$value->format('l jS F')} [$difference}</p>{$info}' title3='{$value->format('Y-m-d')}' title4='{$value->format('D')}' iscurwk='1'>{$value->format('l jS F')}</a>";
   }
   foreach(['Forth25',$curwk,'c','n'] as $element) {$json[]=$element;}
   $json=json_encode($json);
@@ -136,8 +136,9 @@ Route::get('ajax/quickentries/up/{id}', function($id){
 
 Route::post('ajax/update/{date}', function($date){
   $input=Request::all();
-  $videos=new \App\Entry;
+  $entry=new \App\Entry;
   $info=(empty($input['info'])) ? '' : $input['info'] ;
-  $videos->updateOrInsert(['d'=>$date], ['info'=>$info]);
-  $videos=new \App\Entry;$videos->where('d',$date)->increment('numedit');
+  $entry->updateOrInsert(['d'=>$date], ['info'=>$info]);
+  $entry2=new \App\Entry;$entry->where('d',$date)->increment('numedit');
+  return $entry ? 'Saved' : 'Not saved';
 });
