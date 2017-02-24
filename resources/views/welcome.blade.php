@@ -62,14 +62,12 @@ $(document).ready(function(){
     }
   });
   
-  //showHideItem2(); // Hide Show elements as per cookie values to restore previous state
-
-  function getData(initial,date) {
+  function getData(mode,date) {
     $.ajax({
       type:'get',
       url:'ajax/getday/' + date,
       dataType: 'json',
-      success: function (json){AjaxTest(json, initial);}
+      success: function (json){AjaxTest(json, mode);}
     });
   }
  
@@ -110,31 +108,6 @@ $(document).ready(function(){
     // Make sure the tab for today stays noticeable only when current week is displayed
     if (iscurweeksplit[1]==1) {$('#'+Dt2dy2+' a').attr('class','').addClass('datehead today_col');} // End if.
 
-
-    //var DateEntryText  = splitdata[0]; // Actual text for diary entry from database
-    //var IsImportant    = splitdata[1]; // Marked as important
-    //var InsertDate     = splitdata[2]; // Date created
-    //var changedDate    = splitdata[3]; // Date changed
-    //var numEdits       = splitdata[4]; // Number of edits made to entry. Added on 21-07-2009.
-    //var TotalEntries   = splitdata[5]; // Total diary entries (to show in document title bar)
-
-    // 6 - 12: Entry text for each day of selected week
-    // Highlight days with no entries or no content and is not currently selected. Array items 6-12
-
-    //var onthisdaytext  = splitdata[13-6]; // Info for on this day dropdown menu
-    //var impdatestext   = splitdata[14-7]; // Important entries dropdown
-    // 15-8 and 16-9
-    //var lastdofwk      = splitdata[10]; // Not used for anything anymore
-
-    //var prvwkd         = splitdata[11]; // Date on selected day in previous week
-    //var nxtwkd         = splitdata[12]; // Date on selected day next week
-
-    // 18-24: Text to show in DHTML popups for each day of the selected week
-
-    //var futuredatestxt = splitdata[27];
-    
-
-
     // Populate textarea
     $('#txtInfo1').val(splitdata[0]);
       
@@ -148,7 +121,7 @@ $(document).ready(function(){
     st_str += 'Changed: ';
     if (splitdata[3] == '01/01/1990 00:00:00') {st_str += 'Not Known';}
     else if (splitdata[3] == '')               {st_str += 'N/A';}
-    else                                       {st_str += splitdata[3] + splitdata[4];}
+    else                                       {st_str += splitdata[3] + numEdits;}
     $("#ins_upd_dt").html(st_str) ;
    
     // Check boxes if apply
@@ -161,10 +134,6 @@ $(document).ready(function(){
     if (splitdata[1] == 1)        {$("#row_imp").attr('checked', 'checked');}
     else                          {$("#row_imp").removeAttr('checked');}
    
-    // Display select menus
-    //$("#onthisday").html(splitdata[6]) ;  // 13
-    //$("#impdates").html(splitdata[7]) ;   // 14
-    //$("#futuredates").html(splitdata[13]) ; // 
    
     // Change Prev week button text and actions
     $("#li_prvwkbtn")
@@ -185,17 +154,14 @@ $(document).ready(function(){
       
     // We set this so we can keep track of the selected date
     $('#upd_btn').attr('title2',splitdata[9]);
-    //$('#upload_d'); // 10/05/13 - So we can send date to upload script
-    //$('#upd_btn').attr('title4', splitdata[10]); // Attach title4 attribute to Update button so we can see selected date.
 
     if (mode=='initial') {
       //loadGal(Dt2dy);
       //loadRel(Dt2dy);
 
-      // Calendar
-      $('#dtPck').animate({right: 10, top: 20}, 'slow');
-      loadCal(0, splitdata[9]);
+      $('#dtPck').animate({right: 10, top: 20}, 'slow'); // Calendar
     } // End if.
+    loadCal(0, splitdata[9]);
   }
 
 
@@ -212,12 +178,13 @@ $(document).ready(function(){
     $.ajax({
       type:'post',
       url:'ajax/update/' + datetoupdate,
-      data:'&info=' + encodeURIComponent($('#txtInfo1').val()) + '&_token={{ csrf_token() }}',
+      data:'&info=' + encodeURIComponent($('#txtInfo1').val()) ,
       success: function (d){
+        if (d=='Not saved') {alert(d);}
         goToday(datetoupdate);
         showhidechangedstatus('hidden'); // This function is defined below.
         focus_txtarea();
-        loadCal(0, datetoupdate); // Refresh calendar
+        //loadCal(0, datetoupdate); // Refresh calendar
       } // End ajax success.
     });
   });
@@ -230,11 +197,6 @@ $(document).ready(function(){
       else{ focus_txtarea(); return false}
     }
   });
-
-
-
-  
-
 
 
 
@@ -340,28 +302,7 @@ $('#goThisYear').live('click', function(){
   $('#txtInfo1').keypress(function(event){
     if (event.which > 0) {showhidechangedstatus('visible');}
   });
- 
-  // When DIVs are shown or hidden on clicking handle.
-  //$('.btnShowHide').click(function(){
-  //  var layer = $(this).attr('title2');
-  //  var displ = ($('#'+layer).css('display')=='block') ? 'none' : 'block';
-  //  if (displ=='none') {
-  //    $('#'+layer+'hidebar_btn').text('Show ' + layer.capitalize()).hide().fadeIn('slow')
-  //    .css('background','navy');
-  //  } else { // DIV is visible.
-  //    $('#'+layer+'hidebar_btn').text('Hide ' + layer.capitalize()).hide().fadeIn('slow')
-  //    .css('background','lime');
-  //  } // End if.
-  //  $('#'+layer).toggle('slide');
-  //  setCookie(layer, displ, getExpDate(14,0,0));
-  //});
- 
-
-  // Show / Hide Calendar
-  //$('#btnShwCal').click(function(){
-  //  loadCal(1);
-  //});
-  
+   
   function loadCal(toggle, dateSelected) {
     var dateSelected_split = dateSelected.split("-");
     $.ajax({
