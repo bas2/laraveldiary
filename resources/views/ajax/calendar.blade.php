@@ -49,7 +49,7 @@
       <td class="three_col">
       @endif
     @endif
-    <a id="CalDay" title2="{{ $vals['seldate']->format('Y-m-'.$i) }}|{{ \Carbon\Carbon::parse($vals['seldate']->format('Y-m-'.$i))->format('D') }}|"
+    <a id="CalDay" title2="{{ $vals['seldate']->format('Y-m-'.$i) }}|{{ \Carbon\Carbon::parse($vals['seldate']->format('Y-m-'.$i))->format('D') }}"
      tooltiptxt="{{ $vals['monthentries'][$i] }}">{{ $i }}</a></td>
   @else
     @if($vals['seldate']->format('Y-m-'.$i)==date('Y-m-d'))
@@ -61,7 +61,7 @@
       <td class="four_col">
       @endif
     @endif
-    <a id="CalDay" title2="{{ $vals['seldate']->format('Y-m-'.$i) }}|{{ \Carbon\Carbon::parse($vals['seldate']->format('Y-m-'.$i))->format('D') }}|">{{ $i }}</a></td>
+    <a id="CalDay" title2="{{ $vals['seldate']->format('Y-m-'.$i) }}|{{ \Carbon\Carbon::parse($vals['seldate']->format('Y-m-'.$i))->format('D') }}">{{ $i }}</a></td>
   @endif
   @foreach([7,14,21,28,35] as $rnum)
     @if($i == ($rnum-$vals['blankcells']))
