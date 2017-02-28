@@ -55,10 +55,8 @@ $(document).ready(function(){
   $( document ).tooltip({
     items: ".datehead, [tooltiptxt], [title]",
     content: function() {
-      var element = $( this );
-      if ( element.is( "[tooltiptxt]" ) ) {
-        return element.attr( "tooltiptxt" );
-      }
+      var element = $(this);
+      if ( element.is( "[tooltiptxt]" ) ) {return element.attr( "tooltiptxt" );}
     }
   });
   
@@ -84,29 +82,25 @@ $(document).ready(function(){
 
     var dtarr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // JavaScript days of week array.
     for (i=0; i < 7; i++) {
-      var th_dy = dtarr[i]; // Three-letter day of week Mon-Fri
-      $('#'+th_dy).html(splitdata[i+13]) ; // Rewrite Day headings (18-24)
-      if (th_dy == splitdata[10].substring(0,3)) { // Selected day.
-        $('#'+th_dy+' a').attr('class','').addClass('datehead sel_col') ;
-      }
+      //var th_dy = dtarr[i]; // Three-letter day of week Mon-Fri
+      $('#'+dtarr[i]).html(splitdata[i+13]) ; // Rewrite Day headings (18-24)
+      //if (th_dy == splitdata[10].substring(0,3)) { // Selected day.
+        //$('#'+th_dy+' a').attr('class','').addClass('datehead sel_col') ;
+      //}
 
     } // End for.
 
     if (splitdata[8] == splitdata[9]) // Today's entry is selected.
     {
-      $('#txtInfo1').attr('class','').addClass('today_col');
-      $('#'+splitdata[10].substring(0,3)+' a').attr('class','').addClass('datehead today_col');
+      $('#txtInfo1').removeAttr('class').addClass('today_col');
+      //$('#'+splitdata[10].substring(0,3)+' a').attr('class','').addClass('datehead today_col');
     }
     else {
       $('#txtInfo1').addClass('sel_col'); // Add selected colour to text entry area.
     } // End if.
     
-    // 09/05/13 - Are we in the current week?
-    var iscurweek      = splitdata[21];
-    var iscurweeksplit = iscurweek.split('-');
-
     // Make sure the tab for today stays noticeable only when current week is displayed
-    if (iscurweeksplit[1]==1) {$('#'+Dt2dy2+' a').attr('class','').addClass('datehead today_col');} // End if.
+    //if (iscurweeksplit[1]==1) {$('#'+Dt2dy2+' a').attr('class','').addClass('datehead today_col');} // End if.
 
     // Populate textarea
     $('#txtInfo1').val(splitdata[0]);
@@ -134,7 +128,9 @@ $(document).ready(function(){
     if (splitdata[1] == 1)        {$("#row_imp").attr('checked', 'checked');}
     else                          {$("#row_imp").removeAttr('checked');}
    
-   
+    // 09/05/13 - Are we in the current week?
+    var iscurweek      = splitdata[21];
+    var iscurweeksplit = iscurweek.split('-');
     // Change Prev week button text and actions
     $("#li_prvwkbtn")
     .html('<button id="btnPrevwk" title3="'+splitdata[11]+'" title4="'+splitdata[10]+'" iscurwk="'+iscurweeksplit[0]+'" title="This day in the Previous Week">&lt;</button>') ;
@@ -184,7 +180,6 @@ $(document).ready(function(){
         goToday(datetoupdate);
         showhidechangedstatus('hidden'); // This function is defined below.
         focus_txtarea();
-        //loadCal(0, datetoupdate); // Refresh calendar
       } // End ajax success.
     });
   });
