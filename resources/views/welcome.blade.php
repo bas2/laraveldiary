@@ -38,10 +38,10 @@ var Dt2dy2 = '{{ date("D") }}'; // Day today in three letter format eg Tue obvio
 
   <div><textarea id="txtInfo1"></textarea></div>
   <div id="rw7">
-  <input id="row_exist" type="checkbox" checked>
-  <label for="row_exist" title="Delete this entry if it exists">Row Exists</label>
-  <input id="row_imp" name="row_imp" type="checkbox">
-  <label for="row_imp" title="Mark this entry as important">Important</label>
+    <input id="row_exist" type="checkbox" checked>
+    <label for="row_exist" title="Delete this entry if it exists">Row Exists</label>
+    <input id="row_imp" name="row_imp" type="checkbox">
+    <label for="row_imp" title="Mark this entry as important">Important</label>
   </div>
   <div class="upd_btn"><input type="button" id="upd_btn" value="Update &gt;"></div>
   <div id="ins_upd_dt">&nbsp;<!-- Created/Edit dates --></div>
@@ -119,14 +119,14 @@ $(document).ready(function(){
     $("#ins_upd_dt").html(st_str) ;
    
     // Check boxes if apply
-    if (splitdata[2].length > 5)  {$("#row_exist").attr('checked',  'checked') ;}
-    else                          {$('#row_exist').removeAttr('checked');}
+    //if (splitdata[2].length > 5)  {$("#row_exist").attr('checked',  'checked') ;}
+    //else                          {$('#row_exist').removeAttr('checked');}
 
-    if (splitdata[2].length == 5) {$("#row_exist").attr('disabled', 'disabled');}
-    else                          {$('#row_exist').removeAttr('disabled');}
+    //if (splitdata[2].length == 5) {$("#row_exist").attr('disabled', 'disabled');}
+    //else                          {$('#row_exist').removeAttr('disabled');}
 
-    if (splitdata[1] == 1)        {$("#row_imp").attr('checked', 'checked');}
-    else                          {$("#row_imp").removeAttr('checked');}
+    //if (splitdata[1] == 1)        {$("#row_imp").attr('checked', 'checked');}
+    //else                          {$("#row_imp").removeAttr('checked');}
    
     // 09/05/13 - Are we in the current week?
     var iscurweek      = splitdata[21];
