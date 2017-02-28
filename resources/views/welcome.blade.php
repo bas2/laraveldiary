@@ -45,7 +45,7 @@ var Dt2dy2 = '{{ date("D") }}'; // Day today in three letter format eg Tue obvio
 
 <script>
 $(document).ready(function(){
- 
+
   $( document ).tooltip({
     items: ".datehead, [tooltiptxt], [title]",
     content: function() {
@@ -53,7 +53,7 @@ $(document).ready(function(){
       if ( element.is( "[tooltiptxt]" ) ) {return element.attr( "tooltiptxt" );}
     }
   });
-  
+
   function getData(mode,date) {
     $.ajax({
       type:'get',
@@ -62,7 +62,7 @@ $(document).ready(function(){
       success: function (json){AjaxTest(json, mode);}
     });
   }
- 
+
   // Initial load via ajax:
   getData('initial','');
 
@@ -138,7 +138,7 @@ $(document).ready(function(){
 
 
 
- 
+
   // Update entry
   $('#upd_btn').click(function(){
     var datetoupdate = $('#upd_btn').attr('title2');        // e.g. 2013-05-08
@@ -171,7 +171,7 @@ $(document).ready(function(){
     goToday(split2[0]);
     loadCal(0, split2[0]);
   });
- 
+
   $('#CalDay').live('click', function(){
     var split2 = $(this).attr('title2').split('|');
     goToday(split2[0]);
@@ -180,82 +180,82 @@ $(document).ready(function(){
     //loadGal(split2[0]);
   });
 
-// Calendar functions
-// AJAX Calendar functions
+  // Calendar functions
+  // AJAX Calendar functions
 
-$('#goLastMonth').live('click', function(){
-  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
-  var month = parseInt(splittxt[1], 10);
-  var year  = parseInt(splittxt[0], 10);
-  if(month== 1) {
-    --year;
-    month= 13;
-  }
-  month--;
-  goToday(year + '-' + month + '-' + splittxt[2]);
-});
+  $('#goLastMonth').live('click', function(){
+    var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+    var month = parseInt(splittxt[1], 10);
+    var year  = parseInt(splittxt[0], 10);
+    if(month== 1) {
+      --year;
+      month= 13;
+    }
+    month--;
+    goToday(year + '-' + month + '-' + splittxt[2]);
+  });
 
-$('#goToMonth').live('change', function(){
-  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
-  var month = parseInt($(this).val(), 10) + 1;
-  goToday(parseInt(splittxt[2]) + '-' + month + '-01');
-});
+  $('#goToMonth').live('change', function(){
+    var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+    var month = parseInt($(this).val(), 10) + 1;
+    goToday(parseInt(splittxt[2]) + '-' + month + '-01');
+  });
 
-$('#goThisMonth').live('click', function(){
-  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
-  var month = parseInt(splittxt[1], 10);
-  var year  = parseInt(splittxt[0], 10);
-  goToday(year + '-' + month + '-' + splittxt[2]);
-});
+  $('#goThisMonth').live('click', function(){
+    var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+    var month = parseInt(splittxt[1], 10);
+    var year  = parseInt(splittxt[0], 10);
+    goToday(year + '-' + month + '-' + splittxt[2]);
+  });
 
-$('#goNextMonth').live('click', function(){
-  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
-  var month = parseInt(splittxt[1], 10);
-  var year  = parseInt(splittxt[0], 10);
-  if(month==12) {
-    ++year;
-    month=0;
-  }
-  month++;
-  goToday(year + '-' + month + '-' + splittxt[2]);
-});
+  $('#goNextMonth').live('click', function(){
+    var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+    var month = parseInt(splittxt[1], 10);
+    var year  = parseInt(splittxt[0], 10);
+    if(month==12) {
+      ++year;
+      month=0;
+    }
+    month++;
+    goToday(year + '-' + month + '-' + splittxt[2]);
+  });
 
-$('#goLastYear').live('click', function(){
-  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
-  var year = parseInt(splittxt[0], 10);
-  goToday(--year + '-' + splittxt[1] + '-' + splittxt[2]);
-});
+  $('#goLastYear').live('click', function(){
+    var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+    var year = parseInt(splittxt[0], 10);
+    goToday(--year + '-' + splittxt[1] + '-' + splittxt[2]);
+  });
 
-$('#goToYear').live('change', function(){
-  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
-  var year = parseInt($(this).val(), 10) ;
-  goToday(year + '-' + parseInt(splittxt[1], 10)  + '-' + splittxt[2] );
-});
+  $('#goToYear').live('change', function(){
+    var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+    var year = parseInt($(this).val(), 10) ;
+    goToday(year + '-' + parseInt(splittxt[1], 10)  + '-' + splittxt[2] );
+  });
 
-$('#goNextYear').live('click', function(){
-  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
-  var year = parseInt(splittxt[0], 10);
-  goToday(++year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2]);
-});
+  $('#goNextYear').live('click', function(){
+    var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+    var year = parseInt(splittxt[0], 10);
+    goToday(++year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2]);
+  });
 
-$('#goThisYear').live('click', function(){
-  var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
-  var year = parseInt(splittxt[0], 10);
-  goToday(year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2]);
-});
+  $('#goThisYear').live('click', function(){
+    var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
+    var year = parseInt(splittxt[0], 10);
+    goToday(year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2]);
+  });
 
 
- 
+   
   $('#btnPrevwk, #btnNextwk').live('click', function(){
     goToday($(this).attr('title3'));
     loadCal(0, $(this).attr('title3'));
     //loadGal($(this).attr('title3'));
   });
- 
 
- 
+
+
   $('#txtInfo1').change(function(){showhidechangedstatus('visible');});
-  
+
   $('#txtInfo1').keypress(function(event){if(event.which > 0) {showhidechangedstatus('visible');}});
    
   function loadCal(toggle, dateSelected) {
@@ -269,7 +269,7 @@ $('#goThisYear').live('click', function(){
       }
     });
   } // End loadCal() method.
-  
+
 
   // Gallery functions.
   $('#frmupload').submit(function(e){
@@ -286,16 +286,16 @@ $('#goThisYear').live('click', function(){
       }
     });
   }
-  
+
   $('#gallery li').live('mouseover', function(){
     $('.delimage').remove();
     $('<span class="delimage" title="'+$(this).attr('title')+'">X</span>').appendTo($(this));
   });
-  
+
   $('#gallery li').live('mouseout', function(){
     $('.delimage').remove(); 
   });
-  
+
   $('#gallery .delimage').live('click', function(){
     if (confirm('Are you sure you want to delete this lovely image?')) {
       $.ajax({
@@ -305,7 +305,7 @@ $('#goThisYear').live('click', function(){
       }); // End ajax call.
     } // End if delete image.
   });
-  
+
 
   // 23/10/14 - Load Related DIV content
   function loadRel(seldate) {
@@ -334,9 +334,9 @@ $('#goThisYear').live('click', function(){
 
 
 
-  
+
   // 26/10/13 - Diary tags
-  
+
   function loadTags(seldate) {
     $.ajax({
       type: 'POST',
@@ -347,7 +347,7 @@ $('#goThisYear').live('click', function(){
     }); // End ajax call.
   } // End loadTags() function.
 
-  
+
   // Diary tags.
   $('.diarytag').live('click', function(){ 
     if ($(this).attr('checked')=='checked') {
@@ -455,29 +455,29 @@ $('#goThisYear').live('click', function(){
     } // End if.
   } // End function.
 
-function focus_txtarea() {
-  // Problem with giving textarea focus if it is in a layer that is not visible
-  if ($('#txtInfo1').length>0) {$("#txtInfo1").focus();}
-} // End function.
+  function focus_txtarea() {
+    // Problem with giving textarea focus if it is in a layer that is not visible
+    if ($('#txtInfo1').length>0) {$("#txtInfo1").focus();}
+  } // End function.
 
 
-var EntryChangeCounter;
-var EntryChangeCount = 0;
+  var EntryChangeCounter;
+  var EntryChangeCount = 0;
 
-// Hiding/Showing Changedstatus button - invoked when there is a change in the data entered.
-function showhidechangedstatus(wh) {
-  if (wh == "visible") { // Change was detected!
-    clearInterval(EntryChangeCounter);
-    EntryChangeCounter = setInterval(function(){
-      $('#upd_btn').val('Data Changed Update? ' + ++EntryChangeCount);
-    }, 1000);
-    $('#upd_btn').css({'background':'#c00','color':'#fff'});
-  } else {
-    clearInterval(EntryChangeCounter);
-    EntryChangeCount=0;
-    $('#upd_btn').css({'background':'buttonface','color':'#000'}).attr('value','Update!');
-  }
-} // End function.
+  // Hiding/Showing Changedstatus button - invoked when there is a change in the data entered.
+  function showhidechangedstatus(wh) {
+    if (wh == "visible") { // Change was detected!
+      clearInterval(EntryChangeCounter);
+      EntryChangeCounter = setInterval(function(){
+        $('#upd_btn').val('Data Changed Update? ' + ++EntryChangeCount);
+      }, 1000);
+      $('#upd_btn').css({'background':'#c00','color':'#fff'});
+    } else {
+      clearInterval(EntryChangeCounter);
+      EntryChangeCount=0;
+      $('#upd_btn').css({'background':'buttonface','color':'#000'}).attr('value','Update!');
+    }
+  } // End function.
 
 });
 </script>
