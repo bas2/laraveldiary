@@ -82,25 +82,12 @@ $(document).ready(function(){
 
     var dtarr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // JavaScript days of week array.
     for (i=0; i < 7; i++) {
-      //var th_dy = dtarr[i]; // Three-letter day of week Mon-Fri
       $('#'+dtarr[i]).html(splitdata[i+13]) ; // Rewrite Day headings (18-24)
-      //if (th_dy == splitdata[10].substring(0,3)) { // Selected day.
-        //$('#'+th_dy+' a').attr('class','').addClass('datehead sel_col') ;
-      //}
-
-    } // End for.
+    }
 
     if (splitdata[8] == splitdata[9]) // Today's entry is selected.
-    {
-      $('#txtInfo1').removeAttr('class').addClass('today_col');
-      //$('#'+splitdata[10].substring(0,3)+' a').attr('class','').addClass('datehead today_col');
-    }
-    else {
-      $('#txtInfo1').addClass('sel_col'); // Add selected colour to text entry area.
-    } // End if.
-    
-    // Make sure the tab for today stays noticeable only when current week is displayed
-    //if (iscurweeksplit[1]==1) {$('#'+Dt2dy2+' a').attr('class','').addClass('datehead today_col');} // End if.
+    {$('#txtInfo1').removeAttr('class').addClass('today_col');}
+    else {$('#txtInfo1').addClass('sel_col');} // Add selected colour to text entry area..
 
     // Populate textarea
     $('#txtInfo1').val(splitdata[0]);
@@ -117,16 +104,6 @@ $(document).ready(function(){
     else if (splitdata[3] == '')               {st_str += 'N/A';}
     else                                       {st_str += splitdata[3] + numEdits;}
     $("#ins_upd_dt").html(st_str) ;
-   
-    // Check boxes if apply
-    //if (splitdata[2].length > 5)  {$("#row_exist").attr('checked',  'checked') ;}
-    //else                          {$('#row_exist').removeAttr('checked');}
-
-    //if (splitdata[2].length == 5) {$("#row_exist").attr('disabled', 'disabled');}
-    //else                          {$('#row_exist').removeAttr('disabled');}
-
-    //if (splitdata[1] == 1)        {$("#row_imp").attr('checked', 'checked');}
-    //else                          {$("#row_imp").removeAttr('checked');}
    
     // 09/05/13 - Are we in the current week?
     var iscurweek      = splitdata[21];
