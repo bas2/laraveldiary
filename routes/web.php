@@ -16,10 +16,10 @@ Route::get('home', function () {
 });
 
 Route::get('ajax/getday/{date?}', function($date=null){
-  if(is_null($date)) {$date=\Carbon\Carbon::now()->format('Y-m-d');}
+  if(is_null($date)) {$date=\Carbon\Carbon::now()->format('Y-m-d');} # Today.
   else {$date=\Carbon\Carbon::parse($date)->format('Y-m-d');}
 
-  $date2 = \Carbon\Carbon::parse($date);
+  $date2 = \Carbon\Carbon::parse($date); # Carbon instance for selected date.
   
   $date3 = $date2->copy()->format('l');
   $date4 = $date2->copy();
@@ -52,11 +52,6 @@ Route::get('ajax/getday/{date?}', function($date=null){
 
   $json=[$info,'Imp',$crdt,$chdt,$nume,$count];
 
-  //foreach ([$mon,$tue,$wed,$thu,$fri,$sat,$sun] as $value) {
-  //  $entries=App\Entry::where('d',$value)->get(['info']);
-  //  $info=(empty($entries[0]->info)) ? '' : $entries[0]->info ;
-  //  $json[]='test'.$info;
-  //}
   foreach(['otd13','imp14',\Carbon\Carbon::now()->format('Y-m-d'),$date,$date3,$prvwk,$nxtwk] as $element) {$json[]=$element;}
 
   $now=\Carbon\Carbon::now()->startOfDay();
@@ -64,7 +59,9 @@ Route::get('ajax/getday/{date?}', function($date=null){
     $entries=App\Entry::where('d',$value)->get(['info']);
     $info=(empty($entries[0]->info)) ? '' : $entries[0]->info ;
     $info=str_replace("'", '&lsquo;', $info); # Replace single quotes so they don't mess tips.
-    $class=(empty($info))?' four_col':' three_col';
+    $class=(empty($info))?' four_col':' three_col'; # No entries versus having entries.
+    if ($value->format('Y-m-d')==$date4->format('Y-m-d')) {$class=' sel_col';}
+    if ($value->format('Y-m-d')==date('Y-m-d'))           {$class=' today_col';}
     $difference = ($value->diff($now)->days < 1)? 'today': $value->diffForHumans($now);
     $json[]= "<a class='datehead{$class}' tooltiptxt='<p class=date_s>{$value->format('l jS F')} [$difference}</p>{$info}' title3='{$value->format('Y-m-d')}' title4='{$value->format('D')}' iscurwk='1'>{$value->format('l jS F')}</a>";
   }
