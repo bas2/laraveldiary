@@ -54,14 +54,6 @@ ul.diaryheadings {
   list-style: none;
   border-bottom: 0;
   background-color: transparent;
-  a {
-    display: block;
-    border: 0;
-    padding: 1%;
-    text-align: center;
-    font-family: arial;
-    font-weight: bold;
-  }
   li {
     margin: 0;
     padding: 0;
@@ -69,6 +61,15 @@ ul.diaryheadings {
 
     border-top-left-radius: .4em;
     border-top-right-radius: .4em;
+    a {
+      display: block;
+      border: 0;
+      padding: .2em 1em;
+      text-align: center;
+      font-family: arial;
+      font-weight: bold;
+      height:100%;
+    }
     &.sep {width:1.7375%;}
   }
   a:hover {
