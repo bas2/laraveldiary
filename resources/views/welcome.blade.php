@@ -185,13 +185,13 @@ $(document).ready(function(){
   });
   
 
-  $('#row_exist').click(function(){
-    if ($(this).attr('checked')!='checked' && $('#ins_upd_dt').substr(9, 12) != 'N/A')
-    {
-      if(confirm ('The diary entry for '+$('#upd_btn').attr('title2')+' will be deleted. Continue?') ){del_entry();}
-      else{ focus_txtarea(); return false}
-    }
-  });
+  //$('#row_exist').click(function(){
+  //  if ($(this).attr('checked')!='checked' && $('#ins_upd_dt').substr(9, 12) != 'N/A')
+  //  {
+  //    if(confirm ('The diary entry for '+$('#upd_btn').attr('title2')+' will be deleted. Continue?') ){del_entry();}
+  //    else{ focus_txtarea(); return false}
+  //  }
+  //});
 
 
 
@@ -218,7 +218,7 @@ $(document).ready(function(){
     //loadGal(split2[0]);
   });
 
-  // Calendar functions
+// Calendar functions
 // AJAX Calendar functions
 
 $('#goLastMonth').live('click', function(){
@@ -294,18 +294,14 @@ $('#goThisYear').live('click', function(){
  
   $('#txtInfo1').change(function(){showhidechangedstatus('visible');});
   
-  $('#txtInfo1').keypress(function(event){
-    if (event.which > 0) {showhidechangedstatus('visible');}
-  });
+  $('#txtInfo1').keypress(function(event){if(event.which > 0) {showhidechangedstatus('visible');}});
    
   function loadCal(toggle, dateSelected) {
     var dateSelected_split = dateSelected.split("-");
     $.ajax({
       type: 'get',
       url: 'ajax/calendar/' + dateSelected,
-      
       success: function (data){
-        //alert(data);
         if (toggle) {$('#dtPck').html(data).toggle();}
         else {$('#dtPck').hide().html(data).show();}
       }
@@ -321,9 +317,7 @@ $('#goThisYear').live('click', function(){
   function loadGal(dateSelected) {
     $.ajax({
       type: 'get',
-      url: 'ajax/images',
-      data: 'd=' + dateSelected,
-      
+      url: 'ajax/images/' + dateSelected,
       success: function (data){
         $('#gallery').html(data);
         $("a.gallery").colorbox({rel:'gallery'});
@@ -333,8 +327,7 @@ $('#goThisYear').live('click', function(){
   
   $('#gallery li').live('mouseover', function(){
     $('.delimage').remove();
-    $('<span class="delimage" title="'+$(this).attr('title')+'">X</span>')
-    .appendTo($(this));
+    $('<span class="delimage" title="'+$(this).attr('title')+'">X</span>').appendTo($(this));
   });
   
   $('#gallery li').live('mouseout', function(){
@@ -345,9 +338,7 @@ $('#goThisYear').live('click', function(){
     if (confirm('Are you sure you want to delete this lovely image?')) {
       $.ajax({
         type: 'get',
-        url: 'ajax/delimage',
-        data: 'imgid=' + $(this).attr('title'),
-        
+        url: 'ajax/delimage/' + $(this).attr('title'),
         success: function (data){loadGal($('#upd_btn').attr('title3'));}
       }); // End ajax call.
     } // End if delete image.
@@ -357,10 +348,9 @@ $('#goThisYear').live('click', function(){
   // 23/10/14 - Load Related DIV content
   function loadRel(seldate) {
     $.ajax({
-      type: 'POST',
-      url: 'ajax/related',
-      data: 'sel=' + seldate + '&load=1',
-  
+      type: 'GET',
+      url: 'ajax/related/' + seldate,
+      data: 'load=1',
       success: function (data){$('#related').html(data);}
     }); // End ajax call.
   }
@@ -371,8 +361,8 @@ $('#goThisYear').live('click', function(){
     var seldate = $(this).attr('title');
     $.ajax({
       type: 'POST',
-      url: 'ajax/related',
-      data: 'sel=' + seldate + '&opt=' + opt + '&upd=1',
+      url: 'ajax/related/' + seldate,
+      data: 'opt=' + opt + '&upd=1',
       
       success: function (data){if (data!='') {$('#related').html(data);}}
     }); // End ajax call.
@@ -388,8 +378,8 @@ $('#goThisYear').live('click', function(){
   function loadTags(seldate) {
     $.ajax({
       type: 'POST',
-      url: 'ajax/addtag',
-      data: 'sel=' + seldate + '&load=1',
+      url: 'ajax/addtag' + seldate,
+      data: '&load=1',
       
       success: function (data){$('#entrytags').html(data);}
     }); // End ajax call.
@@ -406,8 +396,7 @@ $('#goThisYear').live('click', function(){
 
       $.ajax({
         type: 'POST',
-        url: 'ajax/addtag',
-        data: 'sel=' + seldate + '&tagid=' + tagid,
+        url: 'ajax/addtag/' + seldate + '/' + tagid,
         success: function (data){}
       }); // End ajax call.
     }
