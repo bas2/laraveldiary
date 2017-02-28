@@ -37,12 +37,6 @@ var Dt2dy2 = '{{ date("D") }}'; // Day today in three letter format eg Tue obvio
   </ul>
 
   <div><textarea id="txtInfo1"></textarea></div>
-  <div id="rw7">
-    <input id="row_exist" type="checkbox" checked>
-    <label for="row_exist" title="Delete this entry if it exists">Row Exists</label>
-    <input id="row_imp" name="row_imp" type="checkbox">
-    <label for="row_imp" title="Mark this entry as important">Important</label>
-  </div>
   <div class="upd_btn"><input type="button" id="upd_btn" value="Update &gt;"></div>
   <div id="ins_upd_dt">&nbsp;<!-- Created/Edit dates --></div>
 
@@ -160,15 +154,6 @@ $(document).ready(function(){
       } // End ajax success.
     });
   });
-  
-
-  //$('#row_exist').click(function(){
-  //  if ($(this).attr('checked')!='checked' && $('#ins_upd_dt').substr(9, 12) != 'N/A')
-  //  {
-  //    if(confirm ('The diary entry for '+$('#upd_btn').attr('title2')+' will be deleted. Continue?') ){del_entry();}
-  //    else{ focus_txtarea(); return false}
-  //  }
-  //});
 
 
 
