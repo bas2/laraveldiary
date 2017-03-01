@@ -16,11 +16,6 @@
 </head>
 <body>
 <div class="quickadd">+</div>
-<script>
-// DECLARE (global) CONSTANTS to pass to our JavaScript. These values are provided dynamically using PHP
-var Dt2dy2 = '{{ date("D") }}'; // Day today in three letter format eg Tue obviously representing today which is Tuesday.
-
-</script>
 
 <div id="dtPck"><!-- Calendar widget --></div>
 {{ App\ProjectsMenu::display() }}
@@ -37,14 +32,21 @@ var Dt2dy2 = '{{ date("D") }}'; // Day today in three letter format eg Tue obvio
   </ul>
 
   <div><textarea id="txtInfo1"></textarea></div>
+
   <div class="upd_btn"><input type="button" id="upd_btn" value="Update &gt;"></div>
+
   <div id="ins_upd_dt">&nbsp;<!-- Created/Edit dates --></div>
 
 </div>
 
-
 <script>
 $(document).ready(function(){
+  $('ul#projectsmenu').css({'background':'#c00'});
+  $('ul#projectsmenu li').css('float','none');
+  $('ul#projectsmenu li').has('a[href]').hide();
+  $('ul#projectsmenu li span').css('cursor','pointer').click(function() {
+    $('ul#projectsmenu li').has('a[href]').toggle();
+  });
 
   $( document ).tooltip({
     items: ".datehead, [tooltiptxt], [title]",
