@@ -86,9 +86,9 @@ Route::get('ajax/calendar/{date}', function($date){
   $monthentries=App\Entry::whereBetween('d',[$seldatest->format('Y-m-d'),$seldateen->format('Y-m-d')])->get(['d','info']);
   $me2=[];foreach($monthentries as $me3) {
     $d=\Carbon\Carbon::parse($me3->d)->format('j');
-    if (!empty($me3->info)) {
-      $me2[$d]=$me3->info;
-    } else {$me2[$d]='';}
+    if (!empty($me3->info)) 
+    {$me2[$d]=$me3->info;} 
+    else {$me2[$d]='';}
   }
   
 
