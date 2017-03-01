@@ -124,7 +124,7 @@ ul.diaryheadings {
   width: 100%;
   margin: 0;
   padding: .3em;
-  height: 20em;
+  height: 25em;
   font: 1.2em arial;
   border: 0;
   font-weight: bold;
@@ -205,33 +205,35 @@ div.upd_btn {
 /* Calendar styles */
 #dtPck {
   position: fixed;
-  width: 27%;
+  width: 29%;
   text-align: center;
   background-image: linear-gradient($selcol, #000);
   border-radius: .8em;
   box-shadow: 2px 2px 2px #000;
-  height: 80%;
   tbody#d td {
     font: bold .8em arial;
     color: #fff;
     background: grey;
+    border-radius: 0;
+    text-shadow: 2px 2px 1px #000;
   }
   #tblDate {
     border-collapse: collapse;
     text-align: center;
+    width: 90%;
+    margin:0 auto;
+    caption {background: rgba(255,255,255,.5);color:#000;}
     td {
-      padding: 0;
-      font: 1.2em tahoma;
+      padding:0;margin:0;
+      border-radius: .4em;
       a {
         display: block;
         text-decoration: none;
-        padding: .1em;
-        font: bold 1em arial;
+        font: bold 1.5em arial;
         border-radius: .4em;
-        border-right: 1px solid #000;
-        border-bottom: 1px solid #000;
+        border-right:1px solid #000;
+        border-bottom:1px solid #000;
         text-shadow: 2px 2px 1px #000;
-        width: 2em;
         cursor: pointer;
       }
     }
