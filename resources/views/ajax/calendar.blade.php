@@ -24,7 +24,7 @@
 <caption>{{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</caption>
 <tr id="caldayrow">
   <tbody id="d">
-  <td class="nohover">wk</td>
+  {{-- <td class="nohover">wk</td> --}}
   @foreach (['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $day)
   <td width="10%">{{ $day }}</td>
   @endforeach
@@ -32,11 +32,11 @@
 </tr>
 
 <tr>
-  <td>&nbsp;</td>
+  {{-- <td>&nbsp;</td> --}}
 
-@for ($i=0;$i<$vals['blankcells'];$i++)
-  <td>&nbsp;</td>
-@endfor
+{{-- @for ($i=0;$i<$vals['blankcells'];$i++) --}}
+  <td colspan="{{ $vals['blankcells'] }}"><a>&nbsp;</a></td>
+{{-- @endfor --}}
 
 @for($i=1;$i<=$vals['daysinmonth'];$i++)
   @if(!empty($vals['monthentries'][$i]))
@@ -67,7 +67,7 @@
     @if($i == ($rnum-$vals['blankcells']))
 </tr>
 <tr>
-  <td></td>
+  {{-- <td>-</td> --}}
     @endif
   @endforeach
 @endfor
