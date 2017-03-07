@@ -9,10 +9,6 @@ body {
   margin: 5px;
 }
 
-select {
- font-size: 11px;
-}
-
 /* Preferred colours */
 .today_col {
   background-color: $tdycol; color: #fff; /* today */
@@ -31,6 +27,10 @@ select {
   background-image: linear-gradient($forcol, #000);
 }
 
+select {
+ font-size: 11px;
+}
+
 ul#projectsmenu {
   position:absolute;top:0;right:0;
   margin-top:0;padding-left: 0;
@@ -46,7 +46,9 @@ ul#projectsmenu {
 
 }
 
+
 ul.diaryheadings {
+  width: 70%;
   display:flex;
   flex-wrap:wrap;
   margin: 0;
@@ -58,41 +60,48 @@ ul.diaryheadings {
     margin: 0;
     padding: 0;
     width: 10.8%;
-
     border-top-left-radius: .4em;
     border-top-right-radius: .4em;
     a {
       display: block;
-      border: 0;
-      padding: .2em 1em;
       text-align: center;
-      font-family: arial;
       font-weight: bold;
-      height:100%;
+      padding: .1em 1em;
+      color: #fff;
+      font-family: verdana;
+      font-size: 8pt;
+      cursor: pointer;
+      border-top-left-radius: .8em;
+      border-top-right-radius: .8em;
+      text-shadow: 2px 2px 1px grey;
+      &:hover {
+        background: linear-gradient($selcol,#000); color: #fff;
+      }
     }
     &.sep {width:1.7375%;}
   }
-  a:hover {
-    background: linear-gradient($selcol,#000); color: #fff;
+  #li_prvwkbtn, #li_nxtwkbtn {
+    width:5.25%;
+    button {width: 100%;}
   }
+
+  #li_prvwkbtn button {
+    border-top-left-radius: .8em;
+    border-bottom-left-radius: .8em;
+  }
+
+  #li_nxtwkbtn button {
+    border-top-right-radius: .8em;
+    border-bottom-right-radius: .8em;
+  }
+
+  #li_prvwkbtn button:hover, #li_nxtwkbtn button:hover {
+    background-color: #c00;
+    color: #fff;
+  }
+  
 }
 
-.datehead {
-  color: #fff;
-  font-weight: bold;
-  font-family: verdana;
-  font-size: 8pt;
-  cursor: pointer;
-  border-top-left-radius: .8em;
-  border-top-right-radius: .8em;
-  text-shadow: 2px 2px 1px grey;
-  border-top: 2px solid orange;
-}
-
-#li_prvwkbtn, #li_nxtwkbtn {
-  width:5.25%;
-  button {width: 100%;}
-}
 
 #li_prvwkbtn button, #li_nxtwkbtn button, #dtPck .lbtn, #dtPck .rbtn  {
   cursor: pointer;
@@ -103,25 +112,11 @@ ul.diaryheadings {
   color: #900;
 }
 
-#li_prvwkbtn button:hover, #li_nxtwkbtn button:hover {
-  background-color: #c00;
-  color: #fff;
-}
-
-#li_prvwkbtn button {
-  border-top-left-radius: .8em;
-  border-bottom-left-radius: .8em;
-}
-
-#li_nxtwkbtn button {
-  border-top-right-radius: .8em;
-  border-bottom-right-radius: .8em;
-}
 
 
 /* Data entry textarea */
 #txtInfo1 {
-  width: 100%;
+  width: 70%;
   margin: 0;
   padding: .3em;
   height: 25em;
@@ -135,33 +130,21 @@ ul.diaryheadings {
 }
 
 
-#diarym {
-  padding: 0;
-  margin: 0;
+
+#upd_btn {
   width: 70%;
-  input {
-    border: 1px solid #ccc;
-    padding: 1px;
-    font-family: verdana;
+  border-bottom-left-radius: .8em;
+  border-bottom-right-radius: .8em;
+  font-size: 1.3em;
+
+  border: 0;
+  &:hover {
+    background-color: #c00;
+    color: #fff;
+    font-weight: bold;
   }
 }
 
-div.upd_btn {
-  float: right;
-  #upd_btn {
-    float: right;
-    border-bottom-left-radius: .8em;
-    border-bottom-right-radius: .8em;
-    font-size: 1.3em;
-    width: 20em;
-    border: 0;
-    &:hover {
-      background-color: #c00;
-      color: #fff;
-      font-weight: bold;
-    }
-  }
-}
 
 #rw7 { /* Row exists and important. */
   float: left;
@@ -169,12 +152,14 @@ div.upd_btn {
 }
 
 #ins_upd_dt {
+  box-sizing: border-box;
+  width: 70%;
   clear:both;
   background: #c00;
   color: #fff;
   font: bold .9em tahoma;
   border-radius: .3em;
-  margin-top: 2.3em;
+  margin-top: .5em;
   padding: .4em;
   text-align: center;
 }
@@ -204,7 +189,7 @@ div.upd_btn {
 
 /* Calendar styles */
 #dtPck {
-  position: fixed;
+  position: fixed;right:0;top:20px;
   width: 29%;
   text-align: center;
   background-image: linear-gradient($selcol, #000);
