@@ -2,13 +2,13 @@
 <p>
 {!! Form::button('&lt;',['id'=>"goLastMonth",'class'=>"lbtn",'title2'=>$vals['datesel'],'title'=>"Previous Month"]) !!}
 
-{!! Form::selectMonth('months', $vals['seldate']->format('n'), ['id'=>'goToMonth']) !!}
+{!! Form::selectMonth('months', $vals['seldate']->format('n'), ['id'=>'goToMonth','title2'=>$vals['datesel']]) !!}
 
 {!! Form::button('&gt;',['id'=>"goNextMonth",'class'=>"rbtn",'title2'=>$vals['datesel'],'title'=>"Next Month"]) !!}
 
 {!! Form::button('&lt;',['id'=>"goLastYear",'class'=>"lbtn",'title2'=>$vals['datesel'],'title'=>"Previous Year"]) !!}
 
-{!! Form::selectYear('years','1973','2099',$vals['seldate']->format('Y')) !!}
+{!! Form::selectYear('years','1973','2099',$vals['seldate']->format('Y'),['id'=>'goToYear','title2'=>$vals['datesel']]) !!}
 
 {!! Form::button('&gt;',['id'=>"goNextYear",'class'=>"rbtn",'title2'=>$vals['datesel'],'title'=>"Next Year"]) !!}
 </p>
@@ -34,13 +34,13 @@
 <tr>
   {{-- <td>&nbsp;</td> --}}
 
-{{-- @for ($i=0;$i<$vals['blankcells'];$i++) --}}
+@if($vals['blankcells'])
   <td colspan="{{ $vals['blankcells'] }}"><a>&nbsp;</a></td>
-{{-- @endfor --}}
+@endif
 
 @for($i=1;$i<=$vals['daysinmonth'];$i++)
   @if(!empty($vals['monthentries'][$i]))
-    @if($vals['seldate']->format('Y-m-'.$i)==date('Y-m-d'))
+    @if($vals['seldate']->format('Y-m-'.sprintf('%02d', $i))==date('Y-m-d'))
     <td class="curDate">
     @else
       @if($vals['seldate']->format('Y-m-'.sprintf('%02d', $i))==$vals['datesel'])
@@ -52,7 +52,7 @@
     <a id="CalDay" title2="{{ $vals['seldate']->format('Y-m-'.$i) }}|{{ \Carbon\Carbon::parse($vals['seldate']->format('Y-m-'.$i))->format('D') }}"
      tooltiptxt="{{ $vals['monthentries'][$i] }}">{{ $i }}</a></td>
   @else
-    @if($vals['seldate']->format('Y-m-'.$i)==date('Y-m-d'))
+    @if($vals['seldate']->format('Y-m-'.sprintf('%02d', $i))==date('Y-m-d'))
     <td class="curDate">
     @else
       @if($vals['seldate']->format('Y-m-'.sprintf('%02d', $i))==$vals['datesel'])
