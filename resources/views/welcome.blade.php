@@ -143,22 +143,19 @@ $(document).ready(function(){
   // Click on a date heading
   $('ul.diaryheadings a').live('click', function(){
     goToday($(this).attr('title3') );
-    loadCal(0, $(this).attr('title3'));
   });
 
 
   // Calendar functions
+  
+  $('#tblDate a[title2]').live('click', function(){
+    var split2 = $(this).attr('title2').split('|');
+    goToday(split2[0]);
+  });
 
   $('#goToday').live('click', function(){
     var split2 = $(this).attr('title2').split('|');
     goToday(split2[0]);
-    loadCal(0, split2[0]);
-  });
-
-  $('#CalDay').live('click', function(){
-    var split2 = $(this).attr('title2').split('|');
-    goToday(split2[0]);
-    loadCal(0, split2[0]);
   });
 
   $('#goLastMonth').live('click', function(){
@@ -224,7 +221,6 @@ $(document).ready(function(){
 
   $('#btnPrevwk, #btnNextwk').live('click', function(){
     goToday($(this).attr('title3'));
-    loadCal(0, $(this).attr('title3'));
   });
 
   $('#txtInfo1').change(function(){showhidechangedstatus('visible');});
