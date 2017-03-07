@@ -22,14 +22,14 @@
 
 <table id="tblDate">
 <caption>{{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</caption>
+<tbody id="d">
 <tr id="caldayrow">
-  <tbody id="d">
   {{-- <td class="nohover">wk</td> --}}
   @foreach (['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $day)
   <td width="10%">{{ $day }}</td>
   @endforeach
-  </tbody>
 </tr>
+</tbody>
 
 <tr>
   {{-- <td>&nbsp;</td> --}}
