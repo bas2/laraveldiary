@@ -199,8 +199,7 @@ $(document).ready(function(){
 
   $('#goToMonth').live('change', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
-    var month = parseInt($(this).val(), 10) + 1;
-    goToday(parseInt(splittxt[2]) + '-' + month + '-01');
+    goToday(splittxt[0] + '-' + parseInt($(this).val(), 10) + '-' + splittxt[2]);
   });
 
   $('#goThisMonth').live('click', function(){
