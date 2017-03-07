@@ -9,38 +9,33 @@
   <link rel="stylesheet" href="css/styles.css">
 
   <script src="js/jquery-1.8.3.min.js"></script>
-  {{-- <script src="js/jquery.colorbox-min.js"></script> --}}
   <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-  {{-- <script src="js/cookie.js"></script>
-  <script src="js/script.js"></script> --}}
 </head>
 <body>
-<div class="quickadd">+</div>
 
-<div id="dtPck"><!-- Calendar widget --></div>
-{{ App\ProjectsMenu::display() }}
+  @include('projectmenu')
 
-<div id="diarym">
+  <div id="dtPck">@include('ajax.calendar')</div>
 
   <ul class="diaryheadings">
     <li id="li_prvwkbtn"></li>
     <li class="sep"></li>
     @foreach (['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $weekday)
-    <li id="{{ $weekday }}"><a>&nbsp;</a></li><li class="sep"></li>
+    <li id="{{ $weekday }}"><a>{{ $weekday }}</a></li>
+    <li class="sep"></li>
     @endforeach
     <li id="li_nxtwkbtn"></li>
   </ul>
 
-  <div><textarea id="txtInfo1"></textarea></div>
+  <textarea id="txtInfo1" class="today_col"></textarea>
 
-  <div class="upd_btn"><input type="button" id="upd_btn" value="Update &gt;"></div>
+  <input type="button" id="upd_btn" value="Update &gt;">
 
-  <div id="ins_upd_dt">&nbsp;<!-- Created/Edit dates --></div>
-
-</div>
+  <div id="ins_upd_dt"></div>
 
 <script>
 $(document).ready(function(){
+  $('<div class="quickadd">+</div>').prependTo('body');
   $('ul#projectsmenu').css({'background':'#c00'});
   $('ul#projectsmenu li').css('float','none');
   $('ul#projectsmenu li').has('a[href]').hide();
@@ -65,12 +60,11 @@ $(document).ready(function(){
     });
   }
 
-  // Initial load via ajax:
-  getData('initial','');
+  getData('initial',''); // Initial load via ajax:
+
 
   // When a date header is clicked
   function goToday(sel2) {getData('',sel2);}
-
 
 
   function AjaxTest(json, mode) {
@@ -85,8 +79,7 @@ $(document).ready(function(){
     {$('#txtInfo1').removeAttr('class').addClass('today_col');}
     else {$('#txtInfo1').addClass('sel_col');} // Add selected colour to text entry area..
 
-    // Populate textarea
-    $('#txtInfo1').val(splitdata[0]);
+    $('#txtInfo1').val(splitdata[0]); // Populate textarea
       
     var st_str = 'Created: ';
     if (splitdata[2] == '01/01/1990 00:00:00') {st_str += 'Not Known';}
@@ -124,21 +117,10 @@ $(document).ready(function(){
     // We set this so we can keep track of the selected date
     $('#upd_btn').attr('title2',splitdata[9]);
 
-    if (mode=='initial') {
-      //loadGal(Dt2dy);
-      //loadRel(Dt2dy);
+    if (mode=='initial') {$('#dtPck').animate({right: 10, top: 20}, 'slow');} // Calendar
 
-      $('#dtPck').animate({right: 10, top: 20}, 'slow'); // Calendar
-    } // End if.
     loadCal(0, splitdata[9]);
   }
-
-
-
-
-
-
-
 
 
   // Update entry
@@ -158,15 +140,14 @@ $(document).ready(function(){
   });
 
 
-
   // Click on a date heading
-  $('.datehead').live('click', function(){
+  $('ul.diaryheadings a').live('click', function(){
     goToday($(this).attr('title3') );
     loadCal(0, $(this).attr('title3'));
-    //loadGal($(this).attr('title3'));
-    //loadRel($(this).attr('title3')); // 
-    //loadTags($(this).attr('title3')); // 26/10/13
   });
+
+
+  // Calendar functions
 
   $('#goToday').live('click', function(){
     var split2 = $(this).attr('title2').split('|');
@@ -178,12 +159,7 @@ $(document).ready(function(){
     var split2 = $(this).attr('title2').split('|');
     goToday(split2[0]);
     loadCal(0, split2[0]);
-    //loadRel(split2[0]); // 
-    //loadGal(split2[0]);
   });
-
-  // Calendar functions
-  // AJAX Calendar functions
 
   $('#goLastMonth').live('click', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
@@ -246,14 +222,10 @@ $(document).ready(function(){
   });
 
 
-   
   $('#btnPrevwk, #btnNextwk').live('click', function(){
     goToday($(this).attr('title3'));
     loadCal(0, $(this).attr('title3'));
-    //loadGal($(this).attr('title3'));
   });
-
-
 
   $('#txtInfo1').change(function(){showhidechangedstatus('visible');});
 
@@ -270,102 +242,6 @@ $(document).ready(function(){
       }
     });
   } // End loadCal() method.
-
-
-  // Gallery functions.
-  $('#frmupload').submit(function(e){
-    setTimeout(function(){loadGal($('#upd_btn').attr('title3'))}, 3000);
-  });
-
-  function loadGal(dateSelected) {
-    $.ajax({
-      type: 'get',
-      url: 'ajax/images/' + dateSelected,
-      success: function (data){
-        $('#gallery').html(data);
-        $("a.gallery").colorbox({rel:'gallery'});
-      }
-    });
-  }
-
-  $('#gallery li').live('mouseover', function(){
-    $('.delimage').remove();
-    $('<span class="delimage" title="'+$(this).attr('title')+'">X</span>').appendTo($(this));
-  });
-
-  $('#gallery li').live('mouseout', function(){
-    $('.delimage').remove(); 
-  });
-
-  $('#gallery .delimage').live('click', function(){
-    if (confirm('Are you sure you want to delete this lovely image?')) {
-      $.ajax({
-        type: 'get',
-        url: 'ajax/delimage/' + $(this).attr('title'),
-        success: function (data){loadGal($('#upd_btn').attr('title3'));}
-      }); // End ajax call.
-    } // End if delete image.
-  });
-
-
-  // 23/10/14 - Load Related DIV content
-  function loadRel(seldate) {
-    $.ajax({
-      type: 'GET',
-      url: 'ajax/related/' + seldate,
-      data: 'load=1',
-      success: function (data){$('#related').html(data);}
-    }); // End ajax call.
-  }
-
-  // Add related to entry.
-  $('#sel_relmain').live('change', function(){
-    var opt = $(this).val();
-    var seldate = $(this).attr('title');
-    $.ajax({
-      type: 'POST',
-      url: 'ajax/related/' + seldate,
-      data: 'opt=' + opt + '&upd=1',
-      
-      success: function (data){if (data!='') {$('#related').html(data);}}
-    }); // End ajax call.
-  });
-
-
-
-
-
-
-  // 26/10/13 - Diary tags
-
-  function loadTags(seldate) {
-    $.ajax({
-      type: 'POST',
-      url: 'ajax/addtag' + seldate,
-      data: '&load=1',
-      
-      success: function (data){$('#entrytags').html(data);}
-    }); // End ajax call.
-  } // End loadTags() function.
-
-
-  // Diary tags.
-  $('.diarytag').live('click', function(){ 
-    if ($(this).attr('checked')=='checked') {
-      var test = document.title.substr(document.title.indexOf(':')+2);
-      var splittest = test.split('-');
-      var seldate = splittest[2].substr(0,4)+'-'+splittest[1]+'-'+splittest[0];
-      var tagid = $(this).attr('id').substr(4);
-
-      $.ajax({
-        type: 'POST',
-        url: 'ajax/addtag/' + seldate + '/' + tagid,
-        success: function (data){}
-      }); // End ajax call.
-    }
-  });
-
-
 
 
   // Quick add entries
@@ -397,6 +273,7 @@ $(document).ready(function(){
       }); // End ajax call.
     } // End if.
   });
+
 
   $('input[value=X]').live('click', function() {
     reloadQADiv('u');
@@ -430,6 +307,7 @@ $(document).ready(function(){
     }); // End ajax call.
   });
 
+
   $('.delentry').live('click', function() {
     var id   = $(this).parent().attr('class').substr(3);
     $.ajax({
@@ -438,7 +316,6 @@ $(document).ready(function(){
       success: function (quickentries){reloadQADiv('d');}
     }); // End ajax call.
   });
-
 
 
   function reloadQADiv(m) {
@@ -455,6 +332,7 @@ $(document).ready(function(){
       }); // End ajax call.
     } // End if.
   } // End function.
+
 
   function focus_txtarea() {
     // Problem with giving textarea focus if it is in a layer that is not visible
@@ -479,6 +357,7 @@ $(document).ready(function(){
       $('#upd_btn').css({'background':'buttonface','color':'#000'}).attr('value','Update!');
     }
   } // End function.
+
 
 });
 </script>
