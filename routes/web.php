@@ -12,8 +12,12 @@
 */
 
 Route::get('home', function () {
-  return view('welcome');
+  $list = \File::directories('../..');
+  $proj=[];foreach($list as $project) {if($project!='Shared'){$proj[]=ucwords(str_replace('../../', '', $project));}}
+  return view('welcome')->with('projlist',$proj)
+  ->with('vals',['datesel'=>\Carbon\Carbon::now(),'seldate'=>\Carbon\Carbon::now(),'blankcells'=>1,'daysinmonth'=>31]);
 });
+
 
 Route::get('ajax/getday/{date?}', function($date=null){
   if(is_null($date)) {$date=\Carbon\Carbon::now()->format('Y-m-d');} # Today.
@@ -59,11 +63,11 @@ Route::get('ajax/getday/{date?}', function($date=null){
     $entries=App\Entry::where('d',$value)->get(['info']);
     $info=(empty($entries[0]->info)) ? '' : $entries[0]->info ;
     $info=str_replace("'", '&lsquo;', $info); # Replace single quotes so they don't mess tips.
-    $class=(empty($info))?' four_col':' three_col'; # No entries versus having entries.
-    if ($value->format('Y-m-d')==$date4->format('Y-m-d')) {$class=' sel_col';}
-    if ($value->format('Y-m-d')==date('Y-m-d'))           {$class=' today_col';}
+    $class=(empty($info))?'four_col':'three_col'; # No entries versus having entries.
+    if ($value->format('Y-m-d')==$date4->format('Y-m-d')) {$class='sel_col';}
+    if ($value->format('Y-m-d')==date('Y-m-d'))           {$class='today_col';}
     $difference = ($value->diff($now)->days < 1)? 'today': $value->diffForHumans($now);
-    $json[]= "<a class='datehead{$class}' tooltiptxt='<p class=date_s>{$value->format('l jS F')} [$difference}</p>{$info}' title3='{$value->format('Y-m-d')}' title4='{$value->format('D')}' iscurwk='1'>{$value->format('l jS F')}</a>";
+    $json[]= "<a class='{$class}' tooltiptxt='<p class=date_s>{$value->format('l jS F')} [$difference}</p>{$info}' title3='{$value->format('Y-m-d')}' title4='{$value->format('D')}' iscurwk='1'>{$value->format('l jS F')}</a>";
   }
   foreach(['Forth25',$curwk,'c','n'] as $element) {$json[]=$element;}
   $json=json_encode($json);
@@ -86,8 +90,7 @@ Route::get('ajax/calendar/{date}', function($date){
   $monthentries=App\Entry::whereBetween('d',[$seldatest->format('Y-m-d'),$seldateen->format('Y-m-d')])->get(['d','info']);
   $me2=[];foreach($monthentries as $me3) {
     $d=\Carbon\Carbon::parse($me3->d)->format('j');
-    if (!empty($me3->info)) 
-    {$me2[$d]=$me3->info;} 
+    if (!empty($me3->info)) {$me2[$d]=$me3->info;} 
     else {$me2[$d]='';}
   }
   
