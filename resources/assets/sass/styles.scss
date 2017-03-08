@@ -167,17 +167,17 @@ ul.diaryheadings {
 
 
 .ui-tooltip {
-  background: hsla(30, 100%, 40%, 1);
+  background: hsla(30, 100%, 40%, 1) !important;
   text-align: center;
-  padding: 0 20px 10px;
-  color: #fff;
+  padding: 0 20px 10px !important;
+  color: #fff !important;
   border-radius: 20px;
-  font: bold 12px "Helvetica Neue", Sans-Serif;
+  font: bold 12px "Helvetica Neue", Sans-Serif !important;
   text-transform: uppercase;
   box-shadow: 0 0 7px black;
   .date_s {
     font: bold 12px "Arial Black", Tahoma;
-    background-color: #fff;
+    background-color: #000;
     color: #fff;
     border-radius: .3em;
     padding: 0 4px 4px;
