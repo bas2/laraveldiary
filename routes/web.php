@@ -110,6 +110,21 @@ Route::post('ajax/related', function(){
 
 });
 
+Route::post('ajax/quickentries/add', function () {
+  $entry=new \App\Qentry;
+  $entry->text = '-';
+  $entry->save();
+});
+
+Route::post('ajax/quickentries/upd/{id}', function ($id){
+  $input=Request::all();
+  $entry=\App\Qentry::where('id',$id)->update(['text'=>$input['text']]);
+});
+
+Route::post('ajax/quickentries/del/{id}', function ($id){
+  $entry=\App\Qentry::where('id',$id)->delete();
+});
+
 Route::get('ajax/quickentries/{mode}', function($mode){
 
   $mode2 = 'a';
@@ -126,11 +141,17 @@ Route::get('ajax/quickentries/{mode}', function($mode){
 
   $qentries=\App\Qentry::orderBy('id')->get(['id','text']);
 
-  return view('ajax.quickentries')->with('mode',$mode2)->with('classes',[$addclass,$updclass,$delclass,$upclass])->with('data',$qentries);
+  return view('ajax.quickentries')->with('mode',$mode2)
+  ->with('classes',[$addclass,$updclass,$delclass,$upclass])->with('data',$qentries);
 });
 
 Route::get('ajax/quickentries/up/{id}', function($id){
-
+  $prioritem=\App\Qentry::where('id','<',$id)->orderBy('id','desc')->take(1)->get(['id','text']);
+  $curritem=\App\Qentry::where('id',$id)->get(['text']);
+  if(!empty($prioritem[0]->id)) {
+    $upd1=\App\Qentry::where('id',$prioritem[0]->id)->update(['text'=>$curritem[0]->text]);
+    $upd1=\App\Qentry::where('id',$id)->update(['text'=>$prioritem[0]->text]);
+  }
 });
 
 
