@@ -255,49 +255,36 @@ ul.diaryheadings {
 }
 
 .quickadddiv {
+  z-index: 2;
   border-radius: .4em;
   position:absolute; top: 20px; left: 800px;
   background: linear-gradient(black, blue);
   color:#fff;border:1px solid #fff;
   padding: 1em;
+  ul {
+    margin: 1em 1em 1em 0; padding-left:1.3em;
+  }
+  li {
+    cursor: pointer;
+    &:hover {background: #f00;color: #fff;}
+    textarea {width: 25em;}
+  }
+  .newentry {
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: .3em;
+    background: red;
+    text-align: center;
+    width: 5em;
+  }
+  .mode {
+    font-weight: bold;
+  }
+  .mode span {
+    cursor: pointer;
+    &.highlight {
+      color: yellow;
+      cursor: default;
+    }
+  }
 }
-
-.quickadddiv ul {
-  margin: 1em 1em 1em 0; padding-left:1.3em;
-}
-
-.quickadddiv li {
-  cursor: pointer;
-}
-
-.quickadddiv li:hover {
-  background: #f00;color: #fff;
-}
-
-.quickadddiv li textarea {
-  width: 25em;
-}
-
-.quickadddiv .newentry {
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: .3em;
-  background: red;
-  text-align: center;
-  width: 5em;
-}
-
-.quickadddiv .mode span {
-  cursor: pointer;
-}
-
-
-.quickadddiv .mode span.highlight {
-  color: yellow;
-  cursor: default;
-}
-
-.quickadddiv .mode {
-  font-weight: bold;
-}
-
