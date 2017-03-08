@@ -5,11 +5,13 @@
   <title>Diary - AJAX!</title>
 
   {{-- <link rel="stylesheet" href="js/jquery/colorbox/colorbox.css"> --}}
-  <link rel="stylesheet" href="js/jquery/css/blitzer/jquery-ui-1.10.3.custom.min.css">
   <link rel="stylesheet" href="css/styles.css">
 
-  <script src="js/jquery-1.8.3.min.js"></script>
-  <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+  {!! Html::style('js/jquery/jquery-ui-1.12.1.custom/jquery-ui.css') !!}
+
+  {!! Html::script('js/jquery/jquery-3.1.1.min.js') !!}
+  {!! Html::script('js/jquery/jquery-ui-1.12.1.custom/external/jquery/jquery.js') !!}
+  {!! Html::script('js/jquery/jquery-ui-1.12.1.custom/jquery-ui.min.js') !!}
 </head>
 <body>
 
@@ -141,24 +143,24 @@ $(document).ready(function(){
 
 
   // Click on a date heading
-  $('ul.diaryheadings a').live('click', function(){
+  $('ul.diaryheadings').on('click','a', function(){
     goToday($(this).attr('title3') );
   });
 
 
   // Calendar functions
   
-  $('#tblDate a[title2]').live('click', function(){
+  $('body').on('click','#tblDate a[title2]', function(){
     var split2 = $(this).attr('title2').split('|');
     goToday(split2[0]);
   });
 
-  $('#goToday').live('click', function(){
+  $('body').on('click','#goToday', function(){
     var split2 = $(this).attr('title2').split('|');
     goToday(split2[0]);
   });
 
-  $('#goLastMonth').live('click', function(){
+  $('body').on('click','#goLastMonth', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var month = parseInt(splittxt[1], 10);
     var year  = parseInt(splittxt[0], 10);
@@ -170,19 +172,19 @@ $(document).ready(function(){
     goToday(year + '-' + month + '-' + splittxt[2]);
   });
 
-  $('#goToMonth').live('change', function(){
+  $('body').on('change','#goToMonth', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     goToday(splittxt[0] + '-' + parseInt($(this).val(), 10) + '-' + splittxt[2]);
   });
 
-  $('#goThisMonth').live('click', function(){
+  $('body').on('click','#goThisMonth', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var month = parseInt(splittxt[1], 10);
     var year  = parseInt(splittxt[0], 10);
     goToday(year + '-' + month + '-' + splittxt[2]);
   });
 
-  $('#goNextMonth').live('click', function(){
+  $('body').on('click','#goNextMonth', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var month = parseInt(splittxt[1], 10);
     var year  = parseInt(splittxt[0], 10);
@@ -194,32 +196,32 @@ $(document).ready(function(){
     goToday(year + '-' + month + '-' + splittxt[2]);
   });
 
-  $('#goLastYear').live('click', function(){
+  $('body').on('click','#goLastYear', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var year = parseInt(splittxt[0], 10);
     goToday(--year + '-' + splittxt[1] + '-' + splittxt[2]);
   });
 
-  $('#goToYear').live('change', function(){
+  $('body').on('change','#goToYear', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var year = parseInt($(this).val(), 10) ;
     goToday(year + '-' + parseInt(splittxt[1], 10)  + '-' + splittxt[2] );
   });
 
-  $('#goNextYear').live('click', function(){
+  $('body').on('click','#goNextYear', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var year = parseInt(splittxt[0], 10);
     goToday(++year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2]);
   });
 
-  $('#goThisYear').live('click', function(){
+  $('body').on('click','#goThisYear', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var year = parseInt(splittxt[0], 10);
     goToday(year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2]);
   });
 
 
-  $('#btnPrevwk, #btnNextwk').live('click', function(){
+  $('body').on('click','#btnPrevwk, #btnNextwk', function(){
     goToday($(this).attr('title3'));
   });
 
@@ -247,7 +249,7 @@ $(document).ready(function(){
 
 
   // Add to textarea
-  $('.quickadddiv li').live('click', function(){
+  $('.quickadddiv').on('click','li', function(){
     if ($('.quickadddiv .mode span.add').hasClass('highlight')) {
       // Add
       $('#txtInfo1').val( $('#txtInfo1').val() + $(this).text() ).focus();
@@ -271,13 +273,13 @@ $(document).ready(function(){
   });
 
 
-  $('input[value=X]').live('click', function() {
+  $('body').on('click','input[value=X]', function() {
     reloadQADiv('u');
   });
 
 
   // Add new entry
-  $('.quickadddiv .newentry').live('click', function() {
+  $('.quickadddiv').on('click','.newentry', function() {
     $.ajax({
       type: 'POST',
       url: 'ajax/quickentries/add',
@@ -286,13 +288,13 @@ $(document).ready(function(){
   });
 
 
-  $('.quickadddiv .mode span').live('click', function() {
+  $('.quickadddiv .mode').on('click','span', function() {
     $('.quickadddiv .mode span').removeClass('highlight');
     $(this).addClass('highlight');
   });
 
 
-  $('.updentry').live('click', function() {
+  $('body').on('click','.updentry', function() {
     var id   = $(this).parent().attr('class').substr(3);
     var text = $(this).prev().val();
     $.ajax({
@@ -304,7 +306,7 @@ $(document).ready(function(){
   });
 
 
-  $('.delentry').live('click', function() {
+  $('body').on('click','.delentry', function() {
     var id   = $(this).parent().attr('class').substr(3);
     $.ajax({
       type: 'POST',
