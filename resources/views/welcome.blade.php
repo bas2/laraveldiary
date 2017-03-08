@@ -249,24 +249,21 @@ $(document).ready(function(){
 
 
   // Add to textarea
-  $('.quickadddiv').on('click','li', function(){
-    if ($('.quickadddiv .mode span.add').hasClass('highlight')) {
-      // Add
+  $('body').on('click','.quickadddiv li', function(){
+    if ($('.quickadddiv .mode span.add').hasClass('highlight')) { // Add
       $('#txtInfo1').val( $('#txtInfo1').val() + $(this).text() ).focus();
-    } else if ($('.quickadddiv .mode span.upd').hasClass('highlight')) {
-      // Update
+
+    } else if ($('.quickadddiv .mode span.upd').hasClass('highlight')) { // Update
       if ($(this).html().substr(0,2)!='<t') {$(this).html('<textarea>'+$(this).text()+'</textarea> <input type="submit" value="Upd" class="updentry"> <input type="button" value="X">');}
-    } else if ($('.quickadddiv .mode span.del').hasClass('highlight')) {
-      // Delete
+
+    } else if ($('.quickadddiv .mode span.del').hasClass('highlight')) { // Delete
       if ($(this).html().substr(0,2)!='<i') {$(this).html('<input type="submit" value="Confirm" class="delentry"> <input type="button" value="X">');}
-    } else if ($('.quickadddiv .mode span.up').hasClass('highlight')) {
-      // Move up.
+
+    } else if ($('.quickadddiv .mode span.up').hasClass('highlight')) { // Move up.
       var id   = $(this).attr('class').substr(3);
-      //alert(id);
       $.ajax({
         type: 'GET',
         url: 'ajax/quickentries/up/' + id,
-        
         success: function (quickentries){reloadQADiv('up');}
       }); // End ajax call.
     } // End if.
@@ -279,7 +276,7 @@ $(document).ready(function(){
 
 
   // Add new entry
-  $('.quickadddiv').on('click','.newentry', function() {
+  $('body').on('click','.quickadddiv .newentry', function() {
     $.ajax({
       type: 'POST',
       url: 'ajax/quickentries/add',
@@ -288,7 +285,7 @@ $(document).ready(function(){
   });
 
 
-  $('.quickadddiv .mode').on('click','span', function() {
+  $('body').on('click','.quickadddiv .mode span', function() {
     $('.quickadddiv .mode span').removeClass('highlight');
     $(this).addClass('highlight');
   });
@@ -296,7 +293,7 @@ $(document).ready(function(){
 
   $('body').on('click','.updentry', function() {
     var id   = $(this).parent().attr('class').substr(3);
-    var text = $(this).prev().val();
+    var text = $(this).parent().find('textarea').val();
     $.ajax({
       type: 'POST',
       url: 'ajax/quickentries/upd/' + id,
