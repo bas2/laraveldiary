@@ -9,6 +9,8 @@ body {
   margin: 5px;
 }
 
+a {text-decoration: none;}
+
 /* Preferred colours */
 .today_col {
   background-color: $tdycol; color: #fff; /* today */
@@ -36,8 +38,8 @@ ul#projectsmenu {
   z-index: 1;
   position:absolute;top:0;right:0;
   margin-top:0;padding-left: 0;
-  border-bottom-right-radius: 2px;
-  box-shadow: 2px 2px 2px;
+  border-bottom-left-radius: 2px;
+  box-shadow: -2px 2px 2px;
   li {
     list-style: none;
     float:none;
@@ -47,11 +49,12 @@ ul#projectsmenu {
     cursor:pointer;
     font-weight: bold;
     a {
+      display: block;
       color:#ccc;
       &:hover {background-color: rgba(255,255,255,.5);color:#000;};
     }
-    &.sel {margin-right:.5em;color:yellow;border:0;}
-    &.sel, a {padding: 0 0 .5em 0;}
+    &.sel {color:yellow;border:0;}
+    &.sel, a {padding: 0 0 0 0;}
     &:last-child{border:0;};
   }
 
