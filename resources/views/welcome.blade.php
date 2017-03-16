@@ -9,7 +9,7 @@
 
   {!! Html::style('js/jquery/jquery-ui-1.12.1.custom/jquery-ui.css') !!}
 
-  {!! Html::script('js/jquery/jquery-3.1.1.min.js') !!}
+  {{-- {!! Html::script('js/jquery/jquery-3.1.1.min.js') !!} --}}
   {!! Html::script('js/jquery/jquery-ui-1.12.1.custom/external/jquery/jquery.js') !!}
   {!! Html::script('js/jquery/jquery-ui-1.12.1.custom/jquery-ui.min.js') !!}
 </head>
@@ -38,7 +38,7 @@
 <script>
 $(document).ready(function(){
   $('<div class="quickadd">+</div>').prependTo('body');
-  
+
   $('ul#projectsmenu li').has('a[href]').hide();
 
   $('ul#projectsmenu li').click(function() {
@@ -62,7 +62,7 @@ $(document).ready(function(){
   function getData(mode,date) {
     $.ajax({
       type:'get',
-      url:'ajax/getday/' + date,
+      url:'getday/' + date,
       dataType: 'json',
       success: function (json){AjaxTest(json, mode);}
     });
@@ -136,7 +136,7 @@ $(document).ready(function(){
     var datetoupdate = $('#upd_btn').attr('title2');        // e.g. 2013-05-08
     $.ajax({
       type:'post',
-      url:'ajax/update/' + datetoupdate,
+      url:'update/' + datetoupdate,
       data:'&info=' + encodeURIComponent($('#txtInfo1').val()) ,
       success: function (d){
         if (d=='Not saved') {alert(d);}
@@ -239,7 +239,7 @@ $(document).ready(function(){
     var dateSelected_split = dateSelected.split("-");
     $.ajax({
       type: 'get',
-      url: 'ajax/calendar/' + dateSelected,
+      url: 'calendar/' + dateSelected,
       success: function (data){
         if (toggle) {$('#dtPck').html(data).toggle();}
         else {$('#dtPck').hide().html(data).show();}
@@ -269,7 +269,7 @@ $(document).ready(function(){
       var id   = $(this).attr('class').substr(3);
       $.ajax({
         type: 'GET',
-        url: 'ajax/quickentries/up/' + id,
+        url: 'quickentries/up/' + id,
         success: function (quickentries){reloadQADiv('up');}
       }); // End ajax call.
     } // End if.
@@ -285,7 +285,7 @@ $(document).ready(function(){
   $('body').on('click','.quickadddiv .newentry', function() {
     $.ajax({
       type: 'POST',
-      url: 'ajax/quickentries/add',
+      url: 'quickentries/add',
       success: function (quickentries){reloadQADiv('u');}
     }); // End ajax call.
   });
@@ -302,7 +302,7 @@ $(document).ready(function(){
     var text = $(this).parent().find('textarea').val();
     $.ajax({
       type: 'POST',
-      url: 'ajax/quickentries/upd/' + id,
+      url: 'quickentries/upd/' + id,
       data: 'text=' + text,
       success: function (quickentries){reloadQADiv('u');}
     }); // End ajax call.
@@ -313,7 +313,7 @@ $(document).ready(function(){
     var id   = $(this).parent().attr('class').substr(3);
     $.ajax({
       type: 'POST',
-      url: 'ajax/quickentries/del/' + id,
+      url: 'quickentries/del/' + id,
       success: function (quickentries){reloadQADiv('d');}
     }); // End ajax call.
   });
@@ -324,7 +324,7 @@ $(document).ready(function(){
     else {
       $.ajax({
         type: 'GET',
-        url: 'ajax/quickentries/' + m,
+        url: 'quickentries/' + m,
         success: function (quickentries){
           if ($('.quickadddiv').length>0) {$('.quickadddiv').remove();}
           $('.quickadd').text('-');
