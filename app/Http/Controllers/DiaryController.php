@@ -112,16 +112,16 @@ class DiaryController extends Controller
     $entry->save();
   }
 
-  public function quickEntriesEdit() {
+  public function quickEntriesEdit($id) {
     $input=\Request::all();
     $entry=\App\Qentry::where('id',$id)->update(['text'=>$input['text']]);
   }
 
-  public function quickEntriesDelete() {
+  public function quickEntriesDelete($id) {
     $entry=\App\Qentry::where('id',$id)->delete();
   }
 
-  public function quickEntriesMode() {
+  public function quickEntriesMode($mode) {
     $mode2 = 'a';
     if ($mode=='u') { // Update mode.
       $mode2 = 'u';
@@ -140,7 +140,7 @@ class DiaryController extends Controller
     ->with('classes',[$addclass,$updclass,$delclass,$upclass])->with('data',$qentries);
   }
 
-  public function quickEntriesUp() {
+  public function quickEntriesUp($id) {
     $prioritem=\App\Qentry::where('id','<',$id)->orderBy('id','desc')->take(1)->get(['id','text']);
     $curritem=\App\Qentry::where('id',$id)->get(['text']);
     if(!empty($prioritem[0]->id)) {
