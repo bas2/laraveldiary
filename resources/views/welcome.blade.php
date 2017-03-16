@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ config('app.locale') }}">
 <head>
   <meta charset="utf-8">
   <title>Diary - AJAX!</title>
@@ -38,11 +38,17 @@
 <script>
 $(document).ready(function(){
   $('<div class="quickadd">+</div>').prependTo('body');
-  $('ul#projectsmenu').css({'background':'#c00'});
-  $('ul#projectsmenu li').css('float','none');
+  
   $('ul#projectsmenu li').has('a[href]').hide();
-  $('ul#projectsmenu li span').css('cursor','pointer').click(function() {
+
+  $('ul#projectsmenu li').click(function() {
     $('ul#projectsmenu li').has('a[href]').toggle();
+    if ($('ul#projectsmenu li').has('a[href]').is(':hidden')) {
+      $('ul#projectsmenu li.sel').css({'border-bottom':0,'margin-right':'.5em'});
+    } else {
+      $('ul#projectsmenu li.sel')
+      .css({'border-bottom':'1px solid rgba(196,196,196,.7)','margin-right':0});
+    }
   });
 
   $( document ).tooltip({
