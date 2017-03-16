@@ -1,9 +1,9 @@
 <ul id="projectsmenu">
 @foreach($projlist as $project)
   @if (\Config::get('constants.appname')==$project)
-  <li><span>{{ $project }}</span></li>
+  <li class="sel">{{ $project }}</li>
   @else
-  <li><a href="/{{ strtolower($project) }}/public/home">{{ $project }}</a></li>
+  <li>{{ link_to('/'.strtolower($project).'/public/home',$project) }}</li>
   @endif
 @endforeach
 </ul>
