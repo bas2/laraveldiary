@@ -32,17 +32,27 @@ select {
 }
 
 ul#projectsmenu {
+  background-color: rgba(0,0,0,.5);
+  z-index: 1;
   position:absolute;top:0;right:0;
   margin-top:0;padding-left: 0;
-  z-index: 2;
+  border-bottom-right-radius: 2px;
+  box-shadow: 2px 2px 2px;
   li {
     list-style: none;
-    padding-left: 0;
-    float:left;
+    float:none;
+    text-align: center;
+    font-family: verdana;
+    border-bottom: 1px solid rgba(196,196,196,.7);
+    cursor:pointer;
+    font-weight: bold;
     a {
-      margin-right: .5em;color:#ccc;text-decoration: none;font-weight: bold;
+      color:#ccc;
+      &:hover {background-color: rgba(255,255,255,.5);color:#000;};
     }
-    span {margin-right:.5em;font-weight: bold;color:yellow;}
+    &.sel {margin-right:.5em;color:yellow;border:0;}
+    &.sel, a {padding: 0 0 .5em 0;}
+    &:last-child{border:0;};
   }
 
 }
