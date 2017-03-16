@@ -1,17 +1,17 @@
 <?php
 Route::get('home', 'DiaryController@index' );
 
-Route::get('ajax/getday/{date?}', 'DiaryController@getDay' );
+Route::get('getday/{date?}', 'DiaryController@getDay' );
 
-Route::get('ajax/calendar/{date}', 'DiaryController@calendar' );
+Route::get('calendar/{date}', 'DiaryController@calendar' );
 
-Route::post('ajax/update/{date}', 'DiaryController@entryUpdate' );
+Route::post('update/{date}', 'DiaryController@entryUpdate' );
 
-Route::get('ajax/images', 'DiaryController@images' );
-Route::post('ajax/related', 'DiaryController@related' );
+Route::get('images', 'DiaryController@images' );
+Route::post('related', 'DiaryController@related' );
 
-Route::post('ajax/quickentries/add', 'DiaryController@quickEntriesAdd' );
-Route::post('ajax/quickentries/upd/{id}', 'DiaryController@quickEntriesEdit' );
-Route::post('ajax/quickentries/del/{id}', 'DiaryController@quickEntriesDelete' );
-Route::get('ajax/quickentries/{mode}', 'DiaryController@quickEntriesMode' );
-Route::get('ajax/quickentries/up/{id}', 'DiaryController@quickEntriesUp' );
+Route::post('quickentries/add', 'DiaryController@quickEntriesAdd' );
+Route::post('quickentries/upd/{id}', 'DiaryController@quickEntriesEdit' );
+Route::post('quickentries/del/{id}', 'DiaryController@quickEntriesDelete' );
+Route::get('quickentries/{mode}', 'DiaryController@quickEntriesMode' );
+Route::get('quickentries/up/{id}', 'DiaryController@quickEntriesUp' );
