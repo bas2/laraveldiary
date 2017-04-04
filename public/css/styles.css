@@ -1,7 +1,10 @@
 body {
   background-color: #000;
   color: #fff;
-  margin: 5px 0px 0px 5px; }
+  margin: 5px; }
+
+a {
+  text-decoration: none; }
 
 /* Preferred colours */
 .today_col {
@@ -25,65 +28,86 @@ body {
   /* days without entries */
   background-image: linear-gradient(#c90, #000); }
 
+select {
+  font-size: 11px; }
+
 ul#projectsmenu {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
   position: absolute;
   top: 0;
   right: 0;
   margin-top: 0;
-  padding-left: 0; }
+  padding-left: 0;
+  border-bottom-left-radius: 2px;
+  box-shadow: -2px 2px 2px; }
   ul#projectsmenu li {
     list-style: none;
-    padding-left: 0;
-    float: left; }
+    float: none;
+    text-align: center;
+    font-family: verdana;
+    border-bottom: 1px solid rgba(196, 196, 196, 0.7);
+    cursor: pointer;
+    font-weight: bold; }
     ul#projectsmenu li a {
-      margin-right: .5em;
-      color: #ccc;
-      text-decoration: none;
-      font-weight: bold; }
-    ul#projectsmenu li span {
-      margin-right: .5em;
-      font-weight: bold;
-      color: yellow; }
+      display: block;
+      color: #ccc; }
+      ul#projectsmenu li a:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        color: #000; }
+    ul#projectsmenu li.sel {
+      color: yellow;
+      border: 0; }
+    ul#projectsmenu li.sel, ul#projectsmenu li a {
+      padding: 0 0 0 0; }
+    ul#projectsmenu li:last-child {
+      border: 0; }
 
 ul.diaryheadings {
-  float: left;
-  border: 0px solid #000;
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
   margin: 0;
-  padding: 0 0 0 0;
-  /* just don't add at the bottom */
+  padding: 0;
   list-style: none;
   border-bottom: 0;
-  float: left;
-  width: 100%;
   background-color: transparent; }
-  ul.diaryheadings a {
-    height: 100%;
-    display: block;
-    border: 0;
-    padding: 1% 0;
-    text-align: center;
-    font-family: arial;
-    font-weight: bold; }
   ul.diaryheadings li {
-    float: left;
-    margin: 1% 0 0 1%;
+    margin: 0;
     padding: 0;
-    width: 10.5%;
+    width: 10.8%;
     border-top-left-radius: .4em;
     border-top-right-radius: .4em; }
-  ul.diaryheadings li#Mon {
-    margin-left: -6%; }
-
-.datehead {
-  color: #fff;
-  font-weight: bold;
-  font-family: verdana;
-  font-size: 8pt;
-  cursor: pointer;
-  border-top-left-radius: .8em;
-  border-top-right-radius: .8em;
-  text-shadow: 2px 2px 1px grey;
-  border-top: 2px solid orange; }
+    ul.diaryheadings li a {
+      display: block;
+      text-align: center;
+      font-weight: bold;
+      padding: .1em 1em;
+      color: #fff;
+      font-family: verdana;
+      font-size: 8pt;
+      cursor: pointer;
+      border-top-left-radius: .8em;
+      border-top-right-radius: .8em;
+      text-shadow: 2px 2px 1px grey; }
+      ul.diaryheadings li a:hover {
+        background: linear-gradient(#c00, #000);
+        color: #fff; }
+    ul.diaryheadings li.sep {
+      width: 1.7375%; }
+  ul.diaryheadings #li_prvwkbtn, ul.diaryheadings #li_nxtwkbtn {
+    width: 5.25%; }
+    ul.diaryheadings #li_prvwkbtn button, ul.diaryheadings #li_nxtwkbtn button {
+      width: 100%; }
+  ul.diaryheadings #li_prvwkbtn button {
+    border-top-left-radius: .8em;
+    border-bottom-left-radius: .8em; }
+  ul.diaryheadings #li_nxtwkbtn button {
+    border-top-right-radius: .8em;
+    border-bottom-right-radius: .8em; }
+  ul.diaryheadings #li_prvwkbtn button:hover, ul.diaryheadings #li_nxtwkbtn button:hover {
+    background-color: #c00;
+    color: #fff; }
 
 #li_prvwkbtn button, #li_nxtwkbtn button, #dtPck .lbtn, #dtPck .rbtn {
   cursor: pointer;
@@ -93,118 +117,174 @@ ul.diaryheadings {
   background-image: linear-gradient(#f00, #f90);
   color: #900; }
 
-#li_prvwkbtn button:hover, #li_nxtwkbtn button:hover {
-  background-color: #c00;
-  color: #fff; }
-
-#li_prvwkbtn button {
-  border-top-left-radius: .8em;
-  border-bottom-left-radius: .8em; }
-
-#li_nxtwkbtn button {
-  border-top-right-radius: .8em;
-  border-bottom-right-radius: .8em; }
-
 /* Data entry textarea */
 #txtInfo1 {
-  width: 90%;
+  width: 70%;
   margin: 0;
-  padding: .8em;
-  height: 20em;
-  /*  width: 92%; Simple really! 24-07-2009 */
+  padding: .3em;
+  height: 25em;
   font: 1.2em arial;
   border: 0;
   font-weight: bold;
   color: #fff;
-  overflow: auto;
   line-height: 1.4em;
-  border-radius: .8em; }
-
-/* Digital clock */
-#clock {
-  display: none;
-  font-family: arial, helvetica;
-  font-weight: bold;
-  font-size: 9pt;
-  border: 1px solid #000;
-  margin-right: 2px; }
-
-/* Container holding each hideable layer with button to hide/show layer */
-.cont {
-  float: left;
-  width: 99%;
-  border-top: 1px solid #050;
-  border-left: 1px solid #050;
-  border-top-left-radius: .3em;
-  margin-bottom: 5px; }
-
-#diarym {
-  padding: 0;
-  margin: 0;
-  width: 70%; }
+  border-radius: .8em;
+  box-sizing: border-box; }
 
 #upd_btn {
+  width: 70%;
   border-bottom-left-radius: .8em;
   border-bottom-right-radius: .8em;
   font-size: 1.3em;
-  width: 20em;
-  border: 0;
-  right: 0; }
+  border: 0; }
+  #upd_btn:hover {
+    background-color: #c00;
+    color: #fff;
+    font-weight: bold; }
 
-#upd_btn:hover {
-  background-color: #c00;
-  color: #fff;
-  font-weight: bold; }
+#rw7 {
+  /* Row exists and important. */
+  float: left;
+  display: none; }
 
 #ins_upd_dt {
+  box-sizing: border-box;
+  width: 70%;
+  clear: both;
   background: #c00;
   color: #fff;
-  font: 1em arial bold;
+  font: bold .9em tahoma;
   border-radius: .3em;
-  padding: .3em; }
-
-#ins_upd_dt span {
-  padding: .4em; }
-
-.ui-tooltip, .arrow:after {
-  background: #f90;
-  background-image: linear-gradient(red, #f90);
-  border: 1px solid rgba(100, 100, 100, 0.6); }
+  margin-top: .5em;
+  padding: .4em;
+  text-align: center; }
 
 .ui-tooltip {
+  background: #cc6600 !important;
   text-align: center;
-  padding: 10px 20px;
-  color: #fff;
+  padding: 0 20px 10px !important;
+  color: #fff !important;
   border-radius: 20px;
-  font: bold 12px "Helvetica Neue", Sans-Serif;
+  font: bold 12px "Helvetica Neue", Sans-Serif !important;
   text-transform: uppercase;
   box-shadow: 0 0 7px black; }
-
-.ui-tooltip .date_s {
-  font: bold 12px "Arial Black", Tahoma;
-  background-color: #fff;
-  color: #fff;
-  border: 0px solid #900;
-  border-radius: .3em;
-  padding: 4px;
-  margin-bottom: 4px;
-  background-image: linear-gradient(#f90, red);
-  text-shadow: 1px 1px 1px #646464; }
+  .ui-tooltip .date_s {
+    font: bold 12px "Arial Black", Tahoma;
+    background-color: #000;
+    color: #fff;
+    border-radius: .3em;
+    padding: 0 4px 4px;
+    margin-bottom: 4px;
+    background-image: linear-gradient(#f90, red);
+    text-shadow: 1px 1px 1px #646464; }
 
 /* Calendar styles */
 #dtPck {
   position: fixed;
-  right: 20;
-  top: 5;
-  width: 30%;
-  border: 0px solid #c00;
-  padding: .5em;
+  right: 0;
+  top: 20px;
+  width: 29%;
   text-align: center;
-  /*background-color: #fff;*/
   background-image: linear-gradient(#c00, #000);
   border-radius: .8em;
   box-shadow: 2px 2px 2px #000;
-  overflow: auto;
-  heigh: 80%; }
+  /*.btnHide {display:none;position:absolute;width:2em;color:#c00;}*/ }
+  #dtPck tbody#d td {
+    font: bold .8em arial;
+    color: #fff;
+    background: grey;
+    border-radius: 0;
+    text-shadow: 2px 2px 1px #000; }
+  #dtPck #tblDate {
+    border-collapse: collapse;
+    text-align: center;
+    width: 90%;
+    margin: 0 auto; }
+    #dtPck #tblDate caption {
+      background: rgba(255, 255, 255, 0.5);
+      color: #000; }
+    #dtPck #tblDate td {
+      padding: 0;
+      margin: 0;
+      border-radius: .4em; }
+      #dtPck #tblDate td a {
+        display: block;
+        text-decoration: none;
+        font: bold 1.5em arial;
+        border-radius: .4em;
+        border-right: 1px solid #000;
+        border-bottom: 1px solid #000;
+        text-shadow: 2px 2px 1px #000;
+        cursor: pointer; }
+  #dtPck .lbtn {
+    border-top-left-radius: .8em;
+    border-bottom-left-radius: .8em; }
+  #dtPck .rbtn {
+    border-top-right-radius: .8em;
+    border-bottom-right-radius: .8em; }
+
+#dtPck #tblDate td {
+  /* today_col */ }
+  #dtPck #tblDate td.curDate {
+    background-color: #609;
+    color: #fff; }
+
+#dtPck #tblDate td.three_col a {
+  background-color: #f60;
+  color: #fff;
+  /* three_col */ }
+
+#dtPck #tblDate td.four_col a {
+  background-color: #c90;
+  color: #fff;
+  /* four_col */ }
+
+#dtPck #tblDate td.sel_col a, #dtPck #tblDate td.sel_col a:hover, #dtPck #tblDate td a:hover {
+  background-color: #c00;
+  color: #fff; }
+
+/*#dtPck #tblDate td {&.nohover, &.medHead {cursor: hand;}}*/
+/* Quick Add - 15/11/2016 */
+.quickadd {
+  position: absolute;
+  top: 0;
+  left: 70%;
+  cursor: pointer;
+  font-weight: bold; }
+
+.quickadddiv {
+  z-index: 2;
+  border-radius: .4em;
+  position: absolute;
+  top: 20px;
+  left: 800px;
+  background: linear-gradient(black, blue);
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 1em; }
+  .quickadddiv ul {
+    margin: 1em 1em 1em 0;
+    padding-left: 1.3em; }
+  .quickadddiv li {
+    cursor: pointer; }
+    .quickadddiv li:hover {
+      background: #f00;
+      color: #fff; }
+    .quickadddiv li textarea {
+      width: 25em; }
+  .quickadddiv .newentry {
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: .3em;
+    background: red;
+    text-align: center;
+    width: 5em; }
+  .quickadddiv .mode {
+    font-weight: bold; }
+  .quickadddiv .mode span {
+    cursor: pointer; }
+    .quickadddiv .mode span.highlight {
+      color: yellow;
+      cursor: default; }
 
 /*# sourceMappingURL=styles.css.map */
