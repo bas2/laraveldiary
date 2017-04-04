@@ -156,17 +156,17 @@ $(document).ready(function(){
 
   // Calendar functions
   
-  $('body').on('click','#tblDate a[title2]', function(){
+  $(document).on('click','#tblDate a[title2]', function(){
     var split2 = $(this).attr('title2').split('|');
     goToday(split2[0]);
   });
 
-  $('body').on('click','#goToday', function(){
+  $(document).on('click','#goToday', function(){
     var split2 = $(this).attr('title2').split('|');
     goToday(split2[0]);
   });
 
-  $('body').on('click','#goLastMonth', function(){
+  $(document).on('click','#goLastMonth', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var month = parseInt(splittxt[1], 10);
     var year  = parseInt(splittxt[0], 10);
@@ -178,19 +178,19 @@ $(document).ready(function(){
     goToday(year + '-' + month + '-' + splittxt[2]);
   });
 
-  $('body').on('change','#goToMonth', function(){
+  $(document).on('change','#goToMonth', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     goToday(splittxt[0] + '-' + parseInt($(this).val(), 10) + '-' + splittxt[2]);
   });
 
-  $('body').on('click','#goThisMonth', function(){
+  $(document).on('click','#goThisMonth', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var month = parseInt(splittxt[1], 10);
     var year  = parseInt(splittxt[0], 10);
     goToday(year + '-' + month + '-' + splittxt[2]);
   });
 
-  $('body').on('click','#goNextMonth', function(){
+  $(document).on('click','#goNextMonth', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var month = parseInt(splittxt[1], 10);
     var year  = parseInt(splittxt[0], 10);
@@ -202,32 +202,32 @@ $(document).ready(function(){
     goToday(year + '-' + month + '-' + splittxt[2]);
   });
 
-  $('body').on('click','#goLastYear', function(){
+  $(document).on('click','#goLastYear', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var year = parseInt(splittxt[0], 10);
     goToday(--year + '-' + splittxt[1] + '-' + splittxt[2]);
   });
 
-  $('body').on('change','#goToYear', function(){
+  $(document).on('change','#goToYear', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var year = parseInt($(this).val(), 10) ;
     goToday(year + '-' + parseInt(splittxt[1], 10)  + '-' + splittxt[2] );
   });
 
-  $('body').on('click','#goNextYear', function(){
+  $(document).on('click','#goNextYear', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var year = parseInt(splittxt[0], 10);
     goToday(++year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2]);
   });
 
-  $('body').on('click','#goThisYear', function(){
+  $(document).on('click','#goThisYear', function(){
     var splittxt = $(this).attr('title2').split('-'); // YYYY-mm-dd
     var year = parseInt(splittxt[0], 10);
     goToday(year + '-' + parseInt(splittxt[1], 10) + '-' + splittxt[2]);
   });
 
 
-  $('body').on('click','#btnPrevwk, #btnNextwk', function(){
+  $(document).on('click','#btnPrevwk, #btnNextwk', function(){
     goToday($(this).attr('title3'));
   });
 
@@ -255,7 +255,7 @@ $(document).ready(function(){
 
 
   // Add to textarea
-  $('body').on('click','.quickadddiv li', function(){
+  $(document).on('click','.quickadddiv li', function(){
     if ($('.quickadddiv .mode span.add').hasClass('highlight')) { // Add
       $('#txtInfo1').val( $('#txtInfo1').val() + $(this).text() ).focus();
 
@@ -276,13 +276,13 @@ $(document).ready(function(){
   });
 
 
-  $('body').on('click','input[value=X]', function() {
+  $(document).on('click','input[value=X]', function() {
     reloadQADiv('u');
   });
 
 
   // Add new entry
-  $('body').on('click','.quickadddiv .newentry', function() {
+  $(document).on('click','.quickadddiv .newentry', function() {
     $.ajax({
       type: 'POST',
       url: 'quickentries/add',
@@ -291,7 +291,7 @@ $(document).ready(function(){
   });
 
 
-  $('body').on('click','.quickadddiv .mode span', function() {
+  $(document).on('click','.quickadddiv .mode span', function() {
     $('.quickadddiv .mode span').removeClass('highlight');
     $(this).addClass('highlight');
   });
