@@ -38,16 +38,16 @@
 <script>
 $(document).ready(function(){
   $('<div class="quickadd">+</div>').prependTo('body');
-
+  $('ul#projectsmenu li.sel').css({'border-bottom':0,'margin':'.2em .5em'});
   $('ul#projectsmenu li').has('a[href]').hide();
 
   $('ul#projectsmenu li').click(function() {
     $('ul#projectsmenu li').has('a[href]').toggle();
     if ($('ul#projectsmenu li').has('a[href]').is(':hidden')) {
-      $('ul#projectsmenu li.sel').css({'border-bottom':0,'margin-left':'.5em'});
+      $('ul#projectsmenu li.sel').css({'border-bottom':0,'margin':'.2em .5em'});
     } else {
       $('ul#projectsmenu li.sel')
-      .css({'border-bottom':'1px solid rgba(196,196,196,.7)','margin-left':0});
+      .css({'border-bottom':'1px solid rgba(196,196,196,.7)','margin':0});
     }
   });
 
