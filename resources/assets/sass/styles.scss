@@ -9,7 +9,7 @@ body {
   margin: 5px;
 }
 
-a {text-decoration: none;}
+a {text-decoration: none !important;}
 
 /* Preferred colours */
 .today_col {
@@ -29,9 +29,15 @@ a {text-decoration: none;}
   background-image: linear-gradient($forcol, #000);
 }
 
-select {
- font-size: 11px;
+.equal {  
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap:wrap;
+  margin-bottom: 2em;
 }
+
+select {font-size: 11px;}
+input,select,button{color:#000;}
 
 ul#projectsmenu {
   background-color: rgba(0,0,0,.5);
@@ -42,19 +48,17 @@ ul#projectsmenu {
   box-shadow: -2px 2px 2px;
   li {
     list-style: none;
-    float:none;
     text-align: center;
-    font-family: verdana;
+    font: bold 1em verdana;
     border-bottom: 1px solid rgba(196,196,196,.7);
     cursor:pointer;
-    font-weight: bold;
     a {
       display: block;
       color:#ccc;
       &:hover {background-color: rgba(255,255,255,.5);color:#000;};
     }
     &.sel {color:yellow;border:0;}
-    &.sel, a {padding: 0 0 0 0;}
+    &.sel, a {padding:0;}
     &:last-child{border:0;};
   }
 
@@ -62,53 +66,29 @@ ul#projectsmenu {
 
 
 ul.diaryheadings {
-  width: 70%;
-  display:flex;
-  flex-wrap:wrap;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  margin: 0;padding: 0;
   border-bottom: 0;
-  background-color: transparent;
   li {
-    margin: 0;
-    padding: 0;
-    width: 10.8%;
-    border-top-left-radius: .4em;
-    border-top-right-radius: .4em;
+    width: 12.85%;
+    margin: 0;padding: 0;
+    border-radius: .4em .4em 0 0;
     a {
       display: block;
+      box-shadow: 1px 1px rgba(255,255,255,.3);
       text-align: center;
-      font-weight: bold;
       padding: .1em 1em;
       color: #fff;
-      font-family: verdana;
-      font-size: 8pt;
+      font: bold 8pt verdana;
       cursor: pointer;
-      border-top-left-radius: .8em;
-      border-top-right-radius: .8em;
+      border-radius: .8em .8em 0 0;
       text-shadow: 2px 2px 1px grey;
-      &:hover {
-        background: linear-gradient($selcol,#000); color: #fff;
-      }
+      &:hover {background: linear-gradient($selcol,#000); color: #fff;}
     }
-    &.sep {width:1.7375%;}
   }
-  #li_prvwkbtn, #li_nxtwkbtn {
-    width:5.25%;
-    button {width: 100%;}
-  }
-
-  #li_prvwkbtn button {
-    border-top-left-radius: .8em;
-    border-bottom-left-radius: .8em;
-  }
-
-  #li_nxtwkbtn button {
-    border-top-right-radius: .8em;
-    border-bottom-right-radius: .8em;
-  }
-
+  #li_nxtwkbtn {text-align:right;}
+  #li_prvwkbtn, #li_nxtwkbtn {width:5%; box-shadow: 0 0;}
+  #li_prvwkbtn button {border-radius: .8em 0 0 .8em;width:80%;text-align: left;}
+  #li_nxtwkbtn button {border-radius: 0 .8em .8em 0;width:80%;text-align: right;}
   #li_prvwkbtn button:hover, #li_nxtwkbtn button:hover {
     background-color: #c00;
     color: #fff;
@@ -120,37 +100,27 @@ ul.diaryheadings {
 #li_prvwkbtn button, #li_nxtwkbtn button, #dtPck .lbtn, #dtPck .rbtn  {
   cursor: pointer;
   border: 1px solid grey;
-  font-size: 1em;
-  font-weight: bold;
+  font: bold 1em arial;
   background-image: linear-gradient(#f00, #f90);
   color: #900;
 }
 
 
-
 /* Data entry textarea */
 #txtInfo1 {
-  width: 70%;
   margin: 0;
   padding: .3em;
   height: 25em;
-  font: 1.2em arial;
+  font: bold 1.2em/1.4em arial;
   border: 0;
-  font-weight: bold;
   color: #fff;
-  line-height: 1.4em;
   border-radius: .8em;
-  box-sizing: border-box;
 }
 
 
-
 #upd_btn {
-  width: 70%;
-  border-bottom-left-radius: .8em;
-  border-bottom-right-radius: .8em;
+  border-radius: 0 0 .8em .8em;
   font-size: 1.3em;
-
   border: 0;
   &:hover {
     background-color: #c00;
@@ -159,23 +129,16 @@ ul.diaryheadings {
   }
 }
 
+#txtInfo1, #upd_btn {width: 100%;}
 
-#rw7 { /* Row exists and important. */
-  float: left;
-  display: none;
-}
 
 #ins_upd_dt {
-  box-sizing: border-box;
-  width: 70%;
-  clear:both;
   background: #c00;
   color: #fff;
   font: bold .9em tahoma;
   border-radius: .3em;
   margin-top: .5em;
   padding: .4em;
-  text-align: center;
 }
 
 
@@ -203,8 +166,6 @@ ul.diaryheadings {
 
 /* Calendar styles */
 #dtPck {
-  position: fixed;right:0;top:20px;
-  width: 29%;
   text-align: center;
   background-image: linear-gradient($selcol, #000);
   border-radius: .8em;
@@ -217,11 +178,11 @@ ul.diaryheadings {
     text-shadow: 2px 2px 1px #000;
   }
   #tblDate {
+    width: 90%;
     border-collapse: collapse;
     text-align: center;
-    width: 90%;
     margin:0 auto;
-    caption {background: rgba(255,255,255,.5);color:#000;}
+    caption {background: rgba(255,255,255,.5);color:#000;font-variant: small-caps;}
     td {
       padding:0;margin:0;
       border-radius: .4em;
@@ -237,8 +198,8 @@ ul.diaryheadings {
       }
     }
   }
-  .lbtn {border-top-left-radius:.8em;border-bottom-left-radius:.8em;}
-  .rbtn {border-top-right-radius:.8em;border-bottom-right-radius:.8em;}
+  .lbtn {border-radius:.8em 0 0 .8em;}
+  .rbtn {border-radius:0 .8em .8em 0;}
   /*.btnHide {display:none;position:absolute;width:2em;color:#c00;}*/
 }
 
