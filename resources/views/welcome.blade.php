@@ -37,6 +37,29 @@
 
     <div class="alert alert-info text-center" id="ins_upd_dt"></div>
 
+    <fieldset class="whatdidyoudo">
+      <legend>What did you do on this day?</legend>
+
+      <ul class="current">
+
+      </ul>
+
+      <div class="new">
+        <div class="form-group">
+        {{ Form::select('whatdidyoudoh',range(0,23)) }}
+        {{ Form::select('whatdidyoudom',range(0,59)) }}
+        </div>
+        <div class="form-group">
+        {{ Form::select('whatdidyoudoa',$whatdidyoudo['activities'],'',['class'=>'form-control']) }}
+        </div>
+        <div class="form-group">
+        {{ Form::text('whatdidyoudot',null,['class'=>'form-control']) }}
+        </div>
+        {{ Form::button('Add >',['class'=>'btn btn-primary']) }}
+      </div>
+
+    </fieldset>
+
   </div>
   
   <div class="col-md-4">
@@ -77,6 +100,12 @@ $(document).ready(function(){
       url:'getday/' + date,
       dataType: 'json',
       success: function (json){AjaxTest(json, mode);}
+    });
+
+    $.ajax({
+      type:'get',
+      url:'whatdidyoudo/' + date,
+      success: function (data){$('.whatdidyoudo .current').html(data);}
     });
   }
 
@@ -165,6 +194,19 @@ $(document).ready(function(){
     goToday($(this).attr('title3') );
   });
 
+  $('.whatdidyoudo button').click(function(){
+    $.ajax({
+      type: 'post',
+      url: 'whatdidyoudo/' + $('#upd_btn').attr('title2'),
+      data:'time=' + $('select[name=whatdidyoudoh]').val() + ':' + $('select[name=whatdidyoudom]').val() 
+      + '&activityid=' + $('select[name=whatdidyoudoa]').val()
+      + '&detail=' + $('input[name=whatdidyoudot]').val(),
+      success: function (data){
+        //alert(data);
+        goToday($('#upd_btn').attr('title2'));
+      }
+    });
+  });
 
   // Calendar functions
   
