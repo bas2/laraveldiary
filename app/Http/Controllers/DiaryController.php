@@ -11,8 +11,12 @@ class DiaryController extends Controller
 
   public function index () {
     $dirpath='../..';$proj=[];foreach(\File::directories($dirpath) as $project){$prj=str_replace($dirpath.'/','',$project);if(substr($prj,0,1)!='_'){$proj[]=ucwords($prj);}}
+    // So we can populate Activities select list.
+    $activities=[];foreach(\App\Activity::get() as $activity){$activities[$activity->id]=$activity->detail;}
     return view('welcome')->with('projlist',$proj)
-    ->with('vals',['datesel'=>Carbon::now(),'seldate'=>Carbon::now(),'blankcells'=>1,'daysinmonth'=>31]);
+    ->with('vals',['datesel'=>Carbon::now(),'seldate'=>Carbon::now(),'blankcells'=>1,'daysinmonth'=>31])
+    ->with('whatdidyoudo',['activities'=>$activities])
+    ;
   }
 
   public function getDay($date=null) {
@@ -105,6 +109,30 @@ class DiaryController extends Controller
     );
   }
 
+  // GET: whatdidyoudo/{date}
+  public function getWhatdidyoudo($date='') {
+    if(empty($date)){$date=date('Y-m-d');}
+    $entryid=\App\Entry::where('d',$date)->get();
+    $savedactivities=\App\DailyActivity::where('entryid',$entryid[0]->id)->orderBy('time')->get();
+    $str='';
+    foreach ($savedactivities as $value) {
+      $time=Carbon::parse($value->time)->format('H:i');
+      $str.="<li>{$time} <strong>{$value->activities[0]->detail}</strong> {$value->detail}</li>";
+    }
+    return $str;
+  }
+
+  // POST: whatdidyoudo/{date}
+  public function postWhatdidyoudo($date, Request $request) {
+    $entryid=\App\Entry::where('d',$date)->get(['id']);
+    //return $entryid->count();
+    $create=new \App\DailyActivity;
+    $create->time=$request['time'];
+    $create->activityid=$request['activityid'];
+    $create->detail=(empty($request['detail']))?'':$request['detail'];
+    $create->entryid=$entryid[0]->id;
+    $create->save();
+  }
 
   public function quickEntriesAdd() {
     $entry=new \App\Qentry;
