@@ -21,7 +21,7 @@
 {!! Form::close() !!}
 
 <table id="tblDate">
-<caption>{{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</caption>
+<caption class="text-center">{{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</caption>
 <tbody id="d">
 <tr id="caldayrow">
   {{-- <td class="nohover">wk</td> --}}
