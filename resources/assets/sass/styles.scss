@@ -119,26 +119,17 @@ ul.diaryheadings {
 
 
 #upd_btn {
-  border-radius: 0 0 .8em .8em;
-  font-size: 1.3em;
-  border: 0;
+
   &:hover {
-    background-color: #c00;
-    color: #fff;
-    font-weight: bold;
+
   }
 }
 
-#txtInfo1, #upd_btn {width: 100%;}
+#txtInfo1 {width: 100%;}
 
 
 #ins_upd_dt {
-  background: #c00;
-  color: #fff;
-  font: bold .9em tahoma;
-  border-radius: .3em;
   margin-top: .5em;
-  padding: .4em;
 }
 
 
