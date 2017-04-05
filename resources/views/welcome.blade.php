@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>Diary - AJAX!</title>
+  <!-- Bootstrap -->
+  {!! Html::style('css/bootstrap.min.css') !!}
 
   {{-- <link rel="stylesheet" href="js/jquery/colorbox/colorbox.css"> --}}
   <link rel="stylesheet" href="css/styles.css">
@@ -16,24 +18,34 @@
 <body>
 
   @include('projectmenu')
+  <div class="container-fluid">
+  <div class="row">
 
-  <div id="dtPck">@include('ajax.calendar')</div>
+  <div class="col-md-8">
 
-  <ul class="diaryheadings">
-    <li id="li_prvwkbtn"></li>
-    <li class="sep"></li>
-    @foreach (['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $weekday)
-    <li id="{{ $weekday }}"><a>{{ $weekday }}</a></li>
-    <li class="sep"></li>
-    @endforeach
-    <li id="li_nxtwkbtn"></li>
-  </ul>
+    <ul class="diaryheadings list-inline row equal">
+      <li id="li_prvwkbtn">
+      @foreach (['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $weekday)
+      <li id="{{ $weekday }}"><a>{{ $weekday }}</a>
+      @endforeach
+      <li id="li_nxtwkbtn">
+    </ul>
 
-  <textarea id="txtInfo1" class="today_col"></textarea>
+    <textarea class="today_col form-control" id="txtInfo1"></textarea>
 
-  <input type="button" id="upd_btn" value="Update &gt;">
+    <input class="btn btn-primary btn-block" type="button" id="upd_btn" value="Update &gt;">
 
-  <div id="ins_upd_dt"></div>
+    <div class="alert alert-info text-center" id="ins_upd_dt"></div>
+
+  </div>
+  
+  <div class="col-md-4">
+    <div id="dtPck">@include('ajax.calendar')</div>
+  </div>
+
+
+  </div>
+  </div>
 
 <script>
 $(document).ready(function(){
@@ -362,6 +374,7 @@ $(document).ready(function(){
 
 });
 </script>
+
 
 </body>
 </html>
