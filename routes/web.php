@@ -7,6 +7,9 @@ Route::get('calendar/{date}', 'DiaryController@calendar' );
 
 Route::post('update/{date}', 'DiaryController@entryUpdate' );
 
+Route::post('whatdidyoudo/{date}', 'DiaryController@postWhatdidyoudo');
+Route::get('whatdidyoudo/{date?}',  'DiaryController@getWhatdidyoudo');
+
 Route::get('images', 'DiaryController@images' );
 Route::post('related', 'DiaryController@related' );
 
