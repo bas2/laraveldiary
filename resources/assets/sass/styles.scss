@@ -110,7 +110,7 @@ ul.diaryheadings {
 #txtInfo1 {
   margin: 0;
   padding: .3em;
-  height: 15em;
+  height: 10em;
   font: bold 1.2em/1.4em arial;
   border: 0;
   color: #fff;
@@ -169,6 +169,7 @@ ul.diaryheadings {
     text-shadow: 2px 2px 1px #000;
   }
   #tblDate {
+    background-color: transparent;
     width: 90%;
     border-collapse: collapse;
     text-align: center;
