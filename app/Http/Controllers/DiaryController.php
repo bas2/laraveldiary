@@ -8,7 +8,7 @@ use \Carbon\Carbon;
 
 class DiaryController extends Controller
 {
-
+  // GET: home
   public function index () {
     $dirpath='../..';$proj=[];foreach(\File::directories($dirpath) as $project){$prj=str_replace($dirpath.'/','',$project);if(substr($prj,0,1)!='_'){$proj[]=ucwords($prj);}}
     // So we can populate Activities select list.
@@ -18,7 +18,7 @@ class DiaryController extends Controller
     ->with('whatdidyoudo',['activities'=>$activities])
     ;
   }
-
+  // GET: getday/date
   public function getDay($date=null) {
     if(is_null($date)) {$date=Carbon::now()->format('Y-m-d');} # Today.
     else {$date=Carbon::parse($date)->format('Y-m-d');}
@@ -73,7 +73,7 @@ class DiaryController extends Controller
     $json=json_encode($json);
     return $json;
   }
-
+  // POST: update/date
   public function entryUpdate($date) {
     $input=\Request::all();
     $entry=new \App\Entry;
@@ -82,7 +82,7 @@ class DiaryController extends Controller
     $entry2=new \App\Entry;$entry->where('d',$date)->increment('numedit');
     return $entry ? 'Saved' : 'Not saved';
   }
-
+  // GET: calendar/date
   public function calendar($date) {
     $seldatest=Carbon::parse($date)->startOfMonth();
     $seldateen=Carbon::parse($date)->endOfMonth();
@@ -134,28 +134,31 @@ class DiaryController extends Controller
     $create->save();
   }
 
+  // POST: quickentries/add
   public function quickEntriesAdd() {
     $entry=new \App\Qentry;
     $entry->text = '-';
     $entry->save();
   }
-
+  // POST: quickentries/upd/id
   public function quickEntriesEdit($id) {
     $input=\Request::all();
     $entry=\App\Qentry::where('id',$id)->update(['text'=>$input['text']]);
   }
-
+  // POST: quickentries/del/id
   public function quickEntriesDelete($id) {
     $entry=\App\Qentry::where('id',$id)->delete();
   }
-
+  // GET: quickentries/mode
   public function quickEntriesMode($mode) {
-    $mode2 = 'a';
-    if ($mode=='u') { // Update mode.
-      $mode2 = 'u';
-    } else if ($mode=='d') { // Delete mode.
-      $mode2 = 'd';
-    } // End if.
+    switch ($mode) {
+      case 'u':
+        $mode2 = 'u';break; # Update mode.
+      case 'd':
+        $mode2 = 'd';break; # Delete mode.
+      default:
+        $mode2 = 'a';break; # Add mode.
+    }
 
     $addclass = ($mode2=='a')  ? ' highlight' : '';
     $updclass = ($mode2=='u')  ? ' highlight' : '';
@@ -167,7 +170,7 @@ class DiaryController extends Controller
     return view('ajax.quickentries')->with('mode',$mode2)
     ->with('classes',[$addclass,$updclass,$delclass,$upclass])->with('data',$qentries);
   }
-
+  // GET: quickentries/up/id
   public function quickEntriesUp($id) {
     $prioritem=\App\Qentry::where('id','<',$id)->orderBy('id','desc')->take(1)->get(['id','text']);
     $curritem=\App\Qentry::where('id',$id)->get(['text']);
