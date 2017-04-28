@@ -3,6 +3,8 @@ $selcol: #c00;
 $thrcol: #f60;
 $forcol: #c90;
 
+$timeh: 250px;
+
 body {
   background-color: #000;
   color: #fff;
@@ -36,7 +38,6 @@ a {text-decoration: none !important;}
   margin-bottom: 2em;
 }
 
-select {font-size: 11px;}
 input,select,button{color:#000;}
 
 ul#projectsmenu {
@@ -118,12 +119,6 @@ ul.diaryheadings {
 }
 
 
-#upd_btn {
-
-  &:hover {
-
-  }
-}
 
 #txtInfo1 {width: 100%;}
 
@@ -209,7 +204,42 @@ ul.diaryheadings {
 /*#dtPck #tblDate td {&.nohover, &.medHead {cursor: hand;}}*/
 
 
+.timepick {
+  position:absolute;
+  background:navy;
+  border-radius:$timeh;
+  width:$timeh;
+  height:$timeh;
+  div.cen {
+    text-align:center;
+  }
+  font-size:2em;
+  span {
+    cursor:pointer;
+    background:blue;
+    border-radius:2em;
+    display: inline-block;
+    width:2em;
+    text-align:center;
+    background:linear-gradient(blue,navy);
+  }
+  .minutes {
+    background:red;
+  }
+  box-shadow:1px 1px;
+}
 
+.activitysel {
+  position:absolute;
+  background:blue;
+  border-radius:.5em;
+  width:700px;
+  
+}
+
+fieldset.whatdidyoudo {
+  input[name=timebox]{width:5em;}
+}
 
 
 /* Quick Add - 15/11/2016 */
