@@ -48,11 +48,7 @@
         <div class="form-group">
         {{ Form::text('timebox','00:00',['class'=>'form-control']) }}
         
-        {!! Form::label('am',Form::radio('am_pm', 'am', 0, ['id'=>'am'])
-        .'Before midday',['class'=>'radio-inline'],false ) !!}
-
-        {!! Form::label('pm',Form::radio('am_pm', 'pm', 1, ['id'=>'pm'])
-        .'After midday',['class'=>'radio-inline'],false ) !!}
+        {{ Form::button('am/pm',['name'=>'ampm','class'=>'btn btn-primary']) }}
         </div>
       </div>
 
@@ -219,7 +215,7 @@ $(document).ready(function(){
   });
 
 
-  $('input[name=am_pm').click(function(){
+  $('button[name=ampm').click(function(){
     var topDigit = $('.timepick span').first().text();
     $('div.timepick:nth-child(1) span').each(function(){
       if ($(this).text()!='•') {
@@ -259,12 +255,12 @@ $(document).ready(function(){
     "success":function(hour){
       $('div.timepick:nth-child(1) span').each(function(){
         if ($(this).text()!='•') {
-          if(hour==0||hour>12) {
+          if(hour>12) {
             $(this).text( convert24h($(this).text()) );
-            $('input[type=radio]#pm').attr('checked','checked');
+            //$('input[type=radio]#pm').attr('checked','checked');
           } else {
-            $(this).text( convert12h($(this).text()) );
-            $('input[type=radio]#am').attr('checked','checked');
+            $(this).text( $(this).text() );
+            //$('input[type=radio]#am').attr('checked','checked');
           }
           if(hour==$(this).text()) $(this).css('color','yellow');
           
