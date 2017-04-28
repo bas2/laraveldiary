@@ -38,7 +38,7 @@
     <div class="alert alert-info text-center" id="ins_upd_dt"></div>
 
     <fieldset class="whatdidyoudo">
-      <legend>What did you do on this day?</legend>
+      <legend>What did you do on this fine day?</legend>
 
       <ul class="current">
 
@@ -46,16 +46,14 @@
 
       <div class="new">
         <div class="form-group">
-        {{ Form::select('whatdidyoudoh',range(0,23)) }}
-        {{ Form::select('whatdidyoudom',range(0,59)) }}
+        {{ Form::text('timebox','00:00',['class'=>'form-control']) }}
+        
+        {!! Form::label('am',Form::radio('am_pm', 'am', 0, ['id'=>'am'])
+        .'Before midday',['class'=>'radio-inline'],false ) !!}
+
+        {!! Form::label('pm',Form::radio('am_pm', 'pm', 1, ['id'=>'pm'])
+        .'After midday',['class'=>'radio-inline'],false ) !!}
         </div>
-        <div class="form-group">
-        {{ Form::select('whatdidyoudoa',$whatdidyoudo['activities'],'',['class'=>'form-control']) }}
-        </div>
-        <div class="form-group">
-        {{ Form::text('whatdidyoudot',null,['class'=>'form-control']) }}
-        </div>
-        {{ Form::button('Add >',['class'=>'btn btn-primary']) }}
       </div>
 
     </fieldset>
@@ -72,7 +70,10 @@
 
 <script>
 $(document).ready(function(){
+  // Quick add link.
   $('<div class="quickadd">+</div>').prependTo('body');
+
+  // Projects menu.
   $('ul#projectsmenu li.sel').css({'border-bottom':0,'margin':'.2em .5em'});
   $('ul#projectsmenu li').has('a[href]').hide();
 
@@ -86,6 +87,7 @@ $(document).ready(function(){
     }
   });
 
+  // Tooltips.
   $( document ).tooltip({
     items: ".datehead, [tooltiptxt], [title]",
     content: function() {
@@ -93,6 +95,7 @@ $(document).ready(function(){
       if ( element.is( "[tooltiptxt]" ) ) {return element.attr( "tooltiptxt" );}
     }
   });
+
 
   function getData(mode,date) {
     $.ajax({
@@ -194,19 +197,158 @@ $(document).ready(function(){
     goToday($(this).attr('title3') );
   });
 
-  $('.whatdidyoudo button').click(function(){
+ // What did you do on this fine day functions.
+
+  $('body').on('click','.whatdidyoudo button[name=add]',function(){
     $.ajax({
       type: 'post',
       url: 'whatdidyoudo/' + $('#upd_btn').attr('title2'),
-      data:'time=' + $('select[name=whatdidyoudoh]').val() + ':' + $('select[name=whatdidyoudom]').val() 
+      data:'time=' + $('input[name=timebox]').val() 
       + '&activityid=' + $('select[name=whatdidyoudoa]').val()
       + '&detail=' + $('input[name=whatdidyoudot]').val(),
       success: function (data){
         //alert(data);
         goToday($('#upd_btn').attr('title2'));
+        $('div.activitysel').remove();
       }
     });
   });
+
+  $('body').on('click','.whatdidyoudo button[name=cancel]',function(){
+    $(this).parent().parent().remove();
+  });
+
+
+  $('input[name=am_pm').click(function(){
+    var topDigit = $('.timepick span').first().text();
+    $('div.timepick:nth-child(1) span').each(function(){
+      if ($(this).text()!='•') {
+        if(topDigit!='12') {$(this).text( convert12h($(this).text()) );}
+        else {$(this).text( convert24h($(this).text()) );}
+      }
+    });
+
+  });
+
+  $('input[name=timebox]').click(function(){
+    // Open timepicker.
+    $('div.timepick').remove();
+
+    var str='<div class="cen" style="padding-top:.25em;"><span>12</span></div>';
+
+    str+='<div style="margin-top:-20px;"><span style="margin-left:2.2em;">11</span><span style="position:absolute;right:2.2em;">1</span></div>';
+    str+='<div style="margin-top:-8px;"><span style="margin-left:24px;">10</span><span style="position:absolute;right:24px;">2</span></div>';
+    
+    str+='<div><span style="margin-left:12px;">9</span><span style="position:absolute;left:40%;">&bull;</span><span style="position:absolute;right:12px;">3</span></div>';
+    
+    str+='<div><span style="margin-left:20px;">8</span><span style="position:absolute;right:20px;">4</span></div>';
+    str+='<div><span style="margin-left:2.2em;">7</span><span style="position:absolute;right:2.2em;">5</span></div>';
+
+    str+='<div class="cen" style="margin-top:-15px;"><span>6</span></div>';
+
+    $('<div class="timepick">'+str+'</div>')
+    .css({'bottom':$(this).position().top-300})
+    .insertBefore($(this).parent())
+    ;
+
+    // Get current hour via ajax:
+    $.ajax({
+    "type":"GET",
+    "url":"time/hour",
+
+    "success":function(hour){
+      $('div.timepick:nth-child(1) span').each(function(){
+        if ($(this).text()!='•') {
+          if(hour==0||hour>12) {
+            $(this).text( convert24h($(this).text()) );
+            $('input[type=radio]#pm').attr('checked','checked');
+          } else {
+            $(this).text( convert12h($(this).text()) );
+            $('input[type=radio]#am').attr('checked','checked');
+          }
+          if(hour==$(this).text()) $(this).css('color','yellow');
+          
+        }
+      });
+      } // End ajax success function
+
+    }); // End ajax.
+
+
+
+
+  });
+
+  function convert24h(h) {
+    var h = parseInt(h,10)
+    //alert(h);
+    if(h==12) {return 0;}
+    return h + 12;
+  }
+
+  function convert12h(h) {
+    var h = parseInt(h,10)
+    if(h==0) {return 12;}
+    return h - 12;
+  }
+
+  $('body').on('click','.timepick span',function(){
+    
+    if(!$(this).parent().parent().hasClass('minutes')) {
+      // Hours.
+      //if($('input[name=am_pm]:checked').val()=='am') $('input[name=timebox]').val($(this).text() + ':00');
+      //else 
+      $('input[name=timebox]').val( $(this).text() + ':00' );
+      $('.timepick').addClass('minutes');
+
+      var cnt=0;
+      $('div.timepick:nth-child(1) span').each(function(){
+        if ($(this).text()!='•') {
+          $(this).text(cnt);
+          cnt+=5;
+        }
+      });
+
+    } else {
+      // Minutes.
+      var timeSplit=$('input[name=timebox]').val().split(':');
+      $('input[name=timebox]').val(timeSplit[0] + ':' + $(this).text());
+      $(this).parent().parent().remove();
+
+      // Show the activity and more info fields.
+      $.ajax({
+        type: 'get',
+        url: 'wdyd' ,
+
+        success: function (formfrag){
+          // What did you do?
+          var str='<h2 class="text-center">What did you do at '+$('input[name=timebox]').val()+'?</h2>';
+          str+=formfrag;
+          $('<div class="activitysel container">'+str+'</div>')
+          .css({'bottom':$('input[name=timebox]').position().top-300})
+          .insertAfter($('input[name=timebox]'));
+        }
+      });
+
+    }
+
+
+
+  });
+
+  // When an item is selected from the activity list, display hint.
+  $('body').on('change','select[name=whatdidyoudoa]',function(){
+    var $this=$(this);
+      $.ajax({
+        type: 'get',
+        url: 'activityhint/' + $this.val() ,
+
+        success: function (hint){
+          $this.parent().next().find('input[name=whatdidyoudot]').val('').attr('placeholder',hint).focus();
+        }
+      });
+  });
+
 
   // Calendar functions
   
@@ -301,8 +443,12 @@ $(document).ready(function(){
     });
   } // End loadCal() method.
 
+ 
+
+
 
   // Quick add entries
+
   $('.quickadd').click(function(){
     reloadQADiv('initial');
   });
@@ -329,7 +475,7 @@ $(document).ready(function(){
     } // End if.
   });
 
-
+  // 
   $(document).on('click','input[value=X]', function() {
     reloadQADiv('u');
   });
@@ -344,13 +490,13 @@ $(document).ready(function(){
     }); // End ajax call.
   });
 
-
+  // Click on a menu item.
   $(document).on('click','.quickadddiv .mode span', function() {
     $('.quickadddiv .mode span').removeClass('highlight');
     $(this).addClass('highlight');
   });
 
-
+  // Update entry.
   $('body').on('click','.updentry', function() {
     var id   = $(this).parent().attr('class').substr(3);
     var text = $(this).parent().find('textarea').val();
@@ -362,7 +508,7 @@ $(document).ready(function(){
     }); // End ajax call.
   });
 
-
+  // Delete entry.
   $('body').on('click','.delentry', function() {
     var id   = $(this).parent().attr('class').substr(3);
     $.ajax({
@@ -372,7 +518,7 @@ $(document).ready(function(){
     }); // End ajax call.
   });
 
-
+  // Reload DIV.
   function reloadQADiv(m) {
     if ($('.quickadddiv').length>0 && m == 'initial') {$('.quickadddiv').remove();$('.quickadd').text('+');}
     else {
@@ -388,7 +534,9 @@ $(document).ready(function(){
     } // End if.
   } // End function.
 
+  // End quickAdd functions.
 
+  // Focus Entry textarea.
   function focus_txtarea() {
     // Problem with giving textarea focus if it is in a layer that is not visible
     if ($('#txtInfo1').length>0) {$("#txtInfo1").focus();}
