@@ -239,6 +239,16 @@ ul.diaryheadings {
 
 fieldset.whatdidyoudo {
   input[name=timebox]{width:5em;}
+  select {
+    font:1.5em arial;
+  }
+  li img {
+    cursor:pointer;
+  }
+    img:hover {
+    transform: scale(2);
+    }
+
 }
 
 
