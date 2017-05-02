@@ -321,7 +321,7 @@ $(document).ready(function(){
           var str='<h2 class="text-center">What did you do at '+$('input[name=timebox]').val()+'?</h2>';
           str+=formfrag;
           $('<div class="activitysel container">'+str+'</div>')
-          .css({'bottom':$('input[name=timebox]').position().top-300})
+          //.css({'bottom':$('input[name=timebox]').position().top-300})
           .insertAfter($('input[name=timebox]'));
         }
       });
@@ -335,14 +335,13 @@ $(document).ready(function(){
   // When an item is selected from the activity list, display hint.
   $('body').on('change','select[name=whatdidyoudoa]',function(){
     var $this=$(this);
-      $.ajax({
-        type: 'get',
-        url: 'activityhint/' + $this.val() ,
-
-        success: function (hint){
-          $this.parent().next().find('input[name=whatdidyoudot]').val('').attr('placeholder',hint).focus();
-        }
-      });
+    $.ajax({
+      type: 'get',
+      url: 'activityhint/' + $this.val() ,
+      success: function (hint){
+        $this.parent().next().find('input[name=whatdidyoudot]').val('').attr('placeholder',hint).focus();
+      }
+    });
   });
 
 
