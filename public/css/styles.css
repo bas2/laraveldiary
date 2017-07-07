@@ -4,7 +4,7 @@ body {
   margin: 5px; }
 
 a {
-  text-decoration: none; }
+  text-decoration: none !important; }
 
 /* Preferred colours */
 .today_col {
@@ -28,8 +28,14 @@ a {
   /* days without entries */
   background-image: linear-gradient(#c90, #000); }
 
-select {
-  font-size: 11px; }
+.equal {
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2em; }
+
+input, select, button {
+  color: #000; }
 
 ul#projectsmenu {
   background-color: rgba(0, 0, 0, 0.5);
@@ -43,12 +49,10 @@ ul#projectsmenu {
   box-shadow: -2px 2px 2px; }
   ul#projectsmenu li {
     list-style: none;
-    float: none;
     text-align: center;
-    font-family: verdana;
+    font: bold 1em verdana;
     border-bottom: 1px solid rgba(196, 196, 196, 0.7);
-    cursor: pointer;
-    font-weight: bold; }
+    cursor: pointer; }
     ul#projectsmenu li a {
       display: block;
       color: #ccc; }
@@ -59,52 +63,45 @@ ul#projectsmenu {
       color: yellow;
       border: 0; }
     ul#projectsmenu li.sel, ul#projectsmenu li a {
-      padding: 0 0 0 0; }
+      padding: 0; }
     ul#projectsmenu li:last-child {
       border: 0; }
 
 ul.diaryheadings {
-  width: 70%;
-  display: flex;
-  flex-wrap: wrap;
   margin: 0;
   padding: 0;
-  list-style: none;
-  border-bottom: 0;
-  background-color: transparent; }
+  border-bottom: 0; }
   ul.diaryheadings li {
+    width: 12.85%;
     margin: 0;
     padding: 0;
-    width: 10.8%;
-    border-top-left-radius: .4em;
-    border-top-right-radius: .4em; }
+    border-radius: .4em .4em 0 0; }
     ul.diaryheadings li a {
       display: block;
+      box-shadow: 1px 1px rgba(255, 255, 255, 0.3);
       text-align: center;
-      font-weight: bold;
       padding: .1em 1em;
       color: #fff;
-      font-family: verdana;
-      font-size: 8pt;
+      font: bold 8pt verdana;
       cursor: pointer;
-      border-top-left-radius: .8em;
-      border-top-right-radius: .8em;
+      border-radius: .8em .8em 0 0;
       text-shadow: 2px 2px 1px grey; }
       ul.diaryheadings li a:hover {
         background: linear-gradient(#c00, #000);
         color: #fff; }
-    ul.diaryheadings li.sep {
-      width: 1.7375%; }
+  ul.diaryheadings #li_nxtwkbtn {
+    text-align: right; }
   ul.diaryheadings #li_prvwkbtn, ul.diaryheadings #li_nxtwkbtn {
-    width: 5.25%; }
-    ul.diaryheadings #li_prvwkbtn button, ul.diaryheadings #li_nxtwkbtn button {
-      width: 100%; }
+    width: 5%;
+    box-shadow: 0 0; }
   ul.diaryheadings #li_prvwkbtn button {
-    border-top-left-radius: .8em;
-    border-bottom-left-radius: .8em; }
+    border-radius: .8em 0 0 .8em;
+    width: 80%;
+    text-align: left; }
   ul.diaryheadings #li_nxtwkbtn button {
-    border-top-right-radius: .8em;
-    border-bottom-right-radius: .8em; }
+    border-radius: 0 .8em .8em 0;
+    width: 80%;
+    text-align: right; }
   ul.diaryheadings #li_prvwkbtn button:hover, ul.diaryheadings #li_nxtwkbtn button:hover {
     background-color: #c00;
     color: #fff; }
@@ -112,52 +109,25 @@ ul.diaryheadings {
 #li_prvwkbtn button, #li_nxtwkbtn button, #dtPck .lbtn, #dtPck .rbtn {
   cursor: pointer;
   border: 1px solid grey;
-  font-size: 1em;
-  font-weight: bold;
+  font: bold 1em arial;
   background-image: linear-gradient(#f00, #f90);
   color: #900; }
 
 /* Data entry textarea */
 #txtInfo1 {
-  width: 70%;
   margin: 0;
   padding: .3em;
-  height: 25em;
-  font: 1.2em arial;
+  height: 10em;
+  font: bold 1.2em/1.4em arial;
   border: 0;
-  font-weight: bold;
   color: #fff;
-  line-height: 1.4em;
-  border-radius: .8em;
-  box-sizing: border-box; }
+  border-radius: .8em; }
 
-#upd_btn {
-  width: 70%;
-  border-bottom-left-radius: .8em;
-  border-bottom-right-radius: .8em;
-  font-size: 1.3em;
-  border: 0; }
-  #upd_btn:hover {
-    background-color: #c00;
-    color: #fff;
-    font-weight: bold; }
-
-#rw7 {
-  /* Row exists and important. */
-  float: left;
-  display: none; }
+#txtInfo1 {
+  width: 100%; }
 
 #ins_upd_dt {
-  box-sizing: border-box;
-  width: 70%;
-  clear: both;
-  background: #c00;
-  color: #fff;
-  font: bold .9em tahoma;
-  border-radius: .3em;
-  margin-top: .5em;
-  padding: .4em;
-  text-align: center; }
+  margin-top: .5em; }
 
 .ui-tooltip {
   background: #cc6600 !important;
@@ -180,10 +150,6 @@ ul.diaryheadings {
 
 /* Calendar styles */
 #dtPck {
-  position: fixed;
-  right: 0;
-  top: 20px;
-  width: 29%;
   text-align: center;
   background-image: linear-gradient(#c00, #000);
   border-radius: .8em;
@@ -196,13 +162,15 @@ ul.diaryheadings {
     border-radius: 0;
     text-shadow: 2px 2px 1px #000; }
   #dtPck #tblDate {
+    background-color: transparent;
+    width: 90%;
     border-collapse: collapse;
     text-align: center;
-    width: 90%;
     margin: 0 auto; }
     #dtPck #tblDate caption {
       background: rgba(255, 255, 255, 0.5);
-      color: #000; }
+      color: #000;
+      font-variant: small-caps; }
     #dtPck #tblDate td {
       padding: 0;
       margin: 0;
@@ -217,11 +185,9 @@ ul.diaryheadings {
         text-shadow: 2px 2px 1px #000;
         cursor: pointer; }
   #dtPck .lbtn {
-    border-top-left-radius: .8em;
-    border-bottom-left-radius: .8em; }
+    border-radius: .8em 0 0 .8em; }
   #dtPck .rbtn {
-    border-top-right-radius: .8em;
-    border-bottom-right-radius: .8em; }
+    border-radius: 0 .8em .8em 0; }
 
 #dtPck #tblDate td {
   /* today_col */ }
@@ -244,6 +210,42 @@ ul.diaryheadings {
   color: #fff; }
 
 /*#dtPck #tblDate td {&.nohover, &.medHead {cursor: hand;}}*/
+.timepick {
+  position: absolute;
+  background: navy;
+  border-radius: 250px;
+  width: 250px;
+  height: 250px;
+  font-size: 2em;
+  box-shadow: 1px 1px; }
+  .timepick div.cen {
+    text-align: center; }
+  .timepick span {
+    cursor: pointer;
+    background: blue;
+    border-radius: 2em;
+    display: inline-block;
+    width: 2em;
+    text-align: center;
+    background: linear-gradient(blue, navy); }
+  .timepick .minutes {
+    background: red; }
+
+.activitysel {
+  position: absolute;
+  background: blue;
+  border-radius: .5em;
+  width: 700px; }
+
+fieldset.whatdidyoudo input[name=timebox] {
+  width: 5em; }
+fieldset.whatdidyoudo select {
+  font: 1.5em arial; }
+fieldset.whatdidyoudo li img {
+  cursor: pointer; }
+fieldset.whatdidyoudo img:hover {
+  transform: scale(2); }
+
 /* Quick Add - 15/11/2016 */
 .quickadd {
   position: absolute;
