@@ -110,24 +110,34 @@ $(document).ready(function()
     });
 
 
-    function getData(mode,date)
+    function getData(mode, date)
     {
-        $.ajax({
-            type:'get',
-            url:'getday/' + date,
-            dataType: 'json',
-            success: function (json){AjaxTest(json, mode);}
-        });
+        var url1 = (mode == 'initial' ? 'getday' : '{{url('')}}/getday/');
 
         $.ajax({
-            type:'get',
-            url:'whatdidyoudo/' + date,
-            success: function (data){$('.whatdidyoudo .current').html(data);}
+            type: 'get',
+            url: url1 + date,
+            dataType: 'json',
+            success: function (json)
+            {
+                AjaxTest(json, mode);
+            }
+        });
+
+        var url1 = (mode == 'initial' ? 'whatdidyoudo' : '{{url('')}}/whatdidyoudo/');
+
+        $.ajax({
+            type: 'get',
+            url: url1 + date,
+            success: function (data)
+            {
+                $('.whatdidyoudo .current').html(data);
+            }
         });
     }
 
 
-    getData('initial',''); // Initial load via ajax:
+    getData('initial', ''); // Initial load via ajax:
 
 
     // When a date header is clicked

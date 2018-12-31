@@ -6,247 +6,307 @@ $forcol: #c90;
 $timeh: 250px;
 
 body {
-  background-color: #000;
-  color: #fff;
-  margin: 5px;
+    background-color: #000;
+    color: #fff;
+    margin: 5px;
 }
 
 a {text-decoration: none !important;}
 
 /* Preferred colours */
 .today_col {
-  background-color: $tdycol; color: #fff; /* today */
-  background-image: linear-gradient($tdycol, #000);
+    background-color: $tdycol; color: #fff; /* today */
+    background-image: linear-gradient($tdycol, #000);
 }
 .sel_col {
-  background-color: $selcol; /* selected day */
-  background-image: linear-gradient($selcol, #000);
+    background-color: $selcol; /* selected day */
+    background-image: linear-gradient($selcol, #000);
 }
 .three_col {
-  background-color: $thrcol; /* days with entries */
-  background-image: linear-gradient($thrcol, #000);
+    background-color: $thrcol; /* days with entries */
+    background-image: linear-gradient($thrcol, #000);
 }
 .four_col {
-  background-color: $forcol; /* days without entries */
-  background-image: linear-gradient($forcol, #000);
+    background-color: $forcol; /* days without entries */
+    background-image: linear-gradient($forcol, #000);
 }
 
 .equal {  
-  display: -webkit-flex;
-  display: flex;
-  flex-wrap:wrap;
-  margin-bottom: 2em;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap:wrap;
+    margin-bottom: 2em;
 }
 
-input,select,button{color:#000;}
+input,select,button {
+    color: #000;
+}
 
 ul#projectsmenu {
-  background-color: rgba(0,0,0,.5);
-  z-index: 1;
-  position:absolute;top:0;right:0;
-  margin-top:0;padding-left: 0;
-  border-bottom-left-radius: 2px;
-  box-shadow: -2px 2px 2px;
-  li {
-    list-style: none;
-    text-align: center;
-    font: bold 1em verdana;
-    border-bottom: 1px solid rgba(196,196,196,.7);
-    cursor:pointer;
-    a {
-      display: block;
-      color:#ccc;
-      &:hover {background-color: rgba(255,255,255,.5);color:#000;};
+    background-color: rgba(0,0,0,.5);
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 0;
+    padding-left: 0;
+    border-bottom-left-radius: 2px;
+    box-shadow: -2px 2px 2px;
+    li {
+        list-style: none;
+        text-align: center;
+        font: bold 1em verdana;
+        border-bottom: 1px solid rgba(196,196,196,.7);
+        cursor:pointer;
+        a {
+            display: block;
+            color: #ccc;
+            &:hover {
+                background-color: rgba(255,255,255,.5);
+                color: #000;
+            };
+        }
+        &.sel {
+            color:yellow;
+            border: 0;
+        }
+        &.sel, a {
+            padding: 0;
+        }
+        &:last-child{
+            border: 0;
+        }
     }
-    &.sel {color:yellow;border:0;}
-    &.sel, a {padding:0;}
-    &:last-child{border:0;};
-  }
 
 }
 
 
 ul.diaryheadings {
-  margin: 0;padding: 0;
-  border-bottom: 0;
-  li {
-    width: 12.85%;
-    margin: 0;padding: 0;
-    border-radius: .4em .4em 0 0;
-    a {
-      display: block;
-      box-shadow: 1px 1px rgba(255,255,255,.3);
-      text-align: center;
-      padding: .1em 1em;
-      color: #fff;
-      font: bold 8pt verdana;
-      cursor: pointer;
-      border-radius: .8em .8em 0 0;
-      text-shadow: 2px 2px 1px grey;
-      &:hover {background: linear-gradient($selcol,#000); color: #fff;}
+    margin: 0;
+    padding: 0;
+    border-bottom: 0;
+    li {
+        width: 12.85%;
+        margin: 0;
+        padding: 0;
+        border-radius: .4em .4em 0 0;
+        a {
+            display: block;
+            box-shadow: 1px 1px rgba(255,255,255,.3);
+            text-align: center;
+            padding: .1em 1em;
+            color: #fff;
+            font: bold 8pt verdana;
+            cursor: pointer;
+            border-radius: .8em .8em 0 0;
+            text-shadow: 2px 2px 1px grey;
+            &:hover {
+                background: linear-gradient($selcol, #000);
+                color: #fff;
+            }
+        }
     }
-  }
-  #li_nxtwkbtn {text-align:right;}
-  #li_prvwkbtn, #li_nxtwkbtn {width:5%; box-shadow: 0 0;}
-  #li_prvwkbtn button {border-radius: .8em 0 0 .8em;width:80%;text-align: left;}
-  #li_nxtwkbtn button {border-radius: 0 .8em .8em 0;width:80%;text-align: right;}
-  #li_prvwkbtn button:hover, #li_nxtwkbtn button:hover {
-    background-color: #c00;
-    color: #fff;
-  }
-  
+    #li_nxtwkbtn {
+        text-align:right;
+    }
+    #li_prvwkbtn, #li_nxtwkbtn {
+        width: 5%;
+        box-shadow: 0 0;
+    }
+    #li_prvwkbtn button {
+        border-radius: .8em 0 0 .8em;
+        width: 80%;
+        text-align: left;
+    }
+    #li_nxtwkbtn button {
+        border-radius: 0 .8em .8em 0;
+        width: 80%;
+        text-align: right;
+    }
+    #li_prvwkbtn button:hover, #li_nxtwkbtn button:hover {
+        background-color: #c00;
+        color: #fff;
+    }
+
 }
 
 
 #li_prvwkbtn button, #li_nxtwkbtn button, #dtPck .lbtn, #dtPck .rbtn  {
-  cursor: pointer;
-  border: 1px solid grey;
-  font: bold 1em arial;
-  background-image: linear-gradient(#f00, #f90);
-  color: #900;
+    cursor: pointer;
+    border: 1px solid grey;
+    font: bold 1em arial;
+    background-image: linear-gradient(#f00, #f90);
+    color: #900;
 }
 
 
 /* Data entry textarea */
 #txtInfo1 {
-  margin: 0;
-  padding: .3em;
-  height: 10em;
-  font: bold 1.2em/1.4em arial;
-  border: 0;
-  color: #fff;
-  border-radius: .8em;
+    margin: 0;
+    padding: .3em;
+    height: 10em;
+    font: bold 1.2em/1.4em arial;
+    border: 0;
+    color: #fff;
+    border-radius: .8em;
 }
 
 
 
-#txtInfo1 {width: 100%;}
+#txtInfo1 {
+    width: 100%;
+}
 
 
 #ins_upd_dt {
-  margin-top: .5em;
+    margin-top: .5em;
 }
 
 
 .ui-tooltip {
-  background: hsla(30, 100%, 40%, 1) !important;
-  text-align: center;
-  padding: 0 20px 10px !important;
-  color: #fff !important;
-  border-radius: 20px;
-  font: bold 12px "Helvetica Neue", Sans-Serif !important;
-  text-transform: uppercase;
-  box-shadow: 0 0 7px black;
-  .date_s {
-    font: bold 12px "Arial Black", Tahoma;
-    background-color: #000;
-    color: #fff;
-    border-radius: .3em;
-    padding: 0 4px 4px;
-    margin-bottom: 4px;
-    background-image: linear-gradient(#f90, rgb(255,0,0));
-    text-shadow: 1px 1px 1px rgb(100,100,100);
-  }
+    background: hsla(30, 100%, 40%, 1) !important;
+    text-align: center;
+    padding: 0 20px 10px !important;
+    color: #fff !important;
+    border-radius: 20px;
+    font: bold 12px "Helvetica Neue", Sans-Serif !important;
+    text-transform: uppercase;
+    box-shadow: 0 0 7px black;
+    .date_s {
+        font: bold 12px "Arial Black", Tahoma;
+        background-color: #000;
+        color: #fff;
+        border-radius: .3em;
+        padding: 0 4px 4px;
+        margin-bottom: 4px;
+        background-image: linear-gradient(#f90, rgb(255,0,0));
+        text-shadow: 1px 1px 1px rgb(100,100,100);
+    }
 }
 
 
 /* Calendar styles */
 #dtPck {
-  text-align: center;
-  background-image: linear-gradient($selcol, #000);
-  border-radius: .8em;
-  box-shadow: 2px 2px 2px #000;
-  tbody#d td {
-    font: bold .8em arial;
-    color: #fff;
-    background: grey;
-    border-radius: 0;
-    text-shadow: 2px 2px 1px #000;
-  }
-  #tblDate {
-    background-color: transparent;
-    width: 90%;
-    border-collapse: collapse;
     text-align: center;
-    margin:0 auto;
-    caption {background: rgba(255,255,255,.5);color:#000;font-variant: small-caps;}
-    td {
-      padding:0;margin:0;
-      border-radius: .4em;
-      a {
-        display: block;
-        text-decoration: none;
-        font: bold 1.5em arial;
-        border-radius: .4em;
-        border-right:1px solid #000;
-        border-bottom:1px solid #000;
+    background-image: linear-gradient($selcol, #000);
+    border-radius: .8em;
+    box-shadow: 2px 2px 2px #000;
+    tbody#d td {
+        font: bold .8em arial;
+        color: #fff;
+        background: grey;
+        border-radius: 0;
         text-shadow: 2px 2px 1px #000;
-        cursor: pointer;
-      }
     }
-  }
-  .lbtn {border-radius:.8em 0 0 .8em;}
-  .rbtn {border-radius:0 .8em .8em 0;}
-  /*.btnHide {display:none;position:absolute;width:2em;color:#c00;}*/
+    #tblDate {
+        background-color: transparent;
+        width: 90%;
+        border-collapse: collapse;
+        text-align: center;
+        margin:0 auto;
+        caption {
+            background: rgba(255,255,255,.5);
+            color:#000;
+            font-variant: small-caps;
+        }
+        td {
+            padding:0;margin:0;
+            border-radius: .4em;
+            a {
+                display: block;
+                text-decoration: none;
+                font: bold 1.5em arial;
+                border-radius: .4em;
+                border-right:1px solid #000;
+                border-bottom:1px solid #000;
+                text-shadow: 2px 2px 1px #000;
+                cursor: pointer;
+            }
+        }
+    }
+    .lbtn {
+        border-radius:.8em 0 0 .8em;
+    }
+    .rbtn {
+        border-radius:0 .8em .8em 0;
+    }
+    /*.btnHide {display:none;position:absolute;width:2em;color:#c00;}*/
+}
+
+
+#dtPck #tblDate td {
+    &.curDate {
+        background-color: $tdycol;
+        color: #fff;
+    } /* today_col */
+}
+
+
+#dtPck #tblDate td.three_col a {
+    background-color: $thrcol;
+    color: #fff; /* three_col */
+}
+#dtPck #tblDate td.four_col a {
+    background-color: $forcol;
+    color: #fff; /* four_col */
 }
 
 #dtPck #tblDate td {
-  &.curDate {background-color: $tdycol; color: #fff;} /* today_col */
-}
-
-#dtPck #tblDate td.three_col a {background-color: $thrcol; color: #fff; /* three_col */}
-#dtPck #tblDate td.four_col a {background-color: $forcol; color: #fff; /* four_col */}
-
-#dtPck #tblDate td {
-  &.sel_col a, &.sel_col a:hover, a:hover {background-color: $selcol; color: #fff;}
+    &.sel_col a, &.sel_col a:hover, a:hover {
+        background-color: $selcol;
+        color: #fff;
+    }
 }
 
 /*#dtPck #tblDate td {&.nohover, &.medHead {cursor: hand;}}*/
 
 
 .timepick {
-  position:absolute;
-  background:navy;
-  border-radius:$timeh;
-  width:$timeh;
-  height:$timeh;
-  div.cen {
-    text-align:center;
-  }
-  font-size:2em;
-  span {
-    cursor:pointer;
-    background:blue;
-    border-radius:2em;
-    display: inline-block;
-    width:2em;
-    text-align:center;
-    background:linear-gradient(blue,navy);
-  }
-  .minutes {
-    background:red;
-  }
-  box-shadow:1px 1px;
+    position: absolute;
+    background: navy;
+    border-radius: $timeh;
+    width: $timeh;
+    height: $timeh;
+    div.cen {
+        text-align:center;
+    }
+    font-size:2em;
+    span {
+        cursor:pointer;
+        background:blue;
+        border-radius:2em;
+        display: inline-block;
+        width:2em;
+        text-align:center;
+        background:linear-gradient(blue, navy);
+    }
+    .minutes {
+        background:red;
+    }
+    box-shadow:1px 1px;
 }
 
+
 .activitysel {
-  position:absolute;
-  background:blue;
-  border-radius:.5em;
-  width:700px;
-  
+    position:absolute;
+    background:blue;
+    border-radius:.5em;
+    width:700px;
+
 }
 
 fieldset.whatdidyoudo {
-  input[name=timebox]{width:5em;}
-  select {
-    font:1.5em arial;
-  }
-  li img {
-    cursor:pointer;
-  }
+    input[name=timebox] {
+        width: 5em;
+    }
+    select {
+        font:1.5em arial;
+    }
+    li img {
+        cursor:pointer;
+    }
     img:hover {
-    transform: scale(2);
+        transform: scale(2);
     }
 
 }
@@ -255,42 +315,42 @@ fieldset.whatdidyoudo {
 /* Quick Add - 15/11/2016 */
 
 .quickadd {
-  position:absolute; top: 0; left: 70%;
-  cursor:pointer;
-  font-weight: bold;
+    position:absolute; top: 0; left: 70%;
+    cursor:pointer;
+    font-weight: bold;
 }
 
 .quickadddiv {
-  z-index: 2;
-  border-radius: .4em;
-  position:absolute; top: 20px; left: 800px;
-  background: linear-gradient(black, blue);
-  color:#fff;border:1px solid #fff;
-  padding: 1em;
-  ul {
-    margin: 1em 1em 1em 0; padding-left:1.3em;
-  }
-  li {
-    cursor: pointer;
-    &:hover {background: #f00;color: #fff;}
-    textarea {width: 25em;}
-  }
-  .newentry {
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: .3em;
-    background: red;
-    text-align: center;
-    width: 5em;
-  }
-  .mode {
-    font-weight: bold;
-  }
-  .mode span {
-    cursor: pointer;
-    &.highlight {
-      color: yellow;
-      cursor: default;
+    z-index: 2;
+    border-radius: .4em;
+    position:absolute; top: 20px; left: 800px;
+    background: linear-gradient(black, blue);
+    color:#fff;border:1px solid #fff;
+    padding: 1em;
+    ul {
+        margin: 1em 1em 1em 0; padding-left:1.3em;
     }
-  }
+    li {
+        cursor: pointer;
+        &:hover {background: #f00;color: #fff;}
+        textarea {width: 25em;}
+    }
+    .newentry {
+        cursor: pointer;
+        font-weight: bold;
+        border-radius: .3em;
+        background: red;
+        text-align: center;
+        width: 5em;
+    }
+    .mode {
+        font-weight: bold;
+    }
+    .mode span {
+        cursor: pointer;
+        &.highlight {
+            color: yellow;
+            cursor: default;
+        }
+    }
 }
