@@ -22,7 +22,6 @@
 
 
 <table id="tblDate">
-    <caption class="text-center">{{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</caption>
 
     <tbody id="d">
         <tr id="caldayrow">
