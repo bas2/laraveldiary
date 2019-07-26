@@ -1,0 +1,15 @@
+/* Used on Help page */
+
+body, td, pre {
+	background: #fff;
+  font-size: 1.1em;
+}
+
+.defaultSkin table.mceLayout {
+  border: none;
+}
+
+
+table.mceToolbar td {
+  background: yellow;
+}

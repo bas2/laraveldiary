@@ -10,6 +10,8 @@
     {!! Html::style('js/jquery/jquery-ui-1.12.1.custom/jquery-ui.css') !!}
     {!! Html::script('js/jquery/jquery-ui-1.12.1.custom/external/jquery/jquery.js') !!}
     {!! Html::script('js/jquery/jquery-ui-1.12.1.custom/jquery-ui.min.js') !!}
+
+    {!! Html::script('js/tinymce/jscripts/tiny_mce/jquery.tinymce.js') !!}
 </head>
 <body>
 
@@ -63,6 +65,41 @@
     </div>
 
 <script>
+
+$('textarea#txtInfo1').tinymce({
+    // Location of TinyMCE script
+    script_url : 'js/tinymce/jscripts/tiny_mce/tiny_mce.js',
+
+    // General options
+    theme   : "advanced",
+    plugins : "",
+
+    // Theme options
+    theme_advanced_buttons1 : "code,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,|,forecolor,backcolor",
+
+    theme_advanced_toolbar_location   : "top",
+    theme_advanced_toolbar_align      : "left",
+    theme_advanced_statusbar_location : "bottom",
+    theme_advanced_resizing           : true,
+    plugins : 'autoresize',
+    width: '100%',
+
+    // Example content CSS (should be your site CSS)
+    content_css : "css/tinymce.css",
+
+    // Drop lists for link/image/media/template dialogs
+    template_external_list_url : "lists/template_list.js",
+    external_link_list_url     : "lists/link_list.js",
+    external_image_list_url    : "lists/image_list.js",
+    media_external_list_url    : "lists/media_list.js",
+
+    // Replace values for the template plugin
+    template_replace_values : {
+        username : "Some User",
+        staffid : "991234"
+    }
+});
+
 $(document).ready(function()
 {
     // Quick add link.
