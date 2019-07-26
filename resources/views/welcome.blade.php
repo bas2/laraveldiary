@@ -31,9 +31,7 @@
 
             <textarea class="today_col form-control" id="txtInfo1"></textarea>
 
-            <input class="btn btn-primary btn-block" type="button" id="upd_btn" value="Update &gt;">
-
-            <div class="alert alert-info text-center" id="ins_upd_dt"></div>
+            <input class="btn btn-primary btn-block" type="submit" id="upd_btn" value="Update &rarr;">
 
                 <fieldset class="whatdidyoudo">
                     <legend>What did you do on this fine day?</legend>
@@ -256,7 +254,8 @@ $(document).ready(function()
         {
             st_str += splitdata[3] + numEdits;
         }
-        $("#ins_upd_dt").html(st_str) ;
+        $("#upd_btn").val(st_str) ;
+        //alert(st_str);
 
         // 09/05/13 - Are we in the current week?
         var iscurweek      = splitdata[21];
