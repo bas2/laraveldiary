@@ -40,3 +40,5 @@ Route::post('quickentries/upd/{id}', 'DiaryController@quickEntriesEdit' );
 Route::post('quickentries/del/{id}', 'DiaryController@quickEntriesDelete' );
 Route::get('quickentries/{mode}',    'DiaryController@quickEntriesMode' );
 Route::get('quickentries/up/{id}',   'DiaryController@quickEntriesUp' );
+
+Route::get('time', 'DiaryController@getTime');

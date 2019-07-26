@@ -276,6 +276,13 @@ class DiaryController extends Controller
     }
 
 
-  
+      /*
+     * Return current time.
+     * GET: time
+     */
+    public function getTime()
+    {
+        return date('H:i') . ' / ' . date('D j M');
+    }
 
 }

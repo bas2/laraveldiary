@@ -79,7 +79,7 @@ $('textarea#txtInfo1').tinymce({
 
     theme_advanced_toolbar_location   : "top",
     theme_advanced_toolbar_align      : "left",
-    theme_advanced_statusbar_location : "bottom",
+    theme_advanced_statusbar_location : "none",
     theme_advanced_resizing           : true,
     plugins : 'autoresize',
     width: '100%',
@@ -102,6 +102,28 @@ $('textarea#txtInfo1').tinymce({
 
 $(document).ready(function()
 {
+
+    function getTimeAndDate()
+    {
+        $.ajax({
+            "type":"GET",
+            "url":"time",
+            "success":function(data) {
+                //var timestring = data.split('|');
+                $('div.tm').text(data);
+            }
+        });
+    }
+
+    $('<div class="tm" style="position:fixed;left:50%;top:35px;transform:translateX(-50%);background-color:rgba(192,33,33,0.842);border:1px solid #fff;border-radius:.3em;color:#fff;font-family:Impact,arial;width:10em;z-index:1;font-weight:bold;opacity:1;text-align:center;">'
+    + '</div>')
+    .prependTo('body');
+
+    setInterval(function(){
+        getTimeAndDate();
+    }, 60000);
+    getTimeAndDate();
+
     // Quick add link.
     $('<div class="quickadd">+</div>').prependTo('body');
 
