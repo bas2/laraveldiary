@@ -5,13 +5,9 @@
     <title>Diary - AJAX!</title>
     <!-- Bootstrap -->
     {!! Html::style('css/bootstrap.min.css') !!}
-
-    {{-- <link rel="stylesheet" href="js/jquery/colorbox/colorbox.css"> --}}
-    <link rel="stylesheet" href="css/styles.css">
+    {!! Html::style('css/styles.css') !!}
 
     {!! Html::style('js/jquery/jquery-ui-1.12.1.custom/jquery-ui.css') !!}
-
-    {{-- {!! Html::script('js/jquery/jquery-3.1.1.min.js') !!} --}}
     {!! Html::script('js/jquery/jquery-ui-1.12.1.custom/external/jquery/jquery.js') !!}
     {!! Html::script('js/jquery/jquery-ui-1.12.1.custom/jquery-ui.min.js') !!}
 </head>
