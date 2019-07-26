@@ -21,14 +21,14 @@ class DiaryController extends Controller
 
         $dirpath = '../..';
         $proj = [];
-        foreach(\File::directories($dirpath) as $project)
-        {
-            $prj = str_replace($dirpath . '/', '', $project);
-            if (substr($prj, 0, 1) != '_')
-            {
-                $proj[] = ucwords($prj);
-            }
-        }
+        //foreach(\File::directories($dirpath) as $project)
+        //{
+        //   $prj = str_replace($dirpath . '/', '', $project);
+        //    if (substr($prj, 0, 1) != '_')
+        //    {
+        //        $proj[] = ucwords($prj);
+        //    }
+        //}
 
         return view('welcome')->with('projlist', $proj)
         ->with('vals', [
