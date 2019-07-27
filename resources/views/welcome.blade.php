@@ -12,6 +12,7 @@
     {!! Html::script('js/jquery/jquery-ui-1.12.1.custom/jquery-ui.min.js') !!}
 
     {!! Html::script('js/tinymce/jscripts/tiny_mce/jquery.tinymce.js') !!}
+    <!-- {!! Html::script('js/tinymce2/tinymce.min.js') !!} -->
 </head>
 <body>
 
@@ -63,6 +64,14 @@
     </div>
 
 <script>
+/*
+tinymce.init({
+    selector: '#txtInfo1',
+    menubar: false,
+    toolbar: 'bold italic',
+    statusbar: false
+});
+*/
 
 $('textarea#txtInfo1').tinymce({
     // Location of TinyMCE script
@@ -97,6 +106,7 @@ $('textarea#txtInfo1').tinymce({
         staffid : "991234"
     }
 });
+
 
 $(document).ready(function()
 {
