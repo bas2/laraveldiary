@@ -106,7 +106,17 @@ class DiaryController extends Controller
                 $class = 'today_col';
             }
             $difference = ($value->diff($now)->days < 1) ?  'today' : $value->diffForHumans($now);
-            $json[]= "<a class='{$class}' tooltiptxt='<p class=date_s>{$value->format('l jS F')} [$difference}</p>{$info}' title3='{$value->format('Y-m-d')}' title4='{$value->format('D')}' iscurwk='1'>{$value->format('l jS F')}</a>";
+
+            $dateheadingstowrite  = "<a";
+            $dateheadingstowrite .= " class='{$class}'";
+            $dateheadingstowrite .= " tooltiptxt='<p class=date_s>{$value->format('l jS F')} [$difference}</p>{$info}'";
+            $dateheadingstowrite .= " title3='{$value->format('Y-m-d')}'";
+            $dateheadingstowrite .= " title4='{$value->format('D')}'";
+            $dateheadingstowrite .= " iscurwk='1'>";
+            $dateheadingstowrite .= "{$value->format('l jS')}<br>{$value->format('F')}";
+            $dateheadingstowrite .= "</a>";
+            
+            $json[] = $dateheadingstowrite;
         }
 
         foreach(['Forth25', $curwk, 'c', 'n'] as $element)
