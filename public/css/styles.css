@@ -209,6 +209,10 @@ ul.diaryheadings {
   background-color: #c00;
   color: #fff; }
 
+#dtPck #goToday {
+  position: fixed; right:24px; top:35px; z-index: 2; border: 0; font-weight: bold;
+}
+
 /*#dtPck #tblDate td {&.nohover, &.medHead {cursor: hand;}}*/
 .timepick {
   position: absolute;

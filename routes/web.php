@@ -41,4 +41,4 @@ Route::post('quickentries/del/{id}', 'DiaryController@quickEntriesDelete' );
 Route::get('quickentries/{mode}',    'DiaryController@quickEntriesMode' );
 Route::get('quickentries/up/{id}',   'DiaryController@quickEntriesUp' );
 
-Route::get('time', 'DiaryController@getTime');
+Route::get('time/{datesel?}', 'DiaryController@getTime');

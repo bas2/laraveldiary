@@ -113,7 +113,7 @@ class DiaryController extends Controller
             $dateheadingstowrite .= " title3='{$value->format('Y-m-d')}'";
             $dateheadingstowrite .= " title4='{$value->format('D')}'";
             $dateheadingstowrite .= " iscurwk='1'>";
-            $dateheadingstowrite .= "{$value->format('l jS')}<br>{$value->format('F')}";
+            $dateheadingstowrite .= "{$value->format('D j')}<br>{$value->format('M')}";
             $dateheadingstowrite .= "</a>";
             
             $json[] = $dateheadingstowrite;
@@ -286,13 +286,16 @@ class DiaryController extends Controller
     }
 
 
-      /*
+    /*
      * Return current time.
      * GET: time
      */
-    public function getTime()
+    public function getTime($datesel = '')
     {
-        return date('H:i') . ' / ' . date('D j M');
+        if ($datesel == 'undefined') {$datesel = '';}
+        if ($datesel!='undefined') {$datesel = Carbon::parse($datesel)->format('D j M');}
+        if ($datesel == date('D j M')) {$datesel = '';} else {$datesel = ' [' . $datesel . ']';}
+        return date('H:i') . ' / ' . date('D j M') . $datesel;
     }
 
 }

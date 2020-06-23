@@ -111,26 +111,7 @@ $('textarea#txtInfo1').tinymce({
 $(document).ready(function()
 {
 
-    function getTimeAndDate()
-    {
-        $.ajax({
-            "type":"GET",
-            "url":"time",
-            "success":function(data) {
-                //var timestring = data.split('|');
-                $('div.tm').text(data);
-            }
-        });
-    }
 
-    $('<div class="tm" style="position:fixed;left:50%;top:35px;transform:translateX(-50%);background-color:rgba(192,33,33,0.842);border:1px solid #fff;border-radius:.3em;color:#fff;font-family:Impact,arial;width:10em;z-index:1;font-weight:bold;opacity:1;text-align:center;">'
-    + '</div>')
-    .prependTo('body');
-
-    setInterval(function(){
-        getTimeAndDate();
-    }, 60000);
-    getTimeAndDate();
 
     // Quick add link.
     $('<div class="quickadd">+</div>').prependTo('body');
@@ -202,6 +183,33 @@ $(document).ready(function()
 
     getData('initial', ''); // Initial load via ajax:
 
+    function getTimeAndDate()
+    {
+        var dateselected = $('#upd_btn').attr('title2'); // e.g. 2013-05-08
+        $.ajax({
+            "type":"GET",
+            "url":"time/" + dateselected,
+            "success":function(data) {
+                //var timestring = data.split('|');
+                $('div.tm').text(data);
+            }
+        });
+
+        $('#goToday').hide();
+        if ( $('.tm:contains("[")').length ) $('#goToday').show();
+
+    }
+
+    $('<div class="tm" style="position:fixed;left:50%;top:35px;transform:translateX(-50%);background-color:rgba(192,33,33,0.842);border:1px solid #fff;border-radius:.3em;color:#fff;font-family:Impact,arial;width:10em;z-index:1;font-weight:bold;opacity:1;text-align:center;">'
+    + '</div>')
+    .prependTo('body');
+
+    //goToday('<?php date('Y-m-d') ?>');
+
+    setInterval(function(){
+        getTimeAndDate();
+    }, 5000);
+
 
     // When a date header is clicked
     function goToday(sel2)
@@ -212,6 +220,7 @@ $(document).ready(function()
 
     function AjaxTest(json, mode)
     {
+
         var splitdata = [];
         $.each(json, function(index, element) 
         {
@@ -303,6 +312,9 @@ $(document).ready(function()
         } // Calendar
 
         loadCal(0, splitdata[9]);
+    
+        getTimeAndDate();
+
     }
 
 
