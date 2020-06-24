@@ -126,6 +126,14 @@ ul.diaryheadings {
 #txtInfo1 {
   width: 100%; }
 
+#upd_btn {
+  position: fixed;
+  bottom: 0;
+  left:0;
+
+  z-index: 2;
+}
+
 #ins_upd_dt {
   margin-top: .5em; }
 
@@ -149,6 +157,11 @@ ul.diaryheadings {
     text-shadow: 1px 1px 1px #646464; }
 
 /* Calendar styles */
+.cal_container {
+  margin-top: 30em;
+  z-index: 3;
+}
+
 #dtPck {
   text-align: center;
   background-image: linear-gradient(#c00, #000);

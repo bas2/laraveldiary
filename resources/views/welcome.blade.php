@@ -34,6 +34,20 @@
 
             <input class="btn btn-primary btn-block" type="submit" id="upd_btn" value="Update &rarr;">
 
+            </div>
+
+            <div class="col-md-4" class="cal_container">
+                <p>&nbsp;</p>
+                <div id="dtPck">@include('ajax.calendar')</div>
+            </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-12">
+
                 <fieldset class="whatdidyoudo">
                     <legend>What did you do on this fine day?</legend>
 
@@ -55,10 +69,9 @@
 
             </div>
 
-            <div class="col-md-4">
-                <div id="dtPck">@include('ajax.calendar')</div>
-            </div>
-
+            
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
 
         </div>
     </div>
