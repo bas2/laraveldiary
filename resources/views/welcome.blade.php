@@ -47,7 +47,7 @@
             <div class="row">
 
                 <div class="col-md-12">
-
+                <p>&nbsp;</p>
                 <fieldset class="whatdidyoudo">
                     <legend>What did you do on this fine day?</legend>
 
@@ -77,14 +77,6 @@
     </div>
 
 <script>
-/*
-tinymce.init({
-    selector: '#txtInfo1',
-    menubar: false,
-    toolbar: 'bold italic',
-    statusbar: false
-});
-*/
 
 $('textarea#txtInfo1').tinymce({
     // Location of TinyMCE script
@@ -124,32 +116,30 @@ $('textarea#txtInfo1').tinymce({
 $(document).ready(function()
 {
 
-
-
     // Quick add link.
-    $('<div class="quickadd">+</div>').prependTo('body');
+    //$('<div class="quickadd">+</div>').prependTo('body');
 
     // Projects menu.
-    $('ul#projectsmenu li.sel').css({'border-bottom':0,'margin':'.2em .5em'});
-    $('ul#projectsmenu li').has('a[href]').hide();
+    //$('ul#projectsmenu li.sel').css({'border-bottom':0,'margin':'.2em .5em'});
+    //$('ul#projectsmenu li').has('a[href]').hide();
 
 
-    $('ul#projectsmenu li').click(function()
-    {
-        $('ul#projectsmenu li').has('a[href]').toggle();
-        if ($('ul#projectsmenu li').has('a[href]').is(':hidden'))
-        {
-            $('ul#projectsmenu li.sel').css(
-            {
-                'border-bottom':0,'margin':'.2em .5em'
-            });
-        }
-        else
-        {
-            $('ul#projectsmenu li.sel')
-            .css({'border-bottom':'1px solid rgba(196,196,196,.7)','margin':0});
-        }
-    });
+    //$('ul#projectsmenu li').click(function()
+    //{
+    //    $('ul#projectsmenu li').has('a[href]').toggle();
+    //    if ($('ul#projectsmenu li').has('a[href]').is(':hidden'))
+    //    {
+    //        $('ul#projectsmenu li.sel').css(
+    //        {
+    //            'border-bottom':0,'margin':'.2em .5em'
+    //        });
+    //    }
+    //    else
+    //    {
+    //        $('ul#projectsmenu li.sel')
+    //        .css({'border-bottom':'1px solid rgba(196,196,196,.7)','margin':0});
+    //    }
+    //});
 
 
     // Tooltips.
@@ -287,7 +277,6 @@ $(document).ready(function()
             st_str += splitdata[3] + numEdits;
         }
         $("#upd_btn").val(st_str) ;
-        //alert(st_str);
 
         // 09/05/13 - Are we in the current week?
         var iscurweek      = splitdata[21];
@@ -678,8 +667,6 @@ $(document).ready(function()
             }
         });
     }
-
-
 
 
     // Quick add entries
