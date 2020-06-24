@@ -162,6 +162,24 @@ ul.diaryheadings {
   z-index: 3;
 }
 
+.tm {
+  position:fixed;
+  left:50%;
+  top:35px;
+  transform:translateX(-50%);
+  background-color:#609;
+  border:1px solid #fff;
+  border-radius:.3em;
+  color:#fff;
+  font-family:Impact,arial;
+  width:10em;
+  z-index:1;
+  font-weight:bold;
+  opacity:1;
+  text-align:center;
+  text-shadow: black;
+}
+
 #dtPck {
   text-align: center;
   background-image: linear-gradient(#c00, #000);

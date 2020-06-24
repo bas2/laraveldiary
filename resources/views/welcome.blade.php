@@ -213,7 +213,7 @@ $(document).ready(function()
 
     }
 
-    $('<div class="tm" style="position:fixed;left:50%;top:35px;transform:translateX(-50%);background-color:rgba(192,33,33,0.842);border:1px solid #fff;border-radius:.3em;color:#fff;font-family:Impact,arial;width:10em;z-index:1;font-weight:bold;opacity:1;text-align:center;">'
+    $('<div class="tm">'
     + '</div>')
     .prependTo('body');
 
