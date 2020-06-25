@@ -14,10 +14,13 @@
 </p>
 
 <p>
+<!--
 {!! Form::button('This Month', ['id' => "goThisMonth", 'class' => "small", 'title2' => date('Y-m-d'), 'title' => "This Month"]) !!}
 {!! Form::button('This Year', ['id' => "goThisYear", 'class' => "small", 'title2' => date('Y-m-d'), 'title' => "This Year"]) !!}
+-->
 {!! Form::button('Today', ['id' => "goToday", 'class' => "today_col", 'title2' => date('Y-m-d') . '|' . date('D'), 'title' => "Today"]) !!}
 </p>
+
 {!! Form::close() !!}
 
 
